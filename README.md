@@ -1,4 +1,4 @@
-#My little linux settings dabbling
+# My little linux settings dabbling
 TODO: Add script that will set up everything. Either by moving or using symlink.
 
 ## config
