@@ -37,7 +37,7 @@ alias 8="pushd +8"
 alias 9="pushd +9"
 alias sd="pushd "$@""
 alias ed="dirs -c"
-function cdl {
+function lcd {
   builtin cd "$@" && ls -l
 }
 

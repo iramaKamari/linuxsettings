@@ -1,5 +1,11 @@
-set nocompatible              " be iMproved, required
+  set nocompatible              " be iMproved, required
 filetype off                  " required <<========== We can turn it on later
+
+let FirstTime = 0
+if (empty(glob('~/.vim/bundle/Vundle.vim')))
+  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  let FirstTime = 1
+endif
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -10,7 +16,10 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
+if FirstTime == 1
+  au VimEnter * PluginInstall
+  au VimEnter * source ~/.vimrc
+endif
 " <============================================>
 " Specify the plugins you want to install here.
 Plugin 'Chiel92/vim-autoformat'
@@ -37,6 +46,7 @@ filetype plugin indent on    " required
 " Put non-Plugin stuff after this
 
 syntax enable
+set tw=0
 set colorcolumn=80
 set tabstop=2
 set softtabstop=2
@@ -143,7 +153,7 @@ nnoremap <leader>f :LeaderfFile <CR>
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 " Display active buffers and prep for :buffer<COMMAND>
-nnoremap <leader>~ :ls<CR>:b<space>
+nnoremap § :ls<CR>:b<space>
 " Go back to last used buffer
 nnoremap <leader>b :e#<CR>
 " Change split dimensions
@@ -254,6 +264,7 @@ function! StatuslineGit()
 endfunction
 
 set statusline=
+set statusline+=\                                                         " Escape one space for alignment
 set statusline+=%0*\%{toupper(g:currentmode[mode()])}»                    " Current mode
 set statusline+=%#identifier#\ [%n]                                       " buffernr
 set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
