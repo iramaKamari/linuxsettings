@@ -1,4 +1,4 @@
-  set nocompatible              " be iMproved, required
+set nocompatible              " be iMproved, required
 filetype off                  " required <<========== We can turn it on later
 
 let FirstTime = 0
@@ -47,7 +47,7 @@ filetype plugin indent on    " required
 
 syntax enable
 set tw=0
-set colorcolumn=80
+"set colorcolumn=80
 set tabstop=2
 set softtabstop=2
 set sw=2
