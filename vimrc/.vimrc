@@ -47,7 +47,6 @@ filetype plugin indent on    " required
 
 syntax enable
 set tw=0
-"set colorcolumn=80
 set tabstop=2
 set softtabstop=2
 set sw=2
@@ -74,7 +73,6 @@ set lazyredraw
 set showmatch
 set incsearch
 set hlsearch
-set title
 set nobackup
 set noswapfile
 " Be able to open a new buffer without saving/undoing current changes
@@ -200,21 +198,6 @@ let g:currentmode={
       \ '!'  : 'Shell ',
       \ 't'  : 'Terminal '
       \}
-
-" Automatically change the statusline color depending on mode
-"function! ChangeStatuslineColor()
-"  if (mode() =~# '\v(n|no)')
-"    exe 'hi! StatusLine ctermfg=000 guibg=#ef5b39'
-"  elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
-"    exe 'hi! StatusLine ctermfg=205'
-"  elseif (mode() ==# 'i')
-"    exe 'hi! StatusLine ctermfg=004'
-"  else
-"    exe 'hi! StatusLine ctermfg=006'
-"  endif
-"
-"  return ''
-"endfunction
 
 function! GitBranch()
   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
