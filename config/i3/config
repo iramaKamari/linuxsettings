@@ -29,7 +29,7 @@ hide_edge_borders both
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec lxterminal
+bindsym $mod+Return exec termite
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -72,7 +72,7 @@ bindsym $mod+x split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+shift+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+Shift+s layout stacking
@@ -91,29 +91,56 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# Dual screen setup
+set $firstMonitor DVI-I-1
+set $secondMonitor DVI-D-0
+
+workspace 1 output $firstMonitor
+workspace 3 output $firstMonitor
+workspace 5 output $firstMonitor
+workspace 7 output $firstMonitor
+workspace 9 output $firstMonitor
+workspace 2 output $secondMonitor
+workspace 4 output $secondMonitor
+workspace 6 output $secondMonitor
+workspace 8 output $secondMonitor
+workspace 10 output $secondMonitor
+
+# name workspaces
+set $workspace1 
+set $workspace2 
+set $workspace3 
+set $workspace4 
+set $workspace5 
+set $workspace6 
+set $workspace7 
+set $workspace8 
+set $workspace9 
+set $workspace10 "
+
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace 1 $workspace1
+bindsym $mod+2 workspace 2 $workspace2
+bindsym $mod+3 workspace 3 $workspace3
+bindsym $mod+4 workspace 4 $workspace4
+bindsym $mod+5 workspace 5 $workspace5
+bindsym $mod+6 workspace 6 $workspace6
+bindsym $mod+7 workspace 7 $workspace7
+bindsym $mod+8 workspace 8 $workspace8
+bindsym $mod+9 workspace 9 $workspace9
+bindsym $mod+0 workspace 10 $workspace10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace 1 $workspace1
+bindsym $mod+Shift+2 move container to workspace 2 $workspace2
+bindsym $mod+Shift+3 move container to workspace 3 $workspace3
+bindsym $mod+Shift+4 move container to workspace 4 $workspace4
+bindsym $mod+Shift+5 move container to workspace 5 $workspace5
+bindsym $mod+Shift+6 move container to workspace 6 $workspace6
+bindsym $mod+Shift+7 move container to workspace 7 $workspace7
+bindsym $mod+Shift+8 move container to workspace 8 $workspace8
+bindsym $mod+Shift+9 move container to workspace 9 $workspace9
+bindsym $mod+Shift+0 move container to workspace 10 $workspace10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -122,10 +149,22 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+set $sysmenu "system: [r]eload [l]ogout [p]oweroff re[b]oot [s]uspend"
+bindsym $mod+Shift+e mode $sysmenu
+mode $sysmenu {
+    bindsym r restart
+    bindsym l exit
+    bindsym p exec shutdown -P now
+    bindsym b exec shutdown -r now
+    bindsym s hibernate
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+#bindsym $mod+Shift+e layout stacking exec oblogout
+# "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # lock
-bindsym $mod+Shift+x exec i3lock --color 475263
+bindsym $mod+Shift+x exec "/usr/bin/screenLock.sh"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -220,7 +259,7 @@ bindsym $mod+F8 exec mocp --next
 
 # App shortcuts
 bindsym $mod+w exec "/usr/bin/firefox"
-bindsym $mod+n exec "/usr/bin/thunar"
+bindsym $mod+f exec "/usr/bin/pcmanfm"
 
 # Redirect sound to headphones
 bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
@@ -232,3 +271,4 @@ exec --no-startup-id nm-applet
 exec --no-startup-id "nitrogen --restore"
 exec --no-startup-id "sleep 5s && kalu"
 exec --no-startup-id "xkbcomp -I$HOME/.xkb $HOME/.keymap.xkb $DISPLAY"
+exec --no-startup-id i3-msg 'workspace 1 $workspace1; exec /usr/bin/termite; workspace 2 $workspace2; exec /usr/bin/firefox; workspace 3 $workspace3; exec /usr/bin/discord'

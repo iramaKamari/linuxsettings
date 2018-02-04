@@ -25,7 +25,7 @@ endif
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'mileszs/ack.vim'
 Plugin 'sjl/gundo.vim'
-Plugin 'Yggdroot/LeaderF'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'iramaKamari/vimcolors'
 Plugin 'tpope/vim-fugitive'
@@ -145,11 +145,29 @@ nnoremap <Leader>R :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 nnoremap <leader>u :GundoToggle<CR>
 " Quick save current buffer
 nnoremap <leader>s :w<CR>
-" Search for file with leaderF
-nnoremap <leader>f :LeaderfFile <CR>
-" Search for code with Ack
-cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
+" Search for files with CtrlP
+let g:ctrlp_working_path_mode = 'ra'
+
+" Search for code with Ag
+if executable('ag')
+  " Use Ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  set grepformat=%f:%l:%c%m
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+
+  "let g:ackprg='ag --nogroup --nocolor --column'
+endif
+"cnoreabbrev Ack Ack!
+"nnoremap <Leader>a :Ack!<Space>
+" Bind Ag and open a quick fix window with the results
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap <Leader>a :Ag<Space>
+" Grep word under cursor
+nnoremap <leader>A :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " Display active buffers and prep for :buffer<COMMAND>
 nnoremap § :ls<CR>:b<space>
 " Go back to last used buffer
