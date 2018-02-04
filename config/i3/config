@@ -131,40 +131,40 @@ bindsym $mod+9 workspace 9 $workspace9
 bindsym $mod+0 workspace 10 $workspace10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1 $workspace1
-bindsym $mod+Shift+2 move container to workspace 2 $workspace2
-bindsym $mod+Shift+3 move container to workspace 3 $workspace3
-bindsym $mod+Shift+4 move container to workspace 4 $workspace4
-bindsym $mod+Shift+5 move container to workspace 5 $workspace5
-bindsym $mod+Shift+6 move container to workspace 6 $workspace6
-bindsym $mod+Shift+7 move container to workspace 7 $workspace7
-bindsym $mod+Shift+8 move container to workspace 8 $workspace8
-bindsym $mod+Shift+9 move container to workspace 9 $workspace9
-bindsym $mod+Shift+0 move container to workspace 10 $workspace10
+bindsym $mod+shift+1 move container to workspace 1 $workspace1
+bindsym $mod+shift+2 move container to workspace 2 $workspace2
+bindsym $mod+shift+3 move container to workspace 3 $workspace3
+bindsym $mod+shift+4 move container to workspace 4 $workspace4
+bindsym $mod+shift+5 move container to workspace 5 $workspace5
+bindsym $mod+shift+6 move container to workspace 6 $workspace6
+bindsym $mod+shift+7 move container to workspace 7 $workspace7
+bindsym $mod+shift+8 move container to workspace 8 $workspace8
+bindsym $mod+shift+9 move container to workspace 9 $workspace9
+bindsym $mod+shift+0 move container to workspace 10 $workspace10
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+shift+r restart
 
 # exit i3 (logs you out of your X session)
 set $sysmenu "system: [r]eload [l]ogout [p]oweroff re[b]oot [s]uspend"
-bindsym $mod+Shift+e mode $sysmenu
+bindsym $mod+shift+e mode $sysmenu
 mode $sysmenu {
     bindsym r restart
     bindsym l exit
     bindsym p exec shutdown -P now
     bindsym b exec shutdown -r now
     bindsym s hibernate
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym return mode "default"
+    bindsym escape mode "default"
 }
-#bindsym $mod+Shift+e layout stacking exec oblogout
+#bindsym $mod+shift+e layout stacking exec oblogout
 # "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # lock
-bindsym $mod+Shift+x exec "/usr/bin/screenLock.sh"
+bindsym $mod+Shift+x exec "/home/tobias/linuxsettings/usrbin/screenLock.sh"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
