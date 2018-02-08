@@ -94,7 +94,7 @@ function! LoadScope()
   if (!empty(db) && filereadable(db))
     let path = matchstr(db, ".*/")
     set nocscopeverbose " supress 'duplicate connection' error
-    exe "cs add" db path
+    exe 'silent !' "cs add" db path
     set cscopeverbose
   elseif $GTAGS_DB != ""
     cs add $GTAGS_DB
