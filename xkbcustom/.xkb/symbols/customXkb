@@ -61,12 +61,12 @@ xkb_symbols "programming" {
 
     key <AE04>  { [ 4, asciicircum, dollar ] };
     key <AE05>  { [ 5, percent, EuroSign, cent ] };
-    key <AE11>  { [ plus,   backslash, questiondown ] };
+    key <AE11>  { [ plus, backslash, questiondown ] };
     key <AE12>  { [ dead_acute, dead_grave, plusminus, notsign ] };
 
-    key <TLDE>  { [ asciitilde, section,    paragraph, threequarters] };
+    key <TLDE>  { [ section, asciitilde, paragraph, threequarters] };
 
-    key <BKSL>  { [ apostrophe,   asterisk,    dead_diaeresis ] };
+    key <BKSL>  { [ apostrophe, asterisk, dead_diaeresis ] };
 
     key <SPCE>  { [ space, space, space, nobreakspace ] };
 
