@@ -17,6 +17,9 @@ font pango:monospace 9
 
 # thin borders
 hide_edge_borders both
+new_window pixel 0
+gaps inner 20
+gaps outer -5
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -206,13 +209,12 @@ client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-col
 client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
 client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          $indicator-color
 
-
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
 	status_command i3status
 	font pango:monospace 9
-
+  position top
 	colors {
 		background $bg-color
 	    	separator #757575
@@ -226,7 +228,6 @@ bar {
 # floating windows
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Kalu"] floating enable
-
 
 # Multimedia Keys
 
@@ -271,4 +272,4 @@ exec --no-startup-id nm-applet
 exec --no-startup-id "nitrogen --restore"
 exec --no-startup-id "sleep 5s && kalu"
 exec --no-startup-id "xkbcomp -I$HOME/.xkb $HOME/.keymap.xkb $DISPLAY"
-exec --no-startup-id i3-msg 'workspace 1 $workspace1; exec /usr/bin/termite; workspace 2 $workspace2; exec /usr/bin/firefox; workspace 3 $workspace3; exec /usr/bin/discord'
+exec --no-startup-id i3-msg 'workspace 1 $workspace1; exec /usr/bin/termite; workspace 2 $workspace2; exec /usr/bin/firefox; workspace 3 $workspace3; exec /usr/bin/discord;'
