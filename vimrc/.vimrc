@@ -137,6 +137,9 @@ inoremap <C-l> <C-o>d$
 inoremap <C-w> <C-o>db
 " Delete word from cursor in insert mode
 inoremap <C-d> <C-o>dw
+" Make recovery option from accidental deletion in insert mode
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
 " For local replace
 nnoremap <Leader>r :s/\<<C-r><C-w>\>//g<Left><Left>
 " For global replace
@@ -145,6 +148,8 @@ nnoremap <Leader>R :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 nnoremap <leader>u :GundoToggle<CR>
 " Quick save current buffer
 nnoremap <leader>s :w<CR>
+" Automatically re-read a file changed outside of VIM
+set autoread
 " Search for files with CtrlP
 let g:ctrlp_working_path_mode = 'ra'
 
