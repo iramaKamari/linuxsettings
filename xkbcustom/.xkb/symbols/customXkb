@@ -59,8 +59,9 @@ xkb_symbols "programming" {
     key <AD11>  { [ braceleft, bracketleft, aring, Aring ] };
     key <AD12>  { [ braceright, bracketright, asciitilde ] };
 
-    key <AE04>  { [ 4, asciicircum, dollar ] };
+    key <AE04>  { [ 4, dollar ] };
     key <AE05>  { [ 5, percent, EuroSign, cent ] };
+    key <AE07>  { [ 7, asciicircum, dollar ] };
     key <AE11>  { [ plus, backslash, questiondown ] };
     key <AE12>  { [ dead_acute, dead_grave, plusminus, notsign ] };
 
