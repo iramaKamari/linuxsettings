@@ -1,4 +1,4 @@
-xkbcomp -I$HOME/.xkb $HOME/.keymap.xkb $DISPLAY// based on a keyboard map from an 'xkb/symbols/se' file
+// based on a keyboard map from an 'xkb/symbols/se' file
 
 default  partial alphanumeric_keys
 xkb_symbols "basic" {
