@@ -100,7 +100,7 @@ function! LoadScope()
     cs add $GTAGS_DB
   endif
 endfunction
-au BufEnter /* call LoadScope()
+"au BufEnter /* call LoadScope()
 let g:ycm_key_list_previous_completion = ['<Up>']
 inoremap <expr><S-Tab> pumvisible() ? "<C-p>" : "<C-d>"
 map <space> <leader>
@@ -147,7 +147,15 @@ nnoremap <Leader>R :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 " Open Gundo for visual change tree
 nnoremap <leader>u :GundoToggle<CR>
 " Quick save current buffer
-nnoremap <leader>s :w<CR>
+nnoremap <leader>w :w<CR>
+" To open new file
+nnoremap <leader>e :e<CR>
+" Quit
+nnoremap <leader>q :q<CR>
+" Split
+nnoremap <leader>s :split<CR>
+" Vertical split
+nnoremap <leader>v :vs<CR>
 " Automatically re-read a file changed outside of VIM
 set autoread
 " Search for files with CtrlP
