@@ -156,6 +156,8 @@ nnoremap <leader>q :q<CR>
 nnoremap <leader>s :split<CR>
 " Vertical split
 nnoremap <leader>v :vs<CR>
+" Search for marked text in file
+vnoremap // y/<C-R>"<CR>
 " Automatically re-read a file changed outside of VIM
 set autoread
 " Search for files with CtrlP
