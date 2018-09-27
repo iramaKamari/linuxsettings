@@ -147,13 +147,13 @@ nnoremap <Leader>R :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 " Open Gundo for visual change tree
 nnoremap <leader>u :GundoToggle<CR>
 " Quick save current buffer
-nnoremap <leader>w :w<CR>
+nnoremap <leader>s :w<CR>
 " To open new file
 nnoremap <leader>e :e<space>
 " Quit
 nnoremap <leader>q :q<CR>
 " Split
-nnoremap <leader>s :split<CR>
+nnoremap <leader>w :split<CR>
 " Vertical split
 nnoremap <leader>v :vs<CR>
 " Search for marked text in file
