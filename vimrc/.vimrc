@@ -149,7 +149,7 @@ nnoremap <leader>u :GundoToggle<CR>
 " Quick save current buffer
 nnoremap <leader>w :w<CR>
 " To open new file
-nnoremap <leader>e :e<CR>
+nnoremap <leader>e :e<space>
 " Quit
 nnoremap <leader>q :q<CR>
 " Split
