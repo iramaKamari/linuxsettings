@@ -44,6 +44,32 @@ function lcd {
   builtin cd "$@" && ls -l
 }
 
+function gf {
+  if [[ -z "$@" ]] ; then
+    git ls-files
+  else
+    if [[ "$#" -lt 2 ]] ; then
+      git ls-files | grep "$1"
+    else
+      git ls-files "$2" | grep "$1"
+    fi
+  fi
+}
+
+function gg {
+  if [[ -z "$@" ]] ; then
+    # Display usage of function
+    echo "Usage of gg <string> <path>"
+  else
+    if [[ "$#" -lt 2 ]] ; then
+      git grep -i "$1" .
+    else
+      git grep -i "$1" "$2"
+    fi
+  fi
+}
+
+
 alias h="history"
 alias j="jobs -l"
 alias ll="ls -l"

@@ -176,10 +176,13 @@ if executable('ag')
 
   "let g:ackprg='ag --nogroup --nocolor --column'
 endif
+" Open quickfix window after grep
+autocmd QuickFixCmdPost *grep* cwindow
 "cnoreabbrev Ack Ack!
 "nnoremap <Leader>a :Ack!<Space>
 " Bind Ag and open a quick fix window with the results
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+" <args>|cwindow|redraw!
+command -nargs=+ -complete=file -bar Ag silent! grep!
 nnoremap <Leader>a :Ag<Space>
 " Grep word under cursor
 nnoremap <leader>A :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -301,5 +304,14 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_cpp_checkers = ['cppcheck']
+function Py2()
+  let g:syntastic_python_python_exec = '/usr/local/bin/python2.7'
+endfunction
+
+function Py3()
+  let g:syntastic_python_python_exec = '/usr/local/bin/python3.6'
+endfunction
+
+call Py3()   " default to Py3
 " Colorscheme
 colorscheme molokai
