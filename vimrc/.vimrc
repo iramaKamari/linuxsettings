@@ -177,12 +177,12 @@ if executable('ag')
   "let g:ackprg='ag --nogroup --nocolor --column'
 endif
 " Open quickfix window after grep
-autocmd QuickFixCmdPost *grep* cwindow
+autocmd QuickFixCmdPost *grep* cwindow|redraw!
 "cnoreabbrev Ack Ack!
 "nnoremap <Leader>a :Ack!<Space>
 " Bind Ag and open a quick fix window with the results
 " <args>|cwindow|redraw!
-command -nargs=+ -complete=file -bar Ag silent! grep!
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap <Leader>a :Ag<Space>
 " Grep word under cursor
 nnoremap <leader>A :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
