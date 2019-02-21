@@ -54,6 +54,7 @@ set softtabstop=2
 set sw=2
 set expandtab
 set number relativenumber
+set guicursor=
 augroup numbertoggle
   autocmd!
   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
