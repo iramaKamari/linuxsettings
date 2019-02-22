@@ -30,7 +30,6 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'iramaKamari/vimcolors'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-Plugin 'jsfaint/gen_tags.vim'
 Plugin 'junegunn/fzf.vim'
 " <============================================>
 call vundle#end()            " required
