@@ -79,6 +79,61 @@ xkb_symbols "programming" {
     include "level3(ralt_switch)"
 };
 
+partial alphanumeric_keys modifier_keys
+xkb_symbols "colemakDH" {
+
+    include "latin(type2)"
+    include "se(se)"
+
+    name[Group1]="ColemakeDH (Programming)";
+    key <AB04>  { [ d, D ] };
+    key <AB05>  { [ v, V ] };
+    key <AB06>  { [ m, M ] };
+    key <AB07>  { [ h, H ] };
+    key <AB08>  { [ comma, less ] };
+    key <AB09>  { [ period, greater ] };
+
+    key <AB02>  { [ r, R ] };
+    key <AB03>  { [ s, S ] };
+    key <AB04>  { [ t, T ] };
+    key <AB06>  { [ k, K ] };
+    key <AB07>  { [ n, N ] };
+    key <AB08>  { [ e, E ] };
+    key <AB09>  { [ i, I ] };
+    key <AC10>  { [ o, O, odiaeresis, Odiaeresis ] };
+    key <AC11>  { [ slash, question, adiaeresis, Adiaeresis ] };
+
+    key <AB03>  { [ f, F ] };
+    key <AB04>  { [ p, P ] };
+    key <AB05>  { [ b, B ] };
+    key <AB06>  { [ j, J ] };
+    key <AB07>  { [ l, L ] };
+    key <AB08>  { [ u, U ] };
+    key <AB09>  { [ y, Y ] };
+    key <AD10>  { [ semicolon, colon, aring, Aring ] };
+    key <AD11>  { [ braceleft, bracketleft ] };
+    key <AD12>  { [ braceright, bracketright, asciitilde ] };
+
+    key <AE04>  { [ 4, dollar ] };
+    key <AE05>  { [ 5, percent, EuroSign, cent ] };
+    key <AE07>  { [ 7, asciicircum, dollar ] };
+    key <AE11>  { [ plus, backslash, questiondown ] };
+    key <AE12>  { [ dead_acute, dead_grave, plusminus, notsign ] };
+
+    key <TLDE>  { [ section, asciitilde, paragraph, threequarters] };
+
+    key <BKSL>  { [ apostrophe, asterisk, dead_diaeresis ] };
+
+    key <SPCE>  { [ space, space, space, nobreakspace ] };
+
+    key <CAPS> { [ Escape ] };
+
+    key <LSGT>  { [ bar, brokenbar ] };
+    include "kpdl(comma)"
+
+    include "level3(ralt_switch)"
+};
+
 // Swedish Dvorak
 partial alphanumeric_keys
 xkb_symbols "dvorak" {
