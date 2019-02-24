@@ -2,78 +2,67 @@ set nocompatible              " be iMproved, required
 filetype off                  " required <<========== We can turn it on later
 " Map Colemak keys to QWERTY keys (row for row).
 " Top
-noremap e f
-noremap E F
-noremap r p
-noremap R P
-noremap t b
-noremap T B
-noremap y j
-noremap Y J
-noremap u l
-noremap U L
-noremap i u
-noremap I U
-noremap o y
-noremap O Y
-" Middle
-noremap s r
-noremap S R
-noremap d s
-noremap D S
-noremap f t
-noremap F T
-noremap h k
-noremap H K
-noremap j n
-noremap J N
-noremap k e
-noremap K E
-noremap l i
-noremap L I
-" Bottom
-noremap v d
-noremap V D
-noremap b v
-noremap B V
-noremap n m
-noremap N M
-noremap m h
-noremap M H
+"noremap e f
+"noremap E F
+"noremap r p
+"noremap R P
+"noremap t b
+"noremap T B
+"noremap y j
+"noremap Y J
+"noremap u l
+"noremap U L
+"noremap i u
+"noremap I U
+"noremap o y
+"noremap O Y
+"" Middle
+"noremap s r
+"noremap S R
+"noremap d s
+"noremap D S
+"noremap f t
+"noremap F T
+"noremap h k
+"noremap H K
+"noremap j n
+"noremap J N
+"noremap k e
+"noremap K E
+"noremap l i
+"noremap L I
+"" Bottom
+"noremap v d
+"noremap V D
+"noremap b v
+"noremap B V
+"noremap n m
+"noremap N M
+"noremap m h
+"noremap M H
 
-let FirstTime = 0
-if (empty(glob('~/.vim/bundle/Vundle.vim')))
-  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  let FirstTime = 1
+if (empty(glob('~/.config/nvim/autoload/plug.vim')))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+  autocmd VimEnter * source ~/.config/nvim/init.vim
 endif
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-if FirstTime == 1
-  au VimEnter * PluginInstall
-  au VimEnter * source ~/.vimrc
-endif
+set rtp+=~/.config/nvim/autoload/plug.vim
+" Plugins will be downloaded under the specified directory.
+call plug#begin('~/.config/nvim/plugged')
 " <============================================>
 " Specify the plugins you want to install here.
-Plugin 'Chiel92/vim-autoformat'
-Plugin 'mileszs/ack.vim'
-Plugin 'sjl/gundo.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'iramaKamari/vimcolors'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'junegunn/fzf.vim'
+Plug 'Chiel92/vim-autoformat'
+Plug 'sjl/gundo.vim'
+Plug 'vim-syntastic/syntastic'
+Plug 'iramaKamari/vimcolors'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " <============================================>
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()            " required
+"filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -94,6 +83,8 @@ set sw=2
 set expandtab
 set number relativenumber
 set guicursor=
+" Automatically re-read a file changed outside of VIM
+set autoread
 augroup numbertoggle
   autocmd!
   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
@@ -154,8 +145,27 @@ nnoremap <C-j> <C-w><C-j>
 nnoremap <C-k> <C-w><C-k>
 nnoremap <C-l> <C-w><C-l>
 nnoremap <C-h> <C-w><C-h>
+" Change split layout
+nnoremap <A-j> <C-w>J
+nnoremap <A-k> <C-w>K
+nnoremap <A-l> <C-w>L
+nnoremap <A-h> <C-w>H
+" Change split dimensions
+nnoremap <C-Up> <C-w><C-+>
+nnoremap <C-Down> <C-w><C-->
+nnoremap <C-Left> <C-w><C->>
+nnoremap <C-Right> <C-w><C-<>
+" Split
+nnoremap <leader>w :split<CR>
+" Vertical split
+nnoremap <leader>v :vs<CR>
 set splitbelow
 set splitright
+" Terminal mode mappings<C-\><C-n>:file<space>
+nnoremap <leader>t :terminal<CR>
+autocmd BufEnter,WinEnter,TermOpen,FocusGained term://* startinsert
+autocmd BufLeave term://* stopinsert
+tnoremap <Esc> <C-\><C-n>
 " Move lines up and down in normal/insert/visual mode
 nnoremap <leader>j :m +1<CR>==
 nnoremap <leader>k :m -2<CR>==
@@ -194,67 +204,115 @@ nnoremap <leader>s :w<CR>
 nnoremap <leader>e :e<space>
 " Quit
 nnoremap <leader>q :q<CR>
-" Split
-nnoremap <leader>w :split<CR>
-" Vertical split
-nnoremap <leader>v :vs<CR>
 " Search for marked text in file
 vnoremap // y/<C-R>"<CR>
-" Automatically re-read a file changed outside of VIM
-set autoread
-" Search for files with CtrlP
-let g:ctrlp_working_path_mode = 'ra'
+" Search for code with Rg or Ag if available
+let rgOrAgFound = 0
+if executable('rg')
+  nnoremap <Leader>g :Rg<CR>
+  " Grep word under cursor
+  nnoremap <leader>G :Rg <C-R><C-W><CR>
+  inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
+    \ 'prefix': '^.*$',
+    \ 'source': 'rg -n ^ --color always',
+    \ 'options': '--ansi --delimiter : --nth 3..',
+    \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
-" Search for code with Ag
-if executable('ag')
-  " Use Ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor\ --column
-  set grepformat=%f:%l:%c%m
+  let rgOrAgFound = 1
+else
+  if executable('ag')
+    " Use Ag over grep
+    nnoremap <Leader>g :Ag<CR>
+    " Grep word under cursor
+    nnoremap <leader>G :Ag <C-R><C-W><CR>>
+    inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
+      \ 'prefix': '^.*$',
+      \ 'source': 'ag -n ^ --color always',
+      \ 'options': '--ansi --delimiter : --nth 3..',
+      \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-
-  "let g:ackprg='ag --nogroup --nocolor --column'
+    let rgOrAgFound = 1
+  endif
 endif
-" Open quickfix window after grep
-autocmd QuickFixCmdPost *grep* cwindow|redraw!
-"cnoreabbrev Ack Ack!
-"nnoremap <Leader>a :Ack!<Space>
-" Bind Ag and open a quick fix window with the results
-" <args>|cwindow|redraw!
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap <Leader>a :Ag<Space>
-" Grep word under cursor
-nnoremap <leader>A :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+if (rgOrAgFound == 0)
+  " Open quickfix window after grep
+  autocmd QuickFixCmdPost *grep* cwindow|redraw!
+  nnoremap <Leader>g :grep<Space>
+  " Grep word under cursor
+  nnoremap <leader>G :grep <C-R><C-W><CR>
+endif
 " Display active buffers and prep for :buffer<COMMAND>
-nnoremap § :ls<CR>:b<space>
+if executable('fzf')
+  nnoremap § :Buffers<CR>
+else
+  nnoremap § :ls<CR>:b<space>
+endif
+
+function! s:FindGitRoot()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+
+if executable('fzf') && strlen(s:FindGitRoot()) > 0
+  command! ProjectFiles execute 'GFiles' s:FindGitRoot()
+  nnoremap <leader>f :Files<CR>
+  nnoremap <leader>F :GFiles<CR>
+  nnoremap <leader>c :BCommits<CR>
+  nnoremap <leader>C :Commits<CR>
+  nnoremap <leader>S :GFiles?<CR>
+  command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+  nnoremap <Leader>g :GGrep<CR>
+  " Grep word under cursor
+  nnoremap <leader>G :GGrep <C-R><C-W><CR>
+else
+  if executable('fzf')
+    nnoremap <leader>f :Files<CR>
+    nnoremap <leader>F :Files<space>
+  else
+    nnoremap <leader>f :files<CR>
+    nnoremap <leader>F :files<space>
+  endif
+endif
 " Go back to last used buffer
 nnoremap <leader>b :e#<CR>
-" Change split dimensions
-nnoremap <C-Up> <C-w>+
-nnoremap <C-Down> <C-w>-
-nnoremap <C-Left> <C-w>>
-nnoremap <C-Right> <C-w><
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd BufEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+autocmd BufLeave * call clearmatches()
 " Trim trailing whitespace
 fun! TrimWhitespace()
     let l:save = winsaveview()
     %s/\s\+$//e
     call winrestview(l:save)
 endfun
-nnoremap <Leader>t :call TrimWhitespace()<CR>
+nnoremap <Leader>T :call TrimWhitespace()<CR>
+" Fzf configuration
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_buffers_jump = 1
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Identifier'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Identifier'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
 " Statusline configuration
 " Status bar always enabled
 set laststatus=2
-
 let g:currentmode={
       \ 'n'  : 'N ',
       \ 'no' : 'N·Operator Pending ',
@@ -340,20 +398,5 @@ set statusline+=\ %{(&fenc!=''?&fenc:&enc)}\[%{&ff}]\ " Encoding & Fileformat
 set statusline+=\ %-3(%{FileSize()}%)                                     " File size
 set statusline+=%<                                                        " Truncate line
 
-" Syntastic settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_cpp_checkers = ['cppcheck']
-function Py2()
-  let g:syntastic_python_python_exec = '/usr/local/bin/python2.7'
-endfunction
-
-function Py3()
-  let g:syntastic_python_python_exec = '/usr/local/bin/python3.6'
-endfunction
-
-call Py3()   " default to Py3
 " Colorscheme
 colorscheme molokai

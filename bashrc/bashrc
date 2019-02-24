@@ -22,6 +22,7 @@ alias files='ranger'
 export EDITOR=vim
 export QT_STYLE_OVERRIDE=gtk
 export QT_SELECT=qt5
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 
 if [[ $LANG = '' ]]; then
 	export LANG=se_SE.UTF-8
@@ -78,3 +79,5 @@ if [ "x$TERM" = "xxterm" ]
 then
     export TERM="xterm-256color"
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
