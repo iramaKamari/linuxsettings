@@ -398,5 +398,20 @@ set statusline+=\ %{(&fenc!=''?&fenc:&enc)}\[%{&ff}]\ " Encoding & Fileformat
 set statusline+=\ %-3(%{FileSize()}%)                                     " File size
 set statusline+=%<                                                        " Truncate line
 
+" Syntastic settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_cpp_checkers = ['cppcheck']
+function Py2()
+  let g:syntastic_python_python_exec = '/usr/local/bin/python2.7'
+endfunction
+
+function Py3()
+  let g:syntastic_python_python_exec = '/usr/local/bin/python3.6'
+endfunction
+
+call Py3()   " default to Py3
 " Colorscheme
 colorscheme molokai
