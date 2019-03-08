@@ -1,45 +1,5 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required <<========== We can turn it on later
-" Map Colemak keys to QWERTY keys (row for row).
-" Top
-"noremap e f
-"noremap E F
-"noremap r p
-"noremap R P
-"noremap t b
-"noremap T B
-"noremap y j
-"noremap Y J
-"noremap u l
-"noremap U L
-"noremap i u
-"noremap I U
-"noremap o y
-"noremap O Y
-"" Middle
-"noremap s r
-"noremap S R
-"noremap d s
-"noremap D S
-"noremap f t
-"noremap F T
-"noremap h k
-"noremap H K
-"noremap j n
-"noremap J N
-"noremap k e
-"noremap K E
-"noremap l i
-"noremap L I
-"" Bottom
-"noremap v d
-"noremap V D
-"noremap b v
-"noremap B V
-"noremap n m
-"noremap N M
-"noremap m h
-"noremap M H
 
 if (empty(glob('~/.config/nvim/autoload/plug.vim')))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -53,13 +13,15 @@ call plug#begin('~/.config/nvim/plugged')
 " <============================================>
 " Specify the plugins you want to install here.
 Plug 'Chiel92/vim-autoformat'
-Plug 'sjl/gundo.vim'
+Plug 'simnalamburt/vim-mundo'
 Plug 'vim-syntastic/syntastic'
 Plug 'iramaKamari/vimcolors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'bfrg/vim-cpp-modern'
+"Plug 'Yggdroot/indentLine'
 " <============================================>
 call plug#end()            " required
 "filetype plugin indent on    " required
@@ -105,7 +67,6 @@ set completeopt=menu,preview
 set lazyredraw
 set showmatch
 set incsearch
-set hlsearch
 set nobackup
 set noswapfile
 " Be able to open a new buffer without saving/undoing current changes
@@ -180,7 +141,7 @@ nnoremap gb g^
 nnoremap ge g$
 vnoremap gb g^
 vnoremap ge g$
-inoremap jk <esc>
+inoremap kk <esc>
 " Delete line behind cursor to beginning in insert mode
 inoremap <C-h> <C-o>d0
 " Delete line from cursor to end in insert mode
@@ -196,8 +157,8 @@ inoremap <c-w> <c-g>u<c-w>
 nnoremap <Leader>r :s/\<<C-r><C-w>\>//g<Left><Left>
 " For global replace
 nnoremap <Leader>R :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
-" Open Gundo for visual change tree
-nnoremap <leader>u :GundoToggle<CR>
+" Open Mundo for visual change tree
+nnoremap <leader>u :MundoToggle<CR>
 " Quick save current buffer
 nnoremap <leader>s :w<CR>
 " To open new file
@@ -206,6 +167,10 @@ nnoremap <leader>e :e<space>
 nnoremap <leader>q :q<CR>
 " Search for marked text in file
 vnoremap // y/<C-R>"<CR>
+" allows incsearch highlighting for range commands
+cnoremap $t <CR>:t''<CR>
+cnoremap $m <CR>:m''<CR>
+cnoremap $d <CR>:d<CR>``
 " Search for code with Rg or Ag if available
 let rgOrAgFound = 0
 if executable('rg')
@@ -278,6 +243,13 @@ else
 endif
 " Go back to last used buffer
 nnoremap <leader>b :e#<CR>
+" Highlight leading whitespace
+fun! Bsts()
+  highlight LeadingWhitespace ctermbg=282 guibg=red
+  match LeadingWhitespace /^\s\+/
+endfun
+"nnoremap <leader>i :call Bsts()<CR>
+nnoremap <leader>i /^\s\+/<CR>
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -413,5 +385,21 @@ function Py3()
 endfunction
 
 call Py3()   " default to Py3
+
+" Mundo settings
+let g:mundo_preview_bottom = 1
+let g:mundo_preview_height = 50
+let g:mundo_close_on_revert = 1
+
+" IndentLine settings
+"let g:indentLine_char_list = ['¦']
+"let g:indentLine_leadingSpaceChar = '·'
+"let g:indentLine_setColors = 0
+"let g:indentLine_bgcolor_term = 282
+"let g:indentLine_color_term = 283
+"let g:indentLine_leadingSpaceEnabled = 1
+
+" Modern c++ highlight
+let c_no_curly_error = 1
 " Colorscheme
 colorscheme molokai

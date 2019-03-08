@@ -72,6 +72,9 @@ xkb_symbols "programming" {
     key <SPCE>  { [ space, space, space, nobreakspace ] };
 
     key <CAPS> { [ Escape ] };
+    key <ESC> { [ Caps_Lock ] };
+    key <DOWN> { [ Up	]	};
+    key <UP> { [ Down	]	};
 
     key <LSGT>  { [ bar, brokenbar ] };
     include "kpdl(comma)"
@@ -86,16 +89,19 @@ xkb_symbols "colemakDH" {
     include "se(se)"
 
     name[Group1]="ColemakeDH (Programming)";
-    key <AB04>  { [ d, D ] };
+    key <AB02>  { [ x, X, 1 ] };
+    key <AB03>  { [ c, C, 2 ] };
+    key <AB04>  { [ d, D, 3 ] };
     key <AB05>  { [ v, V ] };
     key <AB06>  { [ m, M ] };
     key <AB07>  { [ h, H ] };
     key <AB08>  { [ comma, less ] };
     key <AB09>  { [ period, greater ] };
 
-    key <AC02>  { [ r, R ] };
-    key <AC03>  { [ s, S ] };
-    key <AC04>  { [ t, T ] };
+    key <AC01>  { [ a, A, 0 ] };
+    key <AC02>  { [ r, R, 4 ] };
+    key <AC03>  { [ s, S, 5 ] };
+    key <AC04>  { [ t, T, 6 ] };
     key <AC06>  { [ k, K ] };
     key <AC07>  { [ n, N ] };
     key <AC08>  { [ e, E ] };
@@ -103,8 +109,9 @@ xkb_symbols "colemakDH" {
     key <AC10>  { [ o, O, odiaeresis, Odiaeresis ] };
     key <AC11>  { [ slash, question, adiaeresis, Adiaeresis ] };
 
-    key <AD03>  { [ f, F ] };
-    key <AD04>  { [ p, P ] };
+    key <AD02>  { [ w, W, 7 ] };
+    key <AD03>  { [ f, F, 8 ] };
+    key <AD04>  { [ p, P, 9 ] };
     key <AD05>  { [ b, B ] };
     key <AD06>  { [ j, J ] };
     key <AD07>  { [ l, L ] };
@@ -127,6 +134,9 @@ xkb_symbols "colemakDH" {
     key <SPCE>  { [ space, space, space, nobreakspace ] };
 
     key <CAPS> { [ Escape ] };
+    key <ESC> { [ Caps_Lock ] };
+    key <DOWN> { [ Up	]	};
+    key <UP> { [ Down	]	};
 
     key <LSGT>  { [ bar, brokenbar ] };
     include "kpdl(comma)"
