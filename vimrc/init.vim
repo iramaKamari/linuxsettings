@@ -21,7 +21,6 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'bfrg/vim-cpp-modern'
-Plug 'morhetz/gruvbox'
 " <============================================>
 call plug#end()            " required
 "filetype plugin indent on    " required
@@ -45,6 +44,7 @@ set sw=2
 set expandtab
 set number relativenumber
 set guicursor=
+"set termguicolors
 " Automatically re-read a file changed outside of VIM
 set autoread
 augroup numbertoggle
@@ -393,5 +393,6 @@ let g:mundo_close_on_revert = 1
 
 " Modern c++ highlight
 let c_no_curly_error = 1
+
 " Colorscheme
-colorscheme gruvbox
+silent! colorscheme gruvbox
