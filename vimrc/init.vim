@@ -21,7 +21,7 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'bfrg/vim-cpp-modern'
-"Plug 'Yggdroot/indentLine'
+Plug 'morhetz/gruvbox'
 " <============================================>
 call plug#end()            " required
 "filetype plugin indent on    " required
@@ -120,8 +120,7 @@ nnoremap <C-Right> <C-w><C-<>
 nnoremap <leader>w :split<CR>
 " Vertical split
 nnoremap <leader>v :vs<CR>
-set splitbelow
-set splitright
+set splitbelow splitright
 " Terminal mode mappings<C-\><C-n>:file<space>
 nnoremap <leader>t :terminal<CR>
 autocmd BufEnter,WinEnter,TermOpen,FocusGained term://* startinsert
@@ -251,6 +250,7 @@ endfun
 "nnoremap <leader>i :call Bsts()<CR>
 nnoremap <leader>i /^\s\+/<CR>
 " Highlight trailing whitespace
+" autocmd BufWritePre * %s/\s\+$//e
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufEnter * match ExtraWhitespace /\s\+$/
@@ -391,15 +391,7 @@ let g:mundo_preview_bottom = 1
 let g:mundo_preview_height = 50
 let g:mundo_close_on_revert = 1
 
-" IndentLine settings
-"let g:indentLine_char_list = ['¦']
-"let g:indentLine_leadingSpaceChar = '·'
-"let g:indentLine_setColors = 0
-"let g:indentLine_bgcolor_term = 282
-"let g:indentLine_color_term = 283
-"let g:indentLine_leadingSpaceEnabled = 1
-
 " Modern c++ highlight
 let c_no_curly_error = 1
 " Colorscheme
-colorscheme molokai
+colorscheme gruvbox
