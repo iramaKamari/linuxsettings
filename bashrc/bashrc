@@ -75,6 +75,7 @@ alias h="history"
 alias j="jobs -l"
 alias ll="ls -l"
 alias ls='ls --color=auto'
+alias n='nvim'
 if [ "x$TERM" = "xxterm" ]
 then
     export TERM="xterm-256color"
