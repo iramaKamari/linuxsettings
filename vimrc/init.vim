@@ -395,4 +395,4 @@ let g:mundo_close_on_revert = 1
 let c_no_curly_error = 1
 
 " Colorscheme
-silent! colorscheme gruvbox
+silent! colorscheme molokai
