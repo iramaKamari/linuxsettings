@@ -359,7 +359,7 @@ set statusline+=\                                                         " Esca
 set statusline+=%0*\%{toupper(g:currentmode[mode()])}»                    " Current mode
 set statusline+=%#identifier#\ [%n]                                       " buffernr
 set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
-set statusline+=%#identifier#\ %f\%#statement#\%{ReadOnly()}\%m\%w\       " File+path
+set statusline+=%#identifier#\ %f\%#statement#\%{ReadOnly()}\%m\%w\       " Relative path + file
 set statusline+=%#identifier#\%3p%%\ \ %l:\%c\                           " Rownumber/total (%)
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}                              " Syntastic errors
@@ -381,7 +381,7 @@ function Py2()
 endfunction
 
 function Py3()
-  let g:syntastic_python_python_exec = '/usr/local/bin/python3.6'
+  let g:syntastic_python_python_exec = '/usr/local/bin/python3.7'
 endfunction
 
 call Py3()   " default to Py3
