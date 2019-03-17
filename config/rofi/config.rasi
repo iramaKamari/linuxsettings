@@ -1,3 +1,5 @@
 configuration {
 theme: "gruvbox-dark.rasi";
+font: "Monospace bold 12";
+terminal: "lxterminal";
 }

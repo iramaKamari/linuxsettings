@@ -1,4 +1,3 @@
-sleep 5s
 nitrogen --restore &
 compton --config ~/.config/compton.conf -b &
 xkbcomp -I$HOME/.xkb $HOME/.colemakdh.xkb $DISPLAY &

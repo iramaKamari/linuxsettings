@@ -145,7 +145,7 @@
      Many programs reserve space automatically, but you can use this in other
      cases. -->
   <margins>
-    <top>2</top>
+    <top>0</top>
     <bottom>0</bottom>
     <left>0</left>
     <right>0</right>
@@ -170,11 +170,6 @@
   </dock>
   <keyboard>
     <chainQuitKey>C-g</chainQuitKey>
-    <keybind key="C-A-Left">
-      <action name="DesktopLeft">
-        <wrap>yes</wrap>
-      </action>
-    </keybind>
     <!--
     <keybind key="XF86AudioNext">
       <action name="Execute">
@@ -208,27 +203,33 @@
       </action>
     </keybind>
     -->
-    <keybind key="C-A-Right">
+    <!--Workspace keybinds-->
+    <keybind key="C-S-Up">
       <action name="DesktopRight">
         <wrap>yes</wrap>
       </action>
     </keybind>
-    <keybind key="C-A-Up">
+    <keybind key="C-S-Up">
       <action name="DesktopUp">
         <wrap>yes</wrap>
       </action>
     </keybind>
-    <keybind key="C-A-Down">
+    <keybind key="C-S-Down">
       <action name="DesktopDown">
         <wrap>yes</wrap>
       </action>
     </keybind>
-    <keybind key="S-A-Left">
+    <keybind key="C-S-Down">
+      <action name="DesktopLeft">
+        <wrap>yes</wrap>
+      </action>
+    </keybind>
+    <keybind key="S-A-Down">
       <action name="SendToDesktopLeft">
         <wrap>yes</wrap>
       </action>
     </keybind>
-    <keybind key="S-A-Right">
+    <keybind key="S-A-Up">
       <action name="SendToDesktopRight">
         <wrap>yes</wrap>
       </action>
@@ -267,12 +268,67 @@
     <keybind key="A-F4">
       <action name="Close"/>
     </keybind>
-    <keybind key="A-F2">
+    <!--Application keybinds-->
+    <keybind key="C-S-t">
       <action name="Execute">
-        <command>gmrun</command>
+        <command>rofi -modi drun -show drun</command>
         <startupnotify>
           <enabled>yes</enabled>
-          <name>gmrun</name>
+          <name>rofi</name>
+        </startupnotify>
+      </action>
+    </keybind>
+    <keybind key="C-S-s">
+      <action name="Execute">
+        <command>rofi -modi ssh -show ssh</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>rofi</name>
+        </startupnotify>
+      </action>
+    </keybind>
+    <keybind key="C-S-Tab">
+      <action name="Execute">
+        <command>rofi -show window</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>rofi</name>
+        </startupnotify>
+      </action>
+    </keybind>
+    <!--keybind key="C-S-f"> TODO: Ranger or vifm?
+      <action name="Execute">
+        <command>pcmanfm</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>File Manager</name>
+        </startupnotify>
+      </action>
+    </keybind-->
+    <keybind key="A-w">
+      <action name="Execute">
+        <command>firefox</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>Web Browser</name>
+        </startupnotify>
+      </action>
+    </keybind>
+    <keybind key="A-Return">
+      <action name="Execute">
+        <command>lxterminal</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>lxterminal</name>
+        </startupnotify>
+      </action>
+    </keybind>
+    <keybind key="C-S-q">
+      <action name="Execute">
+        <command>xkill</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>Kill an application</name>
         </startupnotify>
       </action>
     </keybind>
@@ -318,53 +374,8 @@
         <desktop>yes</desktop>
       </action>
     </keybind>
-    <keybind key="W-f">
-      <action name="Execute">
-        <command>pcmanfm</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>File Manager</name>
-        </startupnotify>
-      </action>
-    </keybind>
-    <keybind key="W-w">
-      <action name="Execute">
-        <command>firefox</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>Web Browser</name>
-        </startupnotify>
-      </action>
-    </keybind>
-    <keybind key="W-Return">
-      <action name="Execute">
-        <command>lxterminal</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>lxterminal</name>
-        </startupnotify>
-      </action>
-    </keybind>
-    <keybind key="W-q">
-      <action name="Execute">
-        <command>xkill</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>Kill an application</name>
-        </startupnotify>
-      </action>
-    </keybind>
-    <keybind key="W-v">
+    <keybind key="C-S-n">
       <action name="ToggleMaximizeVert"/>
-    </keybind>
-    <keybind key="W-e">
-      <action name="Execute">
-        <command>vim</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>editor</name>
-        </startupnotify>
-      </action>
     </keybind>
     <keybind key="W-m">
       <action name="Execute">

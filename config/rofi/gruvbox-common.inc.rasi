@@ -103,7 +103,8 @@ inputbar {
     spacing:    0;
     text-color: @normal-foreground;
     padding:    2px;
-    children:   [ prompt, textbox-prompt-sep, entry, case-indicator ];
+    children:   [ entry ];
+    /*children:   [ prompt, textbox-prompt-sep, entry, case-indicator ];*/
 }
 
 case-indicator,
