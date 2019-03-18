@@ -251,17 +251,10 @@
     </keybind>
     <keybind key="A-Tab">
       <action name="NextWindow">
-        <allDesktops>yes</allDesktops>
       </action>
     </keybind>
     <keybind key="A-S-Tab">
       <action name="PreviousWindow"/>
-    </keybind>
-    <keybind key="C-A-Tab">
-      <action name="NextWindow">
-        <panels>yes</panels>
-        <desktop>yes</desktop>
-      </action>
     </keybind>
     <keybind key="A-1">
       <action name="Desktop"/>
@@ -284,7 +277,7 @@
     <keybind key="C-S-d">
       <action name="ToggleShowDesktop"/>
     </keybind>
-    <keybind key="A-F4">
+    <keybind key="C-S-q">
       <action name="Close"/>
     </keybind>
     <!--End workspace keybinds-->
@@ -301,7 +294,7 @@
     </keybind>
     <keybind key="C-S-t">
       <action name="Execute">
-        <command>rofi -modi drun -show drun</command>
+        <command>rofi -modi run,drun -show drun</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>rofi</name>
@@ -310,16 +303,7 @@
     </keybind>
     <keybind key="C-S-s">
       <action name="Execute">
-        <command>rofi -modi ssh -show ssh</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>rofi</name>
-        </startupnotify>
-      </action>
-    </keybind>
-    <keybind key="C-S-Tab">
-      <action name="Execute">
-        <command>rofi -show window</command>
+        <command>rofi -modi window,ssh -show window</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>rofi</name>
@@ -353,7 +337,7 @@
         </startupnotify>
       </action>
     </keybind>
-    <keybind key="C-S-q">
+    <keybind key="C-A-q">
       <action name="Execute">
         <command>xkill</command>
         <startupnotify>
