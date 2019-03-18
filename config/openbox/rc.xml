@@ -244,6 +244,25 @@
         <wrap>yes</wrap>
       </action>
     </keybind>
+    <keybind key="A-Escape">
+      <action name="Lower"/>
+      <action name="FocusToBottom"/>
+      <action name="Unfocus"/>
+    </keybind>
+    <keybind key="A-Tab">
+      <action name="NextWindow">
+        <allDesktops>yes</allDesktops>
+      </action>
+    </keybind>
+    <keybind key="A-S-Tab">
+      <action name="PreviousWindow"/>
+    </keybind>
+    <keybind key="C-A-Tab">
+      <action name="NextWindow">
+        <panels>yes</panels>
+        <desktop>yes</desktop>
+      </action>
+    </keybind>
     <keybind key="A-1">
       <action name="Desktop"/>
     </keybind>
@@ -268,7 +287,18 @@
     <keybind key="A-F4">
       <action name="Close"/>
     </keybind>
+    <!--End workspace keybinds-->
     <!--Application keybinds-->
+    <keybind key="A-space">
+      <action name="ShowMenu">
+        <menu>client-menu</menu>
+      </action>
+    </keybind>
+    <keybind key="C-space">
+      <action name="ShowMenu">
+        <menu>root-menu</menu>
+      </action>
+    </keybind>
     <keybind key="C-S-t">
       <action name="Execute">
         <command>rofi -modi drun -show drun</command>
@@ -332,60 +362,6 @@
         </startupnotify>
       </action>
     </keybind>
-    <!--
-  <keybind key="A-F3">
-    <action name="Execute">
-      <command>~/.config/dmenu/dmenu-bind.sh</command>
-      <startupnotify>
-        <enabled>yes</enabled>
-        <name>dmenu</name>
-      </startupnotify>
-    </action>
-  </keybind>
-  <keybind key="W-C-Space">
-    <action name="Execute">
-      <command>dmenu_run -i</command>
-      <startupnotify>
-        <enabled>yes</enabled>
-        <name>dmenu</name>
-      </startupnotify>
-    </action>
-  </keybind>
-  -->
-    <keybind key="A-Escape">
-      <action name="Lower"/>
-      <action name="FocusToBottom"/>
-      <action name="Unfocus"/>
-    </keybind>
-    <keybind key="A-space">
-      <action name="ShowMenu">
-        <menu>client-menu</menu>
-      </action>
-    </keybind>
-    <keybind key="A-Tab">
-      <action name="NextWindow"/>
-    </keybind>
-    <keybind key="A-S-Tab">
-      <action name="PreviousWindow"/>
-    </keybind>
-    <keybind key="C-A-Tab">
-      <action name="NextWindow">
-        <panels>yes</panels>
-        <desktop>yes</desktop>
-      </action>
-    </keybind>
-    <keybind key="C-S-n">
-      <action name="ToggleMaximizeVert"/>
-    </keybind>
-    <keybind key="W-m">
-      <action name="Execute">
-        <command>xnoise</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>Media Player</name>
-        </startupnotify>
-      </action>
-    </keybind>
     <keybind key="W-l">
       <action name="Execute">
         <command>dm-tool lock</command>
@@ -404,44 +380,81 @@
         </startupnotify>
       </action>
     </keybind>
-    <keybind key="W-space">
-      <action name="ShowMenu">
-        <menu>root-menu</menu>
+    <keybind key="W-m">
+      <action name="Execute">
+        <command>xnoise</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>Media Player</name>
+        </startupnotify>
       </action>
     </keybind>
-    <keybind key="W-a">
+    <!--End application keybinds-->
+    <!--Window resizing and positioning-->
+    <keybind key="C-S-a">
       <action name="ToggleMaximizeFull"/>
     </keybind>
-    <keybind key="W-Right">
-      <action name="MoveToEdgeEast"/>
+    <keybind key="C-S-n">
+      <action name="ToggleMaximizeVert"/>
     </keybind>
-    <keybind key="W-Up">
-      <action name="MoveToEdgeNorth"/>
-    </keybind>
-    <keybind key="W-Left">
-      <action name="MoveToEdgeWest"/>
-    </keybind>
-    <keybind key="W-Down">
-      <action name="MoveToEdgeSouth"/>
-    </keybind>
-    <keybind key="W-h">
+    <keybind key="C-S-h">
       <action name="ToggleMaximizeHorz"/>
     </keybind>
-    <keybind key="A-W-Up">
-      <action name="GrowToEdgeNorth"/>
+    <keybind key="C-Right">
+      <action name="MoveToEdgeEast"/>
     </keybind>
-    <keybind key="A-W-Right">
-      <action name="GrowToEdgeEast"/>
+    <keybind key="C-Up">
+      <action name="MoveToEdgeNorth"/>
     </keybind>
-    <keybind key="A-W-Down">
-      <action name="GrowToEdgeSouth"/>
+    <keybind key="C-Left">
+      <action name="MoveToEdgeWest"/>
     </keybind>
-    <keybind key="A-W-Left">
-      <action name="GrowToEdgeWest"/>
+    <keybind key="C-Down">
+      <action name="MoveToEdgeSouth"/>
     </keybind>
-    <keybind key="W-c">
+    <keybind key="C-A-Up">
+      <action name="Resize"/>
+    </keybind>
+    <keybind key="C-A-Right">
+      <action name="UnmaximizeFull"/>
+      <action name="MaximizeVert"/>
+      <action name="Raise"/>
+      <action name="MoveResizeTo">
+        <width>50%</width>
+        <x>50%</x>
+        <y>0</y>
+      </action>
+    </keybind>
+    <keybind key="C-A-Left">
+      <action name="UnmaximizeFull"/>
+      <action name="MaximizeVert"/>
+      <action name="Raise"/>
+      <action name="MoveResizeTo">
+        <width>50%</width>
+        <x>0</x>
+        <y>0</y>
+      </action>
+    </keybind>
+    <keybind key="C-A-Down">
+      <action name="GrowToFill"/>
+    </keybind>
+    <keybind key="A-c">
       <action name="MoveToCenter"/>
     </keybind>
+    <!-- Move to monitor -->
+    <keybind key="C-2">           <!-- move the window to the second monitor -->
+      <action name="Raise"/>
+      <action name="MoveResizeTo">
+        <monitor>2</monitor>
+      </action>
+    </keybind>
+    <keybind key="C-1">            <!-- move the window to the first monitor -->
+      <action name="Raise"/>
+      <action name="MoveResizeTo">
+        <monitor>1</monitor>
+      </action>
+    </keybind>
+    <!--End window resizing and positioning-->
     <keybind key="XF86AudioRaiseVolume">
       <action name="Execute">
         <command>amixer set Master 5%+ unmute</command>
@@ -844,6 +857,7 @@
       <position>
         <monitor>1</monitor>
       </position>
+      <decor>no</decor>
       <focus>yes</focus>
       <maximized>no</maximized>
     </application>
