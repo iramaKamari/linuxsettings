@@ -112,15 +112,29 @@ nnoremap <A-k> <C-w>K
 nnoremap <A-l> <C-w>L
 nnoremap <A-h> <C-w>H
 " Change split dimensions
-nnoremap <C-Up> <C-w><C-+>
-nnoremap <C-Down> <C-w><C-->
-nnoremap <C-Left> <C-w><C->>
-nnoremap <C-Right> <C-w><C-<>
+nnoremap <A-Up> <C-w><C-+>
+nnoremap <A-Down> <C-w><C-->
+nnoremap <A-Left> <C-w><C->>
+nnoremap <A-Right> <C-w><C-<>
 " Split
 nnoremap <leader>w :split<CR>
 " Vertical split
 nnoremap <leader>v :vs<CR>
 set splitbelow splitright
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <leader>z :ZoomToggle<CR>
 " Terminal mode mappings<C-\><C-n>:file<space>
 nnoremap <leader>t :terminal<CR>
 autocmd BufEnter,WinEnter,TermOpen,FocusGained term://* startinsert
