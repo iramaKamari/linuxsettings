@@ -6,30 +6,30 @@
           <execute>/bin/cmake-gui</execute>
       </action> </item>
       <item label="CMake curses GUI (ccmake)"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/ccmake</execute>
+          <execute>/bin/lxterminal -e /bin/ccmake</execute>
       </action> </item>
       <item label="IDLE (Python IDE)"> <action name="Execute">
           <execute>/bin/idle</execute>
       </action> </item>
       <item label="Python"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/python</execute>
+          <execute>/bin/lxterminal -e /bin/python</execute>
       </action> </item>
       <item label="Python (v2.7)"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/python2.7</execute>
+          <execute>/bin/lxterminal -e /bin/python2.7</execute>
       </action> </item>
     </menu>
     <menu id="2" label="Editors">
       <item label="Nano"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/nano</execute>
+          <execute>/bin/lxterminal -e /bin/nano</execute>
       </action> </item>
       <item label="Neovim"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/nvim</execute>
+          <execute>/bin/lxterminal -e /bin/nvim</execute>
       </action> </item>
       <item label="Vi"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/vi</execute>
+          <execute>/bin/lxterminal -e /bin/vi</execute>
       </action> </item>
       <item label="Vim"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/vim</execute>
+          <execute>/bin/lxterminal -e /bin/vim</execute>
       </action> </item>
     </menu>
     <menu id="18" label="Games">
@@ -46,7 +46,7 @@
     </menu>
     <menu id="7" label="Multimedia">
       <item label="ALSA mixer"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/alsamixer</execute>
+          <execute>/bin/lxterminal -e /bin/alsamixer</execute>
       </action> </item>
       <item label="PulseAudio Volume Control"> <action name="Execute">
           <execute>/bin/pavucontrol</execute>
@@ -72,19 +72,19 @@
           <execute>/bin/firefox</execute>
       </action> </item>
       <item label="FTP"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/ftp</execute>
+          <execute>/bin/lxterminal -e /bin/ftp</execute>
       </action> </item>
       <item label="Mail"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/mail</execute>
+          <execute>/bin/lxterminal -e /bin/mail</execute>
       </action> </item>
       <item label="Talk"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/talk</execute>
+          <execute>/bin/lxterminal -e /bin/talk</execute>
       </action> </item>
       <item label="Telnet"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/telnet</execute>
+          <execute>/bin/lxterminal -e /bin/telnet</execute>
       </action> </item>
       <item label="TkVNC"> <action name="Execute">
-          <execute>/bin/xterm -e tkvnc</execute>
+          <execute>/bin/lxterminal -e tkvnc</execute>
       </action> </item>
     </menu>
     <menu id="39" label="Other">
@@ -94,7 +94,7 @@
     </menu>
     <menu id="19" label="Shells">
       <item label="GIT"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/git</execute>
+          <execute>/bin/lxterminal -e /bin/git</execute>
       </action> </item>
       <item label="LXTerminal"> <action name="Execute">
           <execute>/bin/lxterminal</execute>
@@ -127,19 +127,19 @@
           <execute>/usr/bin/avahi-discover</execute>
       </action> </item>
       <item label="Htop"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/htop</execute>
+          <execute>/bin/lxterminal -e /bin/htop</execute>
       </action> </item>
       <item label="pstree"> <action name="Execute">
-          <execute>/bin/xterm -e /usr/bin/pstree.x11</execute>
+          <execute>/bin/lxterminal -e /usr/bin/pstree.x11</execute>
       </action> </item>
       <item label="pstree"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/pstree</execute>
+          <execute>/bin/lxterminal -e /bin/pstree</execute>
       </action> </item>
       <item label="Pstree"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/pstree.x11</execute>
+          <execute>/bin/lxterminal -e /bin/pstree.x11</execute>
       </action> </item>
       <item label="Top"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/top</execute>
+          <execute>/bin/lxterminal -e /bin/top</execute>
       </action> </item>
     </menu>
     <menu id="38" label="Utilities">
@@ -147,10 +147,10 @@
           <execute>/bin/compton</execute>
       </action> </item>
       <item label="Info"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/info</execute>
+          <execute>/bin/lxterminal -e /bin/info</execute>
       </action> </item>
       <item label="Xev"> <action name="Execute">
-          <execute>/bin/xterm -e /bin/xev</execute>
+          <execute>/bin/lxterminal -e /bin/xev</execute>
       </action> </item>
       <item label="Xkill"> <action name="Execute">
           <execute>/bin/xkill</execute>
