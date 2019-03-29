@@ -6,6 +6,14 @@
 [[ $- != *i* ]] && return
 set -o vi
 stty -ixon # Disable ctrl-s and ctrl-q.
+complete -cf sudo # Tab complete for sudo
+
+# shopt options
+shopt -s autocd # This automatically add the cd command.
+shopt -s histappend # Append to history rather than overwrite
+shopt -s checkwinsize # Check window after each command
+shopt -s dotglob # files beginning with . to be returned in the results of path-name expansion.
+
 
 # get current branch in git repo
 function parse_git_branch() {
@@ -121,7 +129,7 @@ function gg {
 
 alias h="history"
 alias j="jobs -l"
-alias ll="ls -l"
+alias ll="ls -lh"
 alias ls='ls --color=auto'
 alias n='nvim'
 if [ "x$TERM" = "xxterm" ]

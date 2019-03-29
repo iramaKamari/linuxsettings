@@ -251,12 +251,14 @@
     </keybind>
     <keybind key="A-Tab">
       <action name="NextWindow">
+        <allDesktops>yes</allDesktops>
       </action>
     </keybind>
     <keybind key="A-S-Tab">
       <action name="PreviousWindow"/>
+        <allDesktops>yes</allDesktops>
     </keybind>
-    <keybind key="A-1">
+    <!--<keybind key="A-1">
       <action name="Desktop"/>
     </keybind>
     <keybind key="A-2">
@@ -273,7 +275,7 @@
       <action name="Desktop">
         <desktop>4</desktop>
       </action>
-    </keybind>
+    </keybind>-->
     <keybind key="C-S-d">
       <action name="ToggleShowDesktop"/>
     </keybind>
@@ -292,7 +294,7 @@
         <menu>root-menu</menu>
       </action>
     </keybind>
-    <keybind key="C-S-t">
+    <keybind key="C-S-r">
       <action name="Execute">
         <command>rofi -modi run,drun -show drun</command>
         <startupnotify>
