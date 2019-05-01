@@ -180,6 +180,8 @@ nnoremap <leader>e :e<space>
 nnoremap <leader>q :q<CR>
 " Search for marked text in file
 vnoremap // y/<C-R>"<CR>
+" Visual mode copy to system buffer
+map <C-c> "*y<CR>
 " allows incsearch highlighting for range commands
 cnoremap $t <CR>:t''<CR>
 cnoremap $m <CR>:m''<CR>
@@ -370,10 +372,10 @@ endfunction
 
 set statusline=
 set statusline+=\                                                         " Escape one space for alignment
-set statusline+=%0*\%{toupper(g:currentmode[mode()])}»                    " Current mode
+set statusline+=%0*\%{toupper(g:currentmode[mode()])}                     " Current mode
 set statusline+=%#identifier#\ [%n]                                       " buffernr
 set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
-set statusline+=%#identifier#\ %f\%#statement#\%{ReadOnly()}\%m\%w\       " Relative path + file
+set statusline+=%#identifier#\ %f\%#statement#\ %{ReadOnly()}\%m\%w\      " Relative path + file
 set statusline+=%#identifier#\%3p%%\ \ %l:\%c\                           " Rownumber/total (%)
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}                              " Syntastic errors
