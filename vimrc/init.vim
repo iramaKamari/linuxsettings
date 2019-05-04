@@ -18,23 +18,15 @@ Plug 'vim-syntastic/syntastic'
 Plug 'iramaKamari/vimcolors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'bfrg/vim-cpp-modern'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
+Plug 'morhetz/gruvbox'
 " <============================================>
 call plug#end()            " required
-"filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put non-Plugin stuff after this
 
 syntax enable
 set tw=0
@@ -44,7 +36,8 @@ set sw=2
 set expandtab
 set number relativenumber
 set guicursor=
-"set termguicolors
+" Comment out if using molokai
+set termguicolors
 " Automatically re-read a file changed outside of VIM
 set autoread
 augroup numbertoggle
@@ -344,9 +337,9 @@ function! FileSize()
   if (exists('mbytes'))
     return mbytes . 'MB '
   elseif (exists('kbytes'))
-    return kbytes . 'KB '
+    return kbytes . 'KB'
   else
-    return bytes . 'B '
+    return bytes . 'B'
   endif
 endfunction
 
@@ -370,20 +363,37 @@ function! StatuslineGit()
   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
 
+"Molokai statusline
+"set statusline=
+"set statusline+=\                                                         " Escape one space for alignment
+"set statusline+=%0*\%{toupper(g:currentmode[mode()])}                     " Current mode
+"set statusline+=%#identifier#\ [%n]                                       " buffernr
+"set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
+"set statusline+=%#identifier#\ %f\%#Statement#\%{ReadOnly()}\%m\%w\       " Relative path + file
+"set statusline+=%#preproc#\Lines\ %L\ Col\ %c                             " Total lines and column number
+"set statusline+=%#identifier#\ %y                                         " FileType
+"set statusline+=\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}]                     " Encoding & Fileformat
+"set statusline+=\ [%(%{FileSize()}%)]                                     " File size
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}                              " Syntastic errors
+"set statusline+=%0*
+"set statusline+=\ %=                                                      " Space
+"set statusline+=%<                                                        " Truncate line
+
 set statusline=
 set statusline+=\                                                         " Escape one space for alignment
 set statusline+=%0*\%{toupper(g:currentmode[mode()])}                     " Current mode
-set statusline+=%#identifier#\ [%n]                                       " buffernr
+set statusline+=%#Statement#\ [%n]                                        " buffernr
 set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
-set statusline+=%#identifier#\ %f\%#statement#\ %{ReadOnly()}\%m\%w\      " Relative path + file
-set statusline+=%#identifier#\%3p%%\ \ %l:\%c\                           " Rownumber/total (%)
+set statusline+=%#Statement#\ %f\%#preproc#\%{ReadOnly()}\%m\%w\          " Relative path + file
+set statusline+=%#preproc#\Lines\ %L\ Col\ %c                             " Total lines and column number
+set statusline+=%#Statement#\ %y                                          " FileType
+set statusline+=\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}]                     " Encoding & Fileformat
+set statusline+=\ [%(%{FileSize()}%)]                                     " File size
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}                              " Syntastic errors
 set statusline+=%0*
 set statusline+=\ %=                                                      " Space
-set statusline+=%0*\ %y\                                                  " FileType
-set statusline+=\ %{(&fenc!=''?&fenc:&enc)}\[%{&ff}]\ " Encoding & Fileformat
-set statusline+=\ %-3(%{FileSize()}%)                                     " File size
 set statusline+=%<                                                        " Truncate line
 
 " Syntastic settings
@@ -410,5 +420,19 @@ let g:mundo_close_on_revert = 1
 " Modern c++ highlight
 let c_no_curly_error = 1
 
+" Gutentags settings
+" enable gtags module
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+
+" config project root markers.
+let g:gutentags_project_root = ['.root', '.git']
+
+" generate datebases in my cache directory, prevent gtags files polluting my project
+"let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+" change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
+
 " Colorscheme
-silent! colorscheme molokai
+let g:gruvbox_contrast_dark = 'hard'
+silent! colorscheme gruvbox
