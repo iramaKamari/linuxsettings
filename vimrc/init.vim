@@ -73,21 +73,6 @@ set foldnestmax=10
 set foldmethod=indent
 " Find ctags file in project/system
 set tags=./tags,tags;
-" Autoload gtags and set it to be used with cscope
-"set cscopetag
-"set csprg=gtags-cscope
-"function! LoadScope()
-"  let db = findfile("GTAGS", ".;")
-"  if (!empty(db) && filereadable(db))
-"    let path = matchstr(db, ".*/")
-"    set nocscopeverbose " supress 'duplicate connection' error
-"    exe 'silent !' "cs add" db path
-"    set cscopeverbose
-"  elseif $GTAGS_DB != ""
-"    cs add $GTAGS_DB
-"  endif
-"endfunction
-"au BufEnter /* call LoadScope()
 let g:ycm_key_list_previous_completion = ['<Up>']
 inoremap <expr><S-Tab> pumvisible() ? "<C-p>" : "<C-d>"
 map <space> <leader>
@@ -435,4 +420,5 @@ let g:gutentags_plus_switch = 1
 
 " Colorscheme
 let g:gruvbox_contrast_dark = 'hard'
+set t_Co=256
 silent! colorscheme gruvbox
