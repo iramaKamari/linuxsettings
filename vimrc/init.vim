@@ -22,8 +22,6 @@ Plug 'tpope/vim-repeat'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'bfrg/vim-cpp-modern'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
 Plug 'morhetz/gruvbox'
 " <============================================>
 call plug#end()            " required
@@ -404,19 +402,6 @@ let g:mundo_close_on_revert = 1
 
 " Modern c++ highlight
 let c_no_curly_error = 1
-
-" Gutentags settings
-" enable gtags module
-let g:gutentags_modules = ['ctags', 'gtags_cscope']
-
-" config project root markers.
-let g:gutentags_project_root = ['.root', '.git']
-
-" generate datebases in my cache directory, prevent gtags files polluting my project
-"let g:gutentags_cache_dir = expand('~/.cache/tags')
-
-" change focus to quickfix window after search (optional).
-let g:gutentags_plus_switch = 1
 
 " Colorscheme
 let g:gruvbox_contrast_dark = 'hard'
