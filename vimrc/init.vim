@@ -14,7 +14,8 @@ call plug#begin('~/.config/nvim/plugged')
 " Specify the plugins you want to install here.
 Plug 'Chiel92/vim-autoformat'
 Plug 'simnalamburt/vim-mundo'
-Plug 'vim-syntastic/syntastic'
+"Plug 'vim-syntastic/syntastic'
+Plug 'w0rp/ale'
 Plug 'iramaKamari/vimcolors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
@@ -24,7 +25,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'bfrg/vim-cpp-modern'
-Plug 'morhetz/gruvbox'
+Plug 'sheerun/vim-polyglot'
 " <============================================>
 call plug#end()            " required
 
@@ -36,8 +37,6 @@ set sw=2
 set expandtab
 set number relativenumber
 set guicursor=
-" Comment out if using molokai
-"set termguicolors
 " Automatically re-read a file changed outside of VIM
 set autoread
 augroup numbertoggle
@@ -45,11 +44,8 @@ augroup numbertoggle
   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
-au WinEnter * setlocal cursorline
-au WinLeave * setlocal nocursorline
 set showcmd
 set noshowmode
-set cursorline
 set path+=**
 " Enable autocomplete suggestions in vim
 set wildmenu
@@ -237,11 +233,6 @@ endif
 " Go back to last used buffer
 nnoremap <leader>b :e#<CR>
 " Highlight leading whitespace
-fun! Bsts()
-  highlight LeadingWhitespace ctermbg=282 guibg=red
-  match LeadingWhitespace /^\s\+/
-endfun
-"nnoremap <leader>i :call Bsts()<CR>
 nnoremap <leader>i /^\s\+/<CR>
 " Highlight trailing whitespace
 " autocmd BufWritePre * %s/\s\+$//e
@@ -359,26 +350,32 @@ set statusline+=\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}]                     " Enco
 set statusline+=\ [%(%{FileSize()}%)]                                     " File size
 set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}                              " Syntastic errors
+"set statusline+=%{SyntasticStatuslineFlag()}                              " Syntastic errors
 set statusline+=%#preproc#                                                " 'Hide' the statusline
 set statusline+=\ %=                                                      " Space
 set statusline+=%<                                                        " Truncate line
 
 " Syntastic settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_cpp_checkers = ['cppcheck']
-function Py2()
-  let g:syntastic_python_python_exec = '/usr/local/bin/python2.7'
-endfunction
-
-function Py3()
-  let g:syntastic_python_python_exec = '/usr/local/bin/python3.7'
-endfunction
-
-call Py3()   " default to Py3
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_cpp_checkers = ['cppcheck']
+"function Py2()
+"  let g:syntastic_python_python_exec = '/usr/local/bin/python2.7'
+"endfunction
+"
+"function Py3()
+"  let g:syntastic_python_python_exec = '/usr/local/bin/python3.7'
+"endfunction
+"
+"call Py3()   " default to Py3
+" Ale settings
+"let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
 " Mundo settings
 let g:mundo_preview_bottom = 1
