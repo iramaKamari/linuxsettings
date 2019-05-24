@@ -21,6 +21,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'morhetz/gruvbox'
 " <============================================>
@@ -35,7 +37,7 @@ set expandtab
 set number relativenumber
 set guicursor=
 " Comment out if using molokai
-set termguicolors
+"set termguicolors
 " Automatically re-read a file changed outside of VIM
 set autoread
 augroup numbertoggle
@@ -194,7 +196,7 @@ endif
 if (rgOrAgFound == 0)
   " Open quickfix window after grep
   autocmd QuickFixCmdPost *grep* cwindow|redraw!
-  nnoremap <Leader>g :grep<Space>
+  nnoremap <Leader>gg :grep<Space>
   " Grep word under cursor
   nnoremap <leader>G :grep <C-R><C-W><CR>
 endif
@@ -328,7 +330,7 @@ endfunction
 
 function! ReadOnly()
   if &readonly || !&modifiable
-    return ''
+    return ' '
   else
     return ''
 endfunction
@@ -346,36 +348,19 @@ function! StatuslineGit()
   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
 
-"Molokai statusline
-"set statusline=
-"set statusline+=\                                                         " Escape one space for alignment
-"set statusline+=%0*\%{toupper(g:currentmode[mode()])}                     " Current mode
-"set statusline+=%#identifier#\ [%n]                                       " buffernr
-"set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
-"set statusline+=%#identifier#\ %f\%#Statement#\%{ReadOnly()}\%m\%w\       " Relative path + file
-"set statusline+=%#preproc#\Lines\ %L\ Col\ %c                             " Total lines and column number
-"set statusline+=%#identifier#\ %y                                         " FileType
-"set statusline+=\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}]                     " Encoding & Fileformat
-"set statusline+=\ [%(%{FileSize()}%)]                                     " File size
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}                              " Syntastic errors
-"set statusline+=%0*
-"set statusline+=\ %=                                                      " Space
-"set statusline+=%<                                                        " Truncate line
-
 set statusline=
 set statusline+=\                                                         " Escape one space for alignment
 set statusline+=%0*\%{toupper(g:currentmode[mode()])}                     " Current mode
-set statusline+=%#Statement#\ [%n]                                        " buffernr
-set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
-set statusline+=%#Statement#\ %f\%#preproc#\%{ReadOnly()}\%m\%w\          " Relative path + file
+set statusline+=%#identifier#\ [%n]                                       " buffernr
+set statusline+=%#identifier#\ %f\%#Statement#\%{ReadOnly()}\%m\%w\       " Relative path + file
 set statusline+=%#preproc#\Lines\ %L\ Col\ %c                             " Total lines and column number
-set statusline+=%#Statement#\ %y                                          " FileType
+set statusline+=%#identifier#\ %y                                         " FileType
 set statusline+=\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}]                     " Encoding & Fileformat
 set statusline+=\ [%(%{FileSize()}%)]                                     " File size
+set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}                              " Syntastic errors
-set statusline+=%0*
+set statusline+=%#preproc#                                                " 'Hide' the statusline
 set statusline+=\ %=                                                      " Space
 set statusline+=%<                                                        " Truncate line
 
@@ -403,7 +388,12 @@ let g:mundo_close_on_revert = 1
 " Modern c++ highlight
 let c_no_curly_error = 1
 
+" Goyo/Limelight
+let g:goyo_height = 100
+nnoremap <Leader>go :Goyo<CR>
+let g:limelight_conceal_ctermfg = 240
+nnoremap <Leader>L :Limelight!!<CR>
+vnoremap <Leader>L :Limelight!!<CR>
+
 " Colorscheme
-let g:gruvbox_contrast_dark = 'hard'
-set t_Co=256
-silent! colorscheme gruvbox
+silent! colorscheme gruvbox_modified
