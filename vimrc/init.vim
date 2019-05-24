@@ -390,6 +390,7 @@ let c_no_curly_error = 1
 
 " Goyo/Limelight
 let g:goyo_height = 100
+let g:goyo_width = 125
 nnoremap <Leader>go :Goyo<CR>
 let g:limelight_conceal_ctermfg = 240
 nnoremap <Leader>L :Limelight!!<CR>
