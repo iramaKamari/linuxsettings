@@ -29,29 +29,12 @@ function cdl {
   builtin cd "$@" && ls -l
 }
 
-function gf {
-  if [[ -z "$@" ]] ; then
-    git ls-files
-  else
-    if [[ "$#" -lt 2 ]] ; then
-      git ls-files | grep "$1"
-    else
-      git ls-files "$2" | grep "$1"
-    fi
-  fi
-}
+# Git
+alias gf="git ls-files"
+alias gg="git grep -n"
 
-function gg {
-  if [[ -z "$@" ]] ; then
-    # Display usage of function
-    echo "Usage of gg <string> <path>"
-  else
-    if [[ "$#" -lt 2 ]] ; then
-      git grep -i "$1" .
-    else
-      git grep -i "$1" "$2"
-    fi
-  fi
+function gitroot() {    
+  cd $(git rev-parse --show-toplevel)"/"$1    
 }
 
 # Misc aliases
