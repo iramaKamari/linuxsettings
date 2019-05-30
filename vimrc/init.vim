@@ -37,6 +37,7 @@ set sw=2
 set expandtab
 set number relativenumber
 set guicursor=
+set termguicolors
 " Automatically re-read a file changed outside of VIM
 set autoread
 augroup numbertoggle
@@ -271,16 +272,16 @@ let g:fzf_colors =
 " Status bar always enabled
 set laststatus=2
 let g:currentmode={
-      \ 'n'  : 'N ',
+      \ 'n'  : 'Normal ',
       \ 'no' : 'N·Operator Pending ',
-      \ 'v'  : 'V ',
+      \ 'v'  : 'Visual ',
       \ 'V'  : 'V·Line ',
       \ '' : 'V·Block ',
       \ 's'  : 'Select ',
       \ 'S'  : 'S·Line ',
       \ '' : 'S·Block ',
-      \ 'i'  : 'I ',
-      \ 'R'  : 'R ',
+      \ 'i'  : 'Insert ',
+      \ 'R'  : 'Replace ',
       \ 'Rv' : 'V·Replace ',
       \ 'c'  : 'Command ',
       \ 'cv' : 'Vim Ex ',
@@ -291,10 +292,6 @@ let g:currentmode={
       \ '!'  : 'Shell ',
       \ 't'  : 'Terminal '
       \}
-
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
 
 " Find out current buffer's size and output it.
 function! FileSize()
@@ -327,32 +324,24 @@ function! ReadOnly()
 endfunction
 
 function! GitInfo()
-  let git = fugitive#head()
+  let git = system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
   if git != ''
-    return ' '.fugitive#head()
+    return ' '.git
   else
     return ''
 endfunction
 
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
-
 set statusline=
-set statusline+=\                                                         " Escape one space for alignment
-set statusline+=%0*\%{toupper(g:currentmode[mode()])}                     " Current mode
-set statusline+=%#identifier#\ [%n]                                       " buffernr
-set statusline+=%#identifier#\ %f\%#Statement#\%{ReadOnly()}\%m\%w\       " Relative path + file
-set statusline+=%#preproc#\Lines\ %L\ Col\ %c                             " Total lines and column number
-set statusline+=%#identifier#\ %y                                         " FileType
+set statusline+=%#statement#\                                             " Escape one space for alignment
+set statusline+=%{toupper(g:currentmode[mode()])}                         " Current mode
+set statusline+=%#macro#\[%n]                                            " buffernr
+set statusline+=%#macro#\ %f\%#Statement#\%{ReadOnly()}\%m\%w\            " Relative path + file
+set statusline+=%#string#\Lines\ %L\ Col\ %c                              " Total lines and column number
+set statusline+=%#macro#\ %y                                              " FileType
 set statusline+=\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}]                     " Encoding & Fileformat
 set statusline+=\ [%(%{FileSize()}%)]                                     " File size
-set statusline+=%#preproc#\ %{GitInfo()}                                  " Git Branch name
-set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}                              " Syntastic errors
-set statusline+=%#preproc#                                                " 'Hide' the statusline
-set statusline+=\ %=                                                      " Space
+set statusline+=%#string#\ %{GitInfo()}                                   " Git Branch name
+set statusline+=%#statement#\ %{LinterStatus()}                           " Show number of errors/warnings
 set statusline+=%<                                                        " Truncate line
 
 " Syntastic settings
@@ -370,12 +359,25 @@ set statusline+=%<                                                        " Trun
 "endfunction
 "
 "call Py3()   " default to Py3
+
 " Ale settings
 "let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? '✓' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
 
 " Mundo settings
 let g:mundo_preview_bottom = 1
@@ -394,4 +396,5 @@ nnoremap <Leader>L :Limelight!!<CR>
 vnoremap <Leader>L :Limelight!!<CR>
 
 " Colorscheme
-silent! colorscheme gruvbox_modified
+let g:gruvbox_termcolors=256
+silent! colorscheme gruvbox
