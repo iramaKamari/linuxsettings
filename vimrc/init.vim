@@ -332,9 +332,9 @@ function! GitInfo()
 endfunction
 
 set statusline=
-set statusline+=%#statement#\                                             " Escape one space for alignment
+set statusline+=%#statement#
 set statusline+=%{toupper(g:currentmode[mode()])}                         " Current mode
-set statusline+=%#macro#\[%n]                                            " buffernr
+set statusline+=%#macro#\[%n]                                             " buffernr
 set statusline+=%#macro#\ %f\%#Statement#\%{ReadOnly()}\%m\%w\            " Relative path + file
 set statusline+=%#string#\Lines\ %L\ Col\ %c                              " Total lines and column number
 set statusline+=%#macro#\ %y                                              " FileType
@@ -342,6 +342,7 @@ set statusline+=\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}]                     " Enco
 set statusline+=\ [%(%{FileSize()}%)]                                     " File size
 set statusline+=%#string#\ %{GitInfo()}                                   " Git Branch name
 set statusline+=%#statement#\ %{LinterStatus()}                           " Show number of errors/warnings
+set statusline+=\ %=                                                      " Space
 set statusline+=%<                                                        " Truncate line
 
 " Syntastic settings
