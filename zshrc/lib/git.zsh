@@ -13,7 +13,7 @@ function parse_git_dirty() {
   FLAGS=('--porcelain' '--ignore-submodules=dirty' '--untracked-files=no')
   STATUS=$(command git status ${FLAGS} 2> /dev/null | tail -n1)
   if [[ -n $STATUS ]]; then
-    echo " $ZSH_THEME_GIT_PROMPT_DIRTY"
+    echo "$ZSH_THEME_GIT_PROMPT_DIRTY"
   else
     echo "$ZSH_THEME_GIT_PROMPT_CLEAN"
   fi
