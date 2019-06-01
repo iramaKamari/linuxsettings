@@ -182,3 +182,29 @@ function git_current_user_name() {
 function git_current_user_email() {
   command git config user.email 2>/dev/null
 }
+
+# Go to the root of git repository or other directory
+function gitroot() {
+  cd $(git rev-parse --show-toplevel)"/"$1
+}
+
+# List files in current/specified/root directory in git repo
+function gf() {
+  command git ls-files $2 | grep $1
+}
+
+function gfr() {
+  command git ls-files $(git rev-parse --show-toplevel)"/"$2 | grep $1
+}
+
+# Usefull aliases
+alias ga="git add"
+alias gap="git add -p"
+alias gbr="git branch"
+alias gci="git commit"
+alias gcim="git commit -m"
+alias gco="git checkout"
+alias gg="git grep -n"
+alias gst="git status"
+alias gdi="git diff"
+alias gstaged="git diff --staged"
