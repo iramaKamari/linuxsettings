@@ -162,35 +162,59 @@ cnoremap $t <CR>:t''<CR>
 cnoremap $m <CR>:m''<CR>
 cnoremap $d <CR>:d<CR>``
 " Search for code with Rg or Ag if available
-let rgOrAgFound = 0
+let grepPrgFound = 0
 if executable('rg')
   nnoremap <Leader>g :Rg<CR>
   " Grep word under cursor
   nnoremap <leader>G :Rg <C-R><C-W><CR>
+  let g:rg_command = '
+    \ rg --column --line-number --color="always" '
+  command! -bang -nargs=* Rg call fzf#vim#grep(g:rg_command . shellescape(<q-args>), 0,
+  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
   inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
     \ 'prefix': '^.*$',
     \ 'source': 'rg -n ^ --color always',
     \ 'options': '--ansi --delimiter : --nth 3..',
     \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
-  let rgOrAgFound = 1
+  let grepPrgFound = 1
 else
-  if executable('ag')
-    " Use Ag over grep
-    nnoremap <Leader>g :Ag<CR>
+  if executable('fzf') && strlen(s:FindGitRoot()) > 0
+    command! ProjectFiles execute 'GFiles' s:FindGitRoot()
+    nnoremap <leader>f :Files<CR>
+    nnoremap <leader>F :GFiles<CR>
+    nnoremap <leader>c :BCommits<CR>
+    nnoremap <leader>C :Commits<CR>
+    nnoremap <leader>S :GFiles?<CR>
+    command! -bang -nargs=* GGrep call fzf#vim#grep(
+    \   'git grep --line-number --color="always" ' . shellescape(<q-args>), 0,
+    \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+    nnoremap <Leader>g :GGrep<CR>
     " Grep word under cursor
-    nnoremap <leader>G :Ag <C-R><C-W><CR>>
-    inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
-      \ 'prefix': '^.*$',
-      \ 'source': 'ag -n ^ --color always',
-      \ 'options': '--ansi --delimiter : --nth 3..',
-      \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+    nnoremap <leader>G :GGrep <C-R><C-W><CR>
+    let grepPrgFound = 1
+  else
+    if executable('ag') && grepPrgFound == 0
+      " Use Ag over grep
+      nnoremap <Leader>g :Ag<CR>
+      " Grep word under cursor
+      nnoremap <leader>G :Ag <C-R><C-W><CR>>
+      let g:ag_command = '
+        \ ag --column --color="always" '
+      command! -bang -nargs=* Ag call fzf#vim#grep(g:ag_command . shellescape(<q-args>), 0,
+      \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+      inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
+        \ 'prefix': '^.*$',
+        \ 'source': 'ag -n ^ --color always',
+        \ 'options': '--ansi --delimiter : --nth 3..',
+        \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
-    let rgOrAgFound = 1
+      let grepPrgFound = 1
+    endif
   endif
 endif
 
-if (rgOrAgFound == 0)
+if (grepPrgFound == 0)
   " Open quickfix window after grep
   autocmd QuickFixCmdPost *grep* cwindow|redraw!
   nnoremap <Leader>gg :grep<Space>
@@ -199,6 +223,8 @@ if (rgOrAgFound == 0)
 endif
 " Display active buffers and prep for :buffer<COMMAND>
 if executable('fzf')
+    command! -bang Colors
+    \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
   nnoremap § :Buffers<CR>
 else
   nnoremap § :ls<CR>:b<space>
@@ -208,29 +234,14 @@ function! s:FindGitRoot()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 
-if executable('fzf') && strlen(s:FindGitRoot()) > 0
-  command! ProjectFiles execute 'GFiles' s:FindGitRoot()
+if executable('fzf')
   nnoremap <leader>f :Files<CR>
-  nnoremap <leader>F :GFiles<CR>
-  nnoremap <leader>c :BCommits<CR>
-  nnoremap <leader>C :Commits<CR>
-  nnoremap <leader>S :GFiles?<CR>
-  command! -bang -nargs=* GGrep
-  \ call fzf#vim#grep(
-  \   'git grep --line-number '.shellescape(<q-args>), 0,
-  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-  nnoremap <Leader>g :GGrep<CR>
-  " Grep word under cursor
-  nnoremap <leader>G :GGrep <C-R><C-W><CR>
+  nnoremap <leader>F :Files<space>
 else
-  if executable('fzf')
-    nnoremap <leader>f :Files<CR>
-    nnoremap <leader>F :Files<space>
-  else
-    nnoremap <leader>f :files<CR>
-    nnoremap <leader>F :files<space>
-  endif
+  nnoremap <leader>f :files<CR>
+  nnoremap <leader>F :files<space>
 endif
+
 " Go back to last used buffer
 nnoremap <leader>b :e#<CR>
 " Highlight leading whitespace
