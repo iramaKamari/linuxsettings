@@ -237,7 +237,7 @@ else
 
   " Display active buffers and prep for :buffer<COMMAND>
   nnoremap § :ls<CR>:b<space>
-  
+
   nnoremap <leader>f :files<CR>
   nnoremap <leader>F :files<space>
 endif
