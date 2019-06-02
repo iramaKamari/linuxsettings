@@ -1,11 +1,14 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/bin:$PATH
 
 # Path to zsh folder.
 export ZSH=$HOME/linuxsettings/zshrc
 
 # Path to zplug folder.
 export ZPLUG_HOME=$HOME/.zplug
+
+# Nvim as standard editor
+export EDITOR=nvim
 
 autoload -Uz compinit
 

@@ -161,25 +161,22 @@ map <C-c> "*y<CR>
 cnoremap $t <CR>:t''<CR>
 cnoremap $m <CR>:m''<CR>
 cnoremap $d <CR>:d<CR>``
+
+function! s:FindGitRoot()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+
 " Search for code with Rg or Ag if available
 let grepPrgFound = 0
-if executable('rg')
-  nnoremap <Leader>g :Rg<CR>
-  " Grep word under cursor
-  nnoremap <leader>G :Rg <C-R><C-W><CR>
-  let g:rg_command = '
-    \ rg --column --line-number --color="always" '
-  command! -bang -nargs=* Rg call fzf#vim#grep(g:rg_command . shellescape(<q-args>), 0,
-  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-  inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
-    \ 'prefix': '^.*$',
-    \ 'source': 'rg -n ^ --color always',
-    \ 'options': '--ansi --delimiter : --nth 3..',
-    \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+if executable('fzf')
+  command! -bang Colors
+  \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
 
-  let grepPrgFound = 1
-else
-  if executable('fzf') && strlen(s:FindGitRoot()) > 0
+  nnoremap <leader>f :Files<CR>
+  nnoremap <leader>F :Files<space>
+  nnoremap § :Buffers<CR>
+
+  if strlen(s:FindGitRoot()) > 0
     command! ProjectFiles execute 'GFiles' s:FindGitRoot()
     nnoremap <leader>f :Files<CR>
     nnoremap <leader>F :GFiles<CR>
@@ -193,51 +190,54 @@ else
     " Grep word under cursor
     nnoremap <leader>G :GGrep <C-R><C-W><CR>
     let grepPrgFound = 1
-  else
-    if executable('ag') && grepPrgFound == 0
-      " Use Ag over grep
-      nnoremap <Leader>g :Ag<CR>
-      " Grep word under cursor
-      nnoremap <leader>G :Ag <C-R><C-W><CR>>
-      let g:ag_command = '
-        \ ag --column --color="always" '
-      command! -bang -nargs=* Ag call fzf#vim#grep(g:ag_command . shellescape(<q-args>), 0,
-      \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-      inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
-        \ 'prefix': '^.*$',
-        \ 'source': 'ag -n ^ --color always',
-        \ 'options': '--ansi --delimiter : --nth 3..',
-        \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
-
-      let grepPrgFound = 1
-    endif
   endif
-endif
 
-if (grepPrgFound == 0)
-  " Open quickfix window after grep
-  autocmd QuickFixCmdPost *grep* cwindow|redraw!
-  nnoremap <Leader>gg :grep<Space>
-  " Grep word under cursor
-  nnoremap <leader>G :grep <C-R><C-W><CR>
-endif
-" Display active buffers and prep for :buffer<COMMAND>
-if executable('fzf')
-    command! -bang Colors
-    \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
-  nnoremap § :Buffers<CR>
+  if executable('rg')
+    nnoremap <Leader>g :Rg<CR>
+    " Grep word under cursor
+    nnoremap <leader>G :Rg <C-R><C-W><CR>
+    let g:rg_command = '
+      \ rg --column --line-number --color="always" '
+    command! -bang -nargs=* Rg call fzf#vim#grep(g:rg_command . shellescape(<q-args>), 0,
+    \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+    inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
+      \ 'prefix': '^.*$',
+      \ 'source': 'rg -n ^ --color always',
+      \ 'options': '--ansi --delimiter : --nth 3..',
+      \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+
+    let grepPrgFound = 1
+  endif
+
+  if executable('ag') && grepPrgFound == 0
+    " Use Ag over grep
+    nnoremap <Leader>g :Ag<CR>
+    " Grep word under cursor
+    nnoremap <leader>G :Ag <C-R><C-W><CR>>
+    let g:ag_command = '
+      \ ag --column --color="always" '
+    command! -bang -nargs=* Ag call fzf#vim#grep(g:ag_command . shellescape(<q-args>), 0,
+    \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+    inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
+      \ 'prefix': '^.*$',
+      \ 'source': 'ag -n ^ --color always',
+      \ 'options': '--ansi --delimiter : --nth 3..',
+      \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+
+    let grepPrgFound = 1
+  endif
 else
+  if (grepPrgFound == 0)
+    " Open quickfix window after grep
+    autocmd QuickFixCmdPost *grep* cwindow|redraw!
+    nnoremap <Leader>g :grep<Space>
+    " Grep word under cursor
+    nnoremap <leader>G :grep <C-R><C-W><CR>
+  endif
+
+  " Display active buffers and prep for :buffer<COMMAND>
   nnoremap § :ls<CR>:b<space>
-endif
-
-function! s:FindGitRoot()
-  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-endfunction
-
-if executable('fzf')
-  nnoremap <leader>f :Files<CR>
-  nnoremap <leader>F :Files<space>
-else
+  
   nnoremap <leader>f :files<CR>
   nnoremap <leader>F :files<space>
 endif
@@ -406,7 +406,7 @@ let c_no_curly_error = 1
 " Goyo/Limelight
 let g:goyo_height = 100
 let g:goyo_width = 125
-nnoremap <Leader>go :Goyo<CR>
+nnoremap <Leader>o :Goyo<CR>
 let g:limelight_conceal_ctermfg = 240
 nnoremap <Leader>L :Limelight!!<CR>
 vnoremap <Leader>L :Limelight!!<CR>
