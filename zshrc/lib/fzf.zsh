@@ -50,20 +50,10 @@ if [[ -n "${fzf_base}" ]]; then
   fi
 
 else
-  print "[oh-my-zsh] fzf plugin: Cannot find fzf installation directory.\n"\
+  print "fzf plugin: Cannot find fzf installation directory.\n"\
         "Please add \`export FZF_BASE=/path/to/fzf/install/dir\` to your .zshrc" >&2
 fi
 
 export FZF_CTRL_T_OPTS="--preview '(ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-git-commit-show () 
-{
-  git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"  | \
-   fzf --ansi --no-sort --reverse --tiebreak=index --preview \
-   'f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always $1 ; }; f {}' \
-   --bind "j:down,k:up,alt-j:preview-down,alt-k:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up,q:abort,ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                {}
-FZF-EOF" --preview-window=right:60%
-}
+
 unset fzf_base fzf_shell dir fzfdirs
