@@ -30,11 +30,31 @@ function cdl {
 }
 
 # Git
-alias gf="git ls-files"
+alias ga="git add"
+alias gap="git add -p"
+alias gbr="git branch"
+alias gci="git commit"
+alias gcim="git commit -m"
+alias gco="git checkout"
+alias gdi="git diff"
 alias gg="git grep -n"
+alias gps="git push"
+alias gpu="git pull"
+alias gst="git status"
+alias gstaged="git diff --staged"
+alias gupdate="git pull --rebase"
 
 function gitroot() {    
   cd $(git rev-parse --show-toplevel)"/"$1    
+}
+
+# List files in current/specified/root directory in git repo
+function gf() {
+  command git ls-files $2 | grep $1
+}
+
+function gfr() {
+  command git ls-files $(git rev-parse --show-toplevel)"/"$2 | grep $1
 }
 
 # Misc aliases
