@@ -384,9 +384,9 @@ function! LinterStatus() abort
     let l:all_errors = l:counts.error + l:counts.style_error
     let l:all_non_errors = l:counts.total - l:all_errors
     let l:checkMark = ''
-    if strlen(s:FindGitRoot()) > 0
-      let l:checkMark = '✓'
-    endif
+    "if strlen(s:FindGitRoot()) > 0
+    "  let l:checkMark = '✓'
+    "endif
 
     return l:counts.total == 0 ? l:checkMark : printf(
     \   '%dW %dE',
