@@ -411,6 +411,13 @@ let g:limelight_conceal_ctermfg = 240
 nnoremap <Leader>L :Limelight!!<CR>
 vnoremap <Leader>L :Limelight!!<CR>
 
+" GIT
+map <Leader>l :te tig %<Return>i
+map <Leader>B :te tig blame +<C-r>=line('.')<Return> %<Return>i
+map <Leader>D :te git diff %<Return>i
+map <Leader>Z :!codemapper map %<Return>
+map <Leader>V :te git checkout -p %<Return>i
+
 " Colorscheme
 let g:gruvbox_termcolors=256
 silent! colorscheme gruvbox
