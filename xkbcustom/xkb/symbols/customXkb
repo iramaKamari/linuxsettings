@@ -89,6 +89,7 @@ xkb_symbols "colemakDH" {
     include "se(se)"
 
     name[Group1]="ColemakeDH (Programming)";
+    key <AB01>  { [ z, Z ] };
     key <AB02>  { [ x, X, 1 ] };
     key <AB03>  { [ c, C, 2 ] };
     key <AB04>  { [ d, D, 3 ] };
@@ -121,7 +122,7 @@ xkb_symbols "colemakDH" {
     key <AD11>  { [ braceleft, bracketleft ] };
     key <AD12>  { [ braceright, bracketright, asciitilde ] };
 
-    key <AE04>  { [ 4, dollar ] };
+    key <AE04>  { [ 4, dollar, grave ] };
     key <AE05>  { [ 5, percent, EuroSign, cent ] };
     key <AE07>  { [ 7, asciicircum, dollar ] };
     key <AE11>  { [ plus, backslash, questiondown ] };

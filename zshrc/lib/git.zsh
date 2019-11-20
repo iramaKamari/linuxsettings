@@ -86,6 +86,7 @@ function gfr() {
 
 # Usefull aliases
 alias ga="git add"
+alias gaa="git add --all"
 alias gap="git add -p"
 alias gbr="git branch"
 alias gci="git commit"
@@ -93,6 +94,7 @@ alias gcim="git commit -m"
 alias gco="git checkout"
 alias gdi="git diff"
 alias gg="git grep -n"
+alias gf="git ls-files"
 alias gps="git push"
 alias gpu="git pull"
 alias gst="git status"
