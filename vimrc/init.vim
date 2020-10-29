@@ -67,7 +67,11 @@ nnoremap <leader><space> :nohlsearch<CR>
 set foldenable
 set foldlevelstart=10
 set foldnestmax=10
-set foldmethod=indent
+"set foldmethod=indent
+augroup folding
+  au BufReadPre * setlocal foldmethod=indent
+  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+augroup END
 " Find ctags file in project/system
 set tags=./tags,tags;
 let g:ycm_key_list_previous_completion = ['<Up>']
@@ -178,8 +182,8 @@ if executable('fzf')
 
   if strlen(s:FindGitRoot()) > 0
     command! ProjectFiles execute 'GFiles' s:FindGitRoot()
-    nnoremap <leader>f :Files<CR>
-    nnoremap <leader>F :GFiles<CR>
+    nnoremap <leader>F :Files<CR>
+    nnoremap <leader>f :GFiles<CR>
     nnoremap <leader>c :BCommits<CR>
     nnoremap <leader>C :Commits<CR>
     nnoremap <leader>S :GFiles?<CR>

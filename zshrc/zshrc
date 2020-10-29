@@ -19,6 +19,9 @@ done
 
 source $ZSH/zshtheme.zsh-theme
 
+# Locale
+export LC_ALL=C
+
 # Zplug plugin management
 source ~/.zplug/init.zsh
 zplug "skywind3000/z.lua"
