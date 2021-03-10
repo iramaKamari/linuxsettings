@@ -2,18 +2,21 @@ function! Cscope(option, query)
   let color = '{ path = $1; $1 = ""; functionName = $2; $2 = ""; linenum = $3; $3 = "";
         \ printf "\033[35m%s\033[0m:\033[31m%s\033[0m \033[93m%s\033[0m\033[92m%s\033[0m\n",
         \ path,linenum,functionName,$0; }'
-  let opts = {
+
+  let cscopeCmd = {
   \ 'source':  "cscope -dL" . a:option . " " . a:query . " | awk '" . color . "'",
   \ 'options': ['--ansi', '--prompt', '> ',
   \             '--multi', '--bind', 'alt-a:select-all,alt-d:deselect-all'],
   \ 'down': '40%'
   \ }
-  function! opts.sink(lines)
+
+  function! cscopeCmd.sink(lines)
     let data = split(a:lines)
     let file = split(data[0], ":")
     execute 'e ' . '+' . file[1] . ' ' . file[0]
   endfunction
-  call fzf#run(fzf#wrap(opts))
+
+  call fzf#run(cscopeCmd)
 endfunction
 
 function! CscopeQuery(option)
