@@ -18,7 +18,6 @@ Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim'
 Plug 'rhysd/vim-clang-format'
 Plug 'iramaKamari/vimcolors'
-Plug 'iramaKamari/vim_plugins/cscopefzf'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -30,6 +29,8 @@ Plug 'bfrg/vim-cpp-modern'
 Plug 'sheerun/vim-polyglot'
 " <============================================>
 call plug#end()            " required
+
+source $PWD/vim_plugins/cscopefzf/cscopefzf.vim
 
 syntax enable
 set tw=0
@@ -361,22 +362,6 @@ set statusline+=%#string#\ %{GitInfo()}                                   " Git 
 set statusline+=%#statement#\ %{LinterStatus()}                           " Show number of errors/warnings
 set statusline+=\ %=                                                      " Space
 set statusline+=%<                                                        " Truncate line
-
-" Syntastic settings
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_cpp_checkers = ['cppcheck']
-"function Py2()
-"  let g:syntastic_python_python_exec = '/usr/local/bin/python2.7'
-"endfunction
-"
-"function Py3()
-"  let g:syntastic_python_python_exec = '/usr/local/bin/python3.7'
-"endfunction
-"
-"call Py3()   " default to Py3
 
 " Ale settings
 "let g:ale_lint_on_text_changed = 'never'
