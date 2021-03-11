@@ -47,5 +47,7 @@ fi
 
 # Then, source plugins and add commands to $PATH
 zplug load
+eval "$(lua ~/.zplug/repos/skywind3000/z.lua/z.lua --init zsh)"
 
+bindkey -v
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
