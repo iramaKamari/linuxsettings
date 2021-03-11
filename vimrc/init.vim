@@ -14,9 +14,11 @@ call plug#begin('~/.config/nvim/plugged')
 " Specify the plugins you want to install here.
 Plug 'Chiel92/vim-autoformat'
 Plug 'simnalamburt/vim-mundo'
-"Plug 'vim-syntastic/syntastic'
 Plug 'w0rp/ale'
+Plug 'neoclide/coc.nvim'
+Plug 'rhysd/vim-clang-format'
 Plug 'iramaKamari/vimcolors'
+Plug 'iramaKamari/vim_plugins/cscopefzf'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -72,9 +74,26 @@ augroup folding
   au BufReadPre * setlocal foldmethod=indent
   au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
 augroup END
+" Make nvim use the system clipboard
+set clipboard+=unnamedplus
+let g:loaded_clipboard_provider = 1
 " Find ctags file in project/system
 set tags=./tags,tags;
-let g:ycm_key_list_previous_completion = ['<Up>']
+" Find and load cscope database
+set nocscopeverbose
+function! LoadCscope()
+  let db = findfile("cscope.out", ".;")
+  if (!empty(db))
+    let path = strpart(db, 0, match(db, "/cscope.out$"))
+    set nocscopeverbose " suppress 'duplicate connection' error
+    exe "cs add " . db . " " . path
+    set cscopeverbose
+  " else add the database pointed to by environment variable
+  elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
+  endif
+endfunction
+au BufEnter /* call LoadCscope()
 inoremap <expr><S-Tab> pumvisible() ? "<C-p>" : "<C-d>"
 map <space> <leader>
 " Don't skip wrapped lines
@@ -248,23 +267,6 @@ endif
 
 " Go back to last used buffer
 nnoremap <leader>b :e#<CR>
-" Highlight leading whitespace
-nnoremap <leader>i /^\s\+/<CR>
-" Highlight trailing whitespace
-" autocmd BufWritePre * %s/\s\+$//e
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufLeave * call clearmatches()
-" Trim trailing whitespace
-fun! TrimWhitespace()
-    let l:save = winsaveview()
-    %s/\s\+$//e
-    call winrestview(l:save)
-endfun
-nnoremap <Leader>T :call TrimWhitespace()<CR>
 " Fzf configuration
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_buffers_jump = 1
@@ -415,6 +417,9 @@ let g:limelight_conceal_ctermfg = 240
 nnoremap <Leader>L :Limelight!!<CR>
 vnoremap <Leader>L :Limelight!!<CR>
 
+" Vim-clang-format
+let g:clang_format#code_style = "chromium"
+
 " GIT
 map <Leader>l :te tig %<Return>i
 map <Leader>B :te tig blame +<C-r>=line('.')<Return> %<Return>i
@@ -425,3 +430,20 @@ map <Leader>V :te git checkout -p %<Return>i
 " Colorscheme
 let g:gruvbox_termcolors=256
 silent! colorscheme gruvbox
+" Highlight leading whitespace
+nnoremap <leader>i /^\s\+/<CR>
+" Highlight trailing whitespace
+"autocmd BufWritePre * %s/\s\+$//e
+" Trim trailing whitespace
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+nnoremap <Leader>T :call TrimWhitespace()<CR>
+highlight ExtraWhitespace ctermbg=124 guibg=#cc241d
+match ExtraWhitespace /\s\+$/
+autocmd BufEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufLeave * call clearmatches()
