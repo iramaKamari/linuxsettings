@@ -11,32 +11,34 @@ set rtp+=~/.config/nvim/autoload/plug.vim
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.config/nvim/plugged')
 " <============================================>
-" Specify the plugins you want to install here.
-Plug 'Chiel92/vim-autoformat'
+" Undo graphical tree
 Plug 'simnalamburt/vim-mundo'
-Plug 'w0rp/ale'
-Plug 'neoclide/coc.nvim'
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'ojroques/nvim-lspfuzzy'
+" Code formatting (until LSP formatting takes custom mode)
 Plug 'rhysd/vim-clang-format'
-Plug 'iramaKamari/vimcolors'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
+" Fuzzy finding of files/buffers etc
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
+"Plug 'nvim-lua/popup.nvim'
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-telescope/telescope.nvim' "Requries popup and plenary
+" Syntax highlighters
+"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'iramaKamari/vimcolors'
 Plug 'bfrg/vim-cpp-modern'
-Plug 'sheerun/vim-polyglot'
+Plug 'vim-python/python-syntax'
 " <============================================>
 call plug#end()            " required
 
-source $PWD/vim_plugins/cscopefzf/cscopefzf.vim
-
 syntax enable
+filetype plugin indent on
 set tw=0
 set tabstop=2
 set softtabstop=2
-set sw=2
+set shiftwidth=2
 set expandtab
 set number relativenumber
 set guicursor=
@@ -53,9 +55,9 @@ set noshowmode
 set path+=**
 " Enable autocomplete suggestions in vim
 set wildmenu
-set complete=.,w,b,u,t,i
+set complete=.,w,b,u,t
 set wildmode=full
-set completeopt=menu,preview
+set completeopt=menu,noinsert,noselect
 " --------------------------------------
 set lazyredraw
 set showmatch
@@ -95,7 +97,13 @@ function! LoadCscope()
   endif
 endfunction
 au BufEnter /* call LoadCscope()
-inoremap <expr><S-Tab> pumvisible() ? "<C-p>" : "<C-d>"
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Completion-nvim, use tab for completion
+"imap <tab> <Plug>(completion_smart_tab)
+"imap <s-tab> <Plug>(completion_smart_s_tab)
+
 map <space> <leader>
 " Don't skip wrapped lines
 nnoremap <expr> j v:count ? 'j' : 'gj'
@@ -162,14 +170,19 @@ inoremap <C-l> <C-o>d$
 inoremap <C-w> <C-o>db
 " Delete word from cursor in insert mode
 inoremap <C-d> <C-o>dw
+" Omnicomple in insert mode
+autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
 " Make recovery option from accidental deletion in insert mode
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
 " For local replace
-nnoremap <Leader>r :s/\<<C-r><C-w>\>//g<Left><Left>
+nnoremap <leader>r :s/\<<C-r><C-w>\>//g<Left><Left>
 " For global replace
 nnoremap <Leader>R :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
-" Open Mundo for visual change tree
+" Mundo settings
+let g:mundo_preview_bottom = 1
+let g:mundo_preview_height = 50
+let g:mundo_close_on_revert = 1
 nnoremap <leader>u :MundoToggle<CR>
 " Quick save current buffer
 nnoremap <leader>s :w<CR>
@@ -190,7 +203,7 @@ function! s:FindGitRoot()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 
-" Search for code with Rg or Ag if available
+" Search for code with Rg/git grep if available
 let grepPrgFound = 0
 if executable('fzf')
   command! -bang Colors
@@ -213,6 +226,7 @@ if executable('fzf')
     nnoremap <Leader>g :GGrep<CR>
     " Grep word under cursor
     nnoremap <leader>G :GGrep <C-R><C-W><CR>
+    vnoremap <leader>G y:GGrep <C-R>"<CR>
     let grepPrgFound = 1
   endif
 
@@ -220,33 +234,20 @@ if executable('fzf')
     nnoremap <Leader>g :Rg<CR>
     " Grep word under cursor
     nnoremap <leader>G :Rg <C-R><C-W><CR>
-    let g:rg_command = '
-      \ rg --column --line-number --color="always" '
-    command! -bang -nargs=* Rg call fzf#vim#grep(g:rg_command . shellescape(<q-args>), 0,
-    \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-    inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
-      \ 'prefix': '^.*$',
-      \ 'source': 'rg -n ^ --color always',
-      \ 'options': '--ansi --delimiter : --nth 3..',
-      \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+    vnoremap <leader>G y:Rg <C-R>"<CR>
+    command! -bang -nargs=* Rg
+          \ call fzf#vim#grep(
+          \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+          \   fzf#vim#with_preview(), <bang>0)
+    function! RipgrepFzf(query, fullscreen)
+      let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+      let initial_command = printf(command_fmt, shellescape(a:query))
+      let reload_command = printf(command_fmt, '{q}')
+      let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+      call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+    endfunction
 
-    let grepPrgFound = 1
-  endif
-
-  if executable('ag') && grepPrgFound == 0
-    " Use Ag over grep
-    nnoremap <Leader>g :Ag<CR>
-    " Grep word under cursor
-    nnoremap <leader>G :Ag <C-R><C-W><CR>>
-    let g:ag_command = '
-      \ ag --column --color="always" '
-    command! -bang -nargs=* Ag call fzf#vim#grep(g:ag_command . shellescape(<q-args>), 0,
-    \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-    inoremap <expr> <c-l> fzf#vim#complete(fzf#wrap({
-      \ 'prefix': '^.*$',
-      \ 'source': 'ag -n ^ --color always',
-      \ 'options': '--ansi --delimiter : --nth 3..',
-      \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+    command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
     let grepPrgFound = 1
   endif
@@ -267,8 +268,12 @@ else
 endif
 
 " Go back to last used buffer
-nnoremap <leader>b :e#<CR>
+nnoremap <leader>b <C-^>
 " Fzf configuration
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_buffers_jump = 1
 let g:fzf_colors =
@@ -289,27 +294,6 @@ let g:fzf_colors =
 " Statusline configuration
 " Status bar always enabled
 set laststatus=2
-let g:currentmode={
-      \ 'n'  : 'Normal ',
-      \ 'no' : 'N·Operator Pending ',
-      \ 'v'  : 'Visual ',
-      \ 'V'  : 'V·Line ',
-      \ '' : 'V·Block ',
-      \ 's'  : 'Select ',
-      \ 'S'  : 'S·Line ',
-      \ '' : 'S·Block ',
-      \ 'i'  : 'Insert ',
-      \ 'R'  : 'Replace ',
-      \ 'Rv' : 'V·Replace ',
-      \ 'c'  : 'Command ',
-      \ 'cv' : 'Vim Ex ',
-      \ 'ce' : 'Ex ',
-      \ 'r'  : 'Prompt ',
-      \ 'rm' : 'More ',
-      \ 'r?' : 'Confirm ',
-      \ '!'  : 'Shell ',
-      \ 't'  : 'Terminal '
-      \}
 
 " Find out current buffer's size and output it.
 function! FileSize()
@@ -349,8 +333,30 @@ function! GitInfo()
     return ''
 endfunction
 
+let g:currentmode={
+      \ 'n'  : 'Normal ',
+      \ 'no' : 'N·Operator Pending ',
+      \ 'v'  : 'Visual ',
+      \ 'V'  : 'V·Line ',
+      \ '' : 'V·Block ',
+      \ 's'  : 'Select ',
+      \ 'S'  : 'S·Line ',
+      \ '' : 'S·Block ',
+      \ 'i'  : 'Insert ',
+      \ 'R'  : 'Replace ',
+      \ 'Rv' : 'V·Replace ',
+      \ 'c'  : 'Command ',
+      \ 'cv' : 'Vim Ex ',
+      \ 'ce' : 'Ex ',
+      \ 'r'  : 'Prompt ',
+      \ 'rm' : 'More ',
+      \ 'r?' : 'Confirm ',
+      \ '!'  : 'Shell ',
+      \ 't'  : 'Terminal '
+      \}
+
 set statusline=
-set statusline+=%#statement#
+"set statusline+=%#statement#
 set statusline+=%{toupper(g:currentmode[mode()])}                         " Current mode
 set statusline+=%#macro#\[%n]                                             " buffernr
 set statusline+=%#macro#\ %f\%#Statement#\%{ReadOnly()}\%m\%w\            " Relative path + file
@@ -359,57 +365,28 @@ set statusline+=%#macro#\ %y                                              " File
 set statusline+=\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}]                     " Encoding & Fileformat
 set statusline+=\ [%(%{FileSize()}%)]                                     " File size
 set statusline+=%#string#\ %{GitInfo()}                                   " Git Branch name
-set statusline+=%#statement#\ %{LinterStatus()}                           " Show number of errors/warnings
 set statusline+=\ %=                                                      " Space
 set statusline+=%<                                                        " Truncate line
+au InsertEnter * hi statusline guifg=#fabd2f guibg=none ctermfg=none ctermbg=none
+au InsertLeave * hi statusline guifg=#fb4934 guibg=none ctermfg=none ctermbg=none
+" #fabd2f for visual modes
+" #fe8019 for command modes
+" #928374 for focus lost
+" #fb4934 for normal/terminal
 
-" Ale settings
-"let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-function! LinterStatus() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
+" Python
+let g:python2_host_prog="/usr/bin/python"
+let g:python3_host_prog="/usr/bin/python3"
+let g:python_recommended_style=1
+let g:python_highlight_all = 1
 
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    let l:checkMark = ''
-    "if strlen(s:FindGitRoot()) > 0
-    "  let l:checkMark = '✓'
-    "endif
-
-    return l:counts.total == 0 ? l:checkMark : printf(
-    \   '%dW %dE',
-    \   all_non_errors,
-    \   all_errors
-    \)
-endfunction
-
-" Mundo settings
-let g:mundo_preview_bottom = 1
-let g:mundo_preview_height = 50
-let g:mundo_close_on_revert = 1
-
-" Modern c++ highlight
-let c_no_curly_error = 1
-
-" Goyo/Limelight
-let g:goyo_height = 100
-let g:goyo_width = 125
-nnoremap <Leader>o :Goyo<CR>
-let g:limelight_conceal_ctermfg = 240
-nnoremap <Leader>L :Limelight!!<CR>
-vnoremap <Leader>L :Limelight!!<CR>
-
-" Vim-clang-format
-let g:clang_format#code_style = "chromium"
+" Code formatting
+let g:clang_format#code_style = 'chromium'
 
 " GIT
 map <Leader>l :te tig %<Return>i
 map <Leader>B :te tig blame +<C-r>=line('.')<Return> %<Return>i
 map <Leader>D :te git diff %<Return>i
-map <Leader>Z :!codemapper map %<Return>
 map <Leader>V :te git checkout -p %<Return>i
 
 " Colorscheme
@@ -417,8 +394,6 @@ let g:gruvbox_termcolors=256
 silent! colorscheme gruvbox
 " Highlight leading whitespace
 nnoremap <leader>i /^\s\+/<CR>
-" Highlight trailing whitespace
-"autocmd BufWritePre * %s/\s\+$//e
 " Trim trailing whitespace
 fun! TrimWhitespace()
     let l:save = winsaveview()
@@ -427,8 +402,99 @@ fun! TrimWhitespace()
 endfun
 nnoremap <Leader>T :call TrimWhitespace()<CR>
 highlight ExtraWhitespace ctermbg=124 guibg=#cc241d
+" Highlight trailing whitespace
 match ExtraWhitespace /\s\+$/
 autocmd BufEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufLeave * call clearmatches()
+
+" Lsp settings
+autocmd FileType c nnoremap <buffer> <leader>h :ClangdSwitchSourceHeader<CR>
+autocmd FileType cpp nnoremap <buffer> <leader>h :ClangdSwitchSourceHeader<CR>
+lua << EOF
+local nvim_lsp = require('lspconfig')
+--require('telescope').setup{}
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  require'completion'.on_attach()
+  require('lspfuzzy').setup {
+    methods = 'all',         -- either 'all' or a list of LSP methods (see below)
+    fzf_preview = {          -- arguments to the FZF '--preview-window' option
+      'right:+{2}-/2'          -- preview on the right and centered on entry
+    },
+    fzf_action = {           -- FZF actions
+      ['ctrl-t'] = 'tabedit',  -- go to location in a new tab
+      ['ctrl-v'] = 'vsplit',   -- go to location in a vertical split
+      ['ctrl-x'] = 'split',    -- go to location in a horizontal split
+    },
+    fzf_modifier = ':~:.',   -- format FZF entries, see |filename-modifiers|
+    fzf_trim = true,         -- trim FZF entries
+  }
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-K>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>d', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>L', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  --buf_set_keymap('n', '<space>cf', '<cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>', opts) Use if format on save
+
+  -- Set some keybinds conditional on server capabilities
+  local code_format_opts = { "tabSize=2", "insestSpaces=true", "trimTrailingWhitespace?=true", "insertFinalNewLine?=false", "trimFinalNewLines?=true"}
+  if client.resolved_capabilities.document_formatting then
+    buf_set_keymap('n', '<space>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  end
+  if client.resolved_capabilities.document_range_formatting then
+    buf_set_keymap('v', '<space>cf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
+  end
+
+  -- Set autocommands conditional on server_capabilities
+  --if client.resolved_capabilities.document_highlight then
+  --  vim.api.nvim_exec([[
+  --    hi LspReferenceRead cterm=bold ctermbg=red guifg=black guibg=fg
+  --    hi LspReferenceText cterm=bold ctermbg=red guifg=black guibg=fg
+  --    hi LspReferenceWrite cterm=bold ctermbg=red guifg=black guibg=fg
+  --    augroup lsp_document_highlight
+  --      autocmd! * <buffer>
+  --      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+  --      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+  --    augroup END
+  --  ]], false)
+  --end
+end
+
+nvim_lsp.pyls.setup{
+  on_attach = on_attach
+}
+--nvim_lsp.pyright.setup{
+--  on_attach = on_attach
+--}
+--nvim_lsp.ccls.setup {
+--  init_options = {
+--    cache = {
+--      directory = ".ccls-cache";
+--    };
+--  };
+--  on_attach = on_attach
+--}
+nvim_lsp.clangd.setup{
+  cmd = {'clangd', '-j=12', '--all-scopes-completion=true', '--background-index=true', '--fallback-style=chromium', '--header-insertion=iwyu', '--suggest-missing-includes=true'};
+  on_attach = on_attach
+}
+EOF
