@@ -37,6 +37,34 @@ Metatable.highlights = {
   orangeFg = "%#OrangeFg#",
 }
 
+Metatable.scrollbar_states = {
+  '▁',
+  '▁',
+  '▂',
+  '▃',
+  '▄',
+  '▅',
+  '▆',
+  '▇',
+  '█',
+}
+
+Metatable.get_scrollbar = function(self)
+  local total_lines = vim.fn.line('$')
+  local current_line = vim.fn.line('.')
+  local position = current_line / total_lines
+  local index = nil
+  if current_line == 1 then
+    index = current_line
+  elseif current_line == total_lines then
+    index = #self.scrollbar_states
+  else
+    index = (math.floor(position * #self.scrollbar_states) % #self.scrollbar_states) + 1 -- Lua arrays are not 0-index based
+  end
+  --return string.format("%s%s[%s]", math.floor(100*position), '%%', self.scrollbar_states[index])
+  return string.format("%s%s", math.floor(100*position), '%%')
+end
+
 Metatable.trunc_width = setmetatable({
   git_status = 90,
   filename = 140,
@@ -53,9 +81,9 @@ end
 Metatable.modes = setmetatable({
   ["n"]  = {"Normal", "redFg"},
   ["no"] = {"N·Operator Pending", "redFg"},
-  ["v"]  = {"Visual", "redBg"},
-  ["V"]  = {"V·Line", "redBg"},
-  [""] = {"V·Block", "redBg"},
+  ["v"]  = {"Visual", "lightFg"},
+  ["V"]  = {"V·Line", "lightFg"},
+  [""] = {"V·Block", "lightFg"},
   ["s"]  = {"Select ", "purpleFg"},
   ["S"]  = {"S·Line", "purpleFg"},
   [""] = {"S·Block", "purpleFg"},
@@ -82,10 +110,10 @@ Metatable.get_current_mode = function(self)
 end
 
 Metatable.get_git_info = function(self)
-  local git_branches_file = io.popen("git rev-parse --abbrev-ref HEAD", "r")
+  local git_branches_file = io.popen("git rev-parse --abbrev-ref HEAD 2> /dev/null", "r")
   local git = git_branches_file:read("*l")
   io.close(git_branches_file)
-  return (git ~= '' or not git) and string.format(" %s", git or "") or ""
+  return not git and "" or string.format(" %s ", git or "")
 end
 
 Metatable.get_filename_and_modifiable = function(self)
@@ -127,21 +155,24 @@ Metatable.set_active = function(self)
   local filename = hi.aquaFg .. self:get_filename_and_modifiable()
   local filetype = hi.aquaFg .. self:get_filetype_and_size()
   local encodeff = hi.aquaFg .. self:get_encoding_and_fileformat()
-  local line_col = hi.yellowFg .. "%l:%c"
+  --local line_total = hi.yellowFg .. ":%L"
+  local coloumn = hi.yellowFg .. "[%c]"
+  local file_position = hi.yellowFg .. self:get_scrollbar()
   local seperator = " "
   return table.concat({
     self:get_current_mode(),
     seperator,
-    git,
-    seperator,
     filename,
     hi.redFg .. "%m%w",
+    coloumn,
     seperator,
-    line_col,
+    file_position,
     seperator,
     filetype,
     seperator,
     encodeff,
+    seperator,
+    git,
   })
 end
 
@@ -152,21 +183,20 @@ Metatable.set_inactive = function(self)
   local filename = self:get_filename_and_modifiable()
   local filetype = self:get_filetype_and_size()
   local encodeff = self:get_encoding_and_fileformat()
-  local line_col = "%l:%c"
+  --local coloumn = "[%c]"
   local seperator = " "
   return table.concat({
     hi.grayFg,
     seperator,
-    git,
-    seperator,
     filename,
     "%m%w",
-    seperator,
-    line_col,
-    seperator,
-    filetype,
-    seperator,
-    encodeff,
+   -- coloumn,
+    --seperator,
+    --filetype,
+    --seperator,
+    --encodeff,
+    --seperator,
+    --git,
   })
 end
 

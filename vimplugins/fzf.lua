@@ -12,17 +12,21 @@ if vim.fn.executable('fzf') == 1 then
     imap <c-x><c-f> <plug>(fzf-complete-path)
     imap <c-x><c-l> <plug>(fzf-complete-line)
   ]], false)
-  --vim.api.nvim_set_var('g:fzf_commits_log_options', '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"')
-  --vim.api.nvim_set_var('g:fzf_buffers_jump', 1)
-  --vim.api.nvim_set_var('g:fzf_colors', "{'fg': ['fg', 'Normal'], 'bg': ['bg', 'Normal'], 'hl': ['fg', 'Comment'], 'fg+': ['fg', 'CursorLine', 'CursorColumn', 'Normal'], 'bg+': ['bg', 'CursorLine', 'CursorColumn'], 'hl+': ['fg', 'Statement'], 'info': ['fg', 'PreProc'], 'border': ['fg', 'Ignore'], 'prompt': ['fg', 'Identifier'], 'pointer': ['fg', 'Exception'], 'marker': ['fg', 'Identifier'], 'spinner': ['fg', 'Label'], 'header': ['fg', 'Comment'] }")
+  vim.api.nvim_set_var('g:fzf_commits_log_options', '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"')
+  vim.api.nvim_set_var('g:fzf_buffers_jump', 1)
+  vim.api.nvim_set_var('g:fzf_colors', "{'fg': ['fg', 'Normal'], 'bg': ['bg', 'Normal'], 'hl': ['fg', 'Comment'], 'fg+': ['fg', 'CursorLine', 'CursorColumn', 'Normal'], 'bg+': ['bg', 'CursorLine', 'CursorColumn'], 'hl+': ['fg', 'Statement'], 'info': ['fg', 'PreProc'], 'border': ['fg', 'Ignore'], 'prompt': ['fg', 'Identifier'], 'pointer': ['fg', 'Exception'], 'marker': ['fg', 'Identifier'], 'spinner': ['fg', 'Label'], 'header': ['fg', 'Comment'] }")
   vim.cmd([[command! -bang Colors call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)]])
 
   vim.api.nvim_set_keymap('n', '<leader>f', ':Files<CR>', { noremap = true, silent = false })
   vim.api.nvim_set_keymap('n', '<leader>F', ':Files<space>', { noremap = true, silent = false })
-  vim.api.nvim_set_keymap('n', '§ ', ':Buffersa<CR>', { noremap = true, silent = false })
-  local git_top_file = io.popen('git rev-parse --show-toplevel 2> /dev/null')
-  local git_top_dir = string.match(git_top_file:read("*l"), "(%d+)/$")
-  io.close(git_top_file)
+  vim.api.nvim_set_keymap('n', '§', ':Buffers<CR>', { noremap = true, silent = false })
+  local git = io.popen('git rev-parse --show-toplevel 2> /dev/null')
+  local path = git:read("*l")
+  local git_top_dir = ""
+  if path then
+    git_top_dir = string.match(path, "(%d+)/$")
+  end
+  io.close(git)
   if git_top_dir ~= '' then
     vim.cmd(string.format('command! ProjectFiles execute \'GFiles\' %s', git_top_dir))
     vim.api.nvim_set_keymap('n', '<leader>F', ':Files<CR>', { noremap = true, silent = false })
@@ -38,11 +42,12 @@ if vim.fn.executable('fzf') == 1 then
   end
 
   if vim.fn.executable('rg') == 1 then
-    vim.api.nvim_set_keymap('n', '<leader>g', ':Rg<CR>', { noremap = true, silent = false })
+    vim.api.nvim_set_keymap('n', '<leader>g', ':Rg<space>', { noremap = true, silent = false })
+    vim.api.nvim_set_keymap('v', '<leader>g', 'y:Rg <C-R>"<space>', { noremap = true, silent = false })
     -- Grep word under cursor
     vim.api.nvim_set_keymap('n', '<leader>G', ':Rg <C-R><C-W><CR>', { noremap = true, silent = false })
     vim.api.nvim_set_keymap('v', '<leader>G', 'y:Rg <C-R>"<CR>', { noremap = true, silent = false })
-    vim.cmd('command! -bang -nargs=* Rg call fzf#vim#grep(\'rg --column --line-number --no-heading --color=always --smart-case -- \'.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)')
+    vim.cmd('command! -bang -nargs=* Rg call fzf#vim#grep(\'rg --hidden --follow --glob "!.git/*" --column --line-number --no-heading --color=always --smart-case \'.<q-args>, 1, fzf#vim#with_preview(), <bang>0)')
     vim.api.nvim_exec([[
       function! RipgrepFzf(query, fullscreen)
         let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'

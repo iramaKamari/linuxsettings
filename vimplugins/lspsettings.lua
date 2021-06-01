@@ -31,7 +31,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-K>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<leader>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
@@ -47,11 +47,13 @@ local on_attach = function(client, bufnr)
 
   -- Set some keybinds conditional on server capabilities
   local code_format_opts = { "tabSize=2", "insestSpaces=true", "trimTrailingWhitespace?=true", "insertFinalNewLine?=false", "trimFinalNewLines?=true"}
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap('n', '<space>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  end
-  if client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap('v', '<space>cf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
+  if client then
+    if client.resolved_capabilities.document_formatting then
+      buf_set_keymap('n', '<space>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    end
+    if client.resolved_capabilities.document_range_formatting then
+      buf_set_keymap('v', '<space>cf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
+    end
   end
 
   -- Set autocommands conditional on server_capabilities

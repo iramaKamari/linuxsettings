@@ -78,6 +78,7 @@ vim.api.nvim_command([[set path+=**]])
 -- Window >>>
 -- Split
 vim.api.nvim_command([[set splitbelow splitright]])
+vim.api.nvim_exec([[autocmd VimResized * wincmd =]], false)
 vim.api.nvim_set_keymap('n', '<leader>w', ':split<CR>', { noremap = true, silent = true })
 -- Vertical split
 vim.api.nvim_set_keymap('n', '<leader>v', ':vs<CR>', { noremap = true, silent = true })
@@ -95,6 +96,13 @@ vim.api.nvim_set_keymap('n', '<A-Right>', '<C-w><C-<>', { noremap = true, silent
 
 -- Navigation >>>
 vim.api.nvim_command([[set number relativenumber]])
+vim.api.nvim_exec([[
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+]], false)
 -- Go to last used buffer
 vim.api.nvim_set_keymap('n', '<leader>b', '<C-^>', { noremap = true, silent = true })
 -- Display active buffers and prep for :buffer<COMMAND>
@@ -129,10 +137,10 @@ vim.api.nvim_set_keymap('n', '<leader>z', ':call ZoomToggle()<CR>', { noremap = 
 vim.api.nvim_buf_set_option(0, 'textwidth', 0)
 vim.api.nvim_buf_set_option(0, 'tabstop', 2)
 vim.api.nvim_buf_set_option(0, 'softtabstop', 2)
-vim.api.nvim_buf_set_option(0, 'shiftwidth', 2)
+vim.cmd([[set shiftwidth=2]])
 vim.api.nvim_buf_set_option(0, 'expandtab', true)
 vim.api.nvim_set_option('hidden', true)
-vim.api.nvim_buf_set_option(0, 'formatoptions', 'crqn1j')
+--vim.api.nvim_buf_set_option(0, 'formatoptions', 'crqn1j')
 
 -- Move lines up and down in normal/insert/visual mode
 vim.api.nvim_set_keymap('n', '<S-Down>', ':m +1<CR>==', { noremap = true, silent = true })
@@ -183,7 +191,7 @@ vim.api.nvim_set_keymap('n', '<leader>u', ':MundoToggle<CR>', { noremap = true, 
 
 -- Terminal mode mappings<C-\><C-n>:file<space>
 vim.api.nvim_set_keymap('n', '<leader>t', ':terminal<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>:b#<CR>', { noremap = true, silent = true })
 vim.api.nvim_exec([[
 autocmd BufEnter,WinEnter,TermOpen,FocusGained term://* startinsert
 autocmd BufLeave term://* stopinsert
