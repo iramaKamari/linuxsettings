@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/usr/bin:$PATH
+export PATH=/snap/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:$PATH
 
 # Path to zsh folder.
 export ZSH=$HOME/linuxsettings/zshrc

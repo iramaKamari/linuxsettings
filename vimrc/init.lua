@@ -1,28 +1,24 @@
 -- Plugins >>>
---if (empty(glob('~/.config/nvim/site/pack/paqs/opt/paq-nvim'))) then
---  os.execute("curl -fLo ~/.config/nvim/site/pack/paqs/opt/paq-nvim --create-dirs https://raw.githubusercontent.com/savq/paq-nvim/master/plugin/paq-nvim.vim")
---  api.nvim_command('autocmd VimEnter * PaqInstall')
---  api.nvim_command('autocmd VimEnter * source ~/.config/nvim.lua')
---end
-vim.cmd([[packadd paq-nvim]])
-local paq = require('paq-nvim').paq
-paq{'savq/paq-nvim', opt = true}
--- Undo graphical tree
-paq 'simnalamburt/vim-mundo'
--- LSP
-paq 'neovim/nvim-lspconfig'
-paq 'nvim-lua/completion-nvim'
-paq 'ojroques/nvim-lspfuzzy'
--- Code formatting (until LSP formatting takes custom mode)
-paq 'rhysd/vim-clang-format'
--- Fuzzy finding of files/buffers etc
-paq 'junegunn/fzf' --, { 'dir': '~/.fzf', 'do': './install --all' }
-paq 'junegunn/fzf.vim'
--- Syntax highlighters
---Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-paq 'iramaKamari/vimcolors'
-paq 'bfrg/vim-cpp-modern'
-paq 'vim-python/python-syntax'
+require "paq" {
+	"savq/paq-nvim";
+  -- Undo graphical tree
+   "simnalamburt/vim-mundo";
+  -- LSP
+  "neovim/nvim-lspconfig";
+  "nvim-lua/completion-nvim";
+  "ojroques/nvim-lspfuzzy";
+  "simrat39/rust-tools.nvim";
+  -- Code formatting (until LSP formatting takes custom mode)
+  "rhysd/vim-clang-format";
+  -- Fuzzy finding of files/buffers etc
+  "junegunn/fzf";
+  "junegunn/fzf.vim";
+  -- Syntax highlighters
+  --Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  "iramaKamari/vimcolors";
+  "bfrg/vim-cpp-modern";
+  "vim-python/python-syntax";
+}
 --paq 'rktjmp/lush.nvim' colortheme creator
 -- <<<
 
@@ -174,8 +170,11 @@ vim.api.nvim_set_var('python_highlight_all', 1)
 
 -- Code formatting
 vim.api.nvim_set_var('clang_format#code_style', "chromium")
-
+vim.api.nvim_exec([[autocmd BufWritePre *.go lua go_org_imports()]], false)
 -- <<<
+
+-- Omnifunc
+vim.api.nvim_exec([[autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc]], false)
 
 -- GIT
 vim.api.nvim_set_keymap('', '<leader>l', ':te tig %<Return>i', { noremap = true, silent = true })
@@ -200,6 +199,6 @@ autocmd BufLeave term://* stopinsert
 vim.api.nvim_set_keymap('n', '<leader>q', ':q<CR>', { noremap = true, silent = true })
 
 -- Load own plugins last, order matters
-require('vimplugins.lspsettings')
-require('vimplugins.statusline')
-require('vimplugins.fzf')
+--require('lspsettings')
+--require('statusline')
+--require('fzf')
