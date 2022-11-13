@@ -1,23 +1,24 @@
 -- Plugins >>>
 require "paq" {
-	"savq/paq-nvim";
+  "savq/paq-nvim";
   -- Undo graphical tree
-   "simnalamburt/vim-mundo";
+  "simnalamburt/vim-mundo";
   -- LSP
   "neovim/nvim-lspconfig";
   "nvim-lua/completion-nvim";
   "ojroques/nvim-lspfuzzy";
   "simrat39/rust-tools.nvim";
-  -- Code formatting (until LSP formatting takes custom mode)
-  "rhysd/vim-clang-format";
   -- Fuzzy finding of files/buffers etc
-  "junegunn/fzf";
-  "junegunn/fzf.vim";
+  "nvim-lua/plenary.nvim";
+  {"nvim-telescope/telescope.nvim", branch = "0.1.x"};
+  {"nvim-telescope/telescope-fzf-native.nvim", run = "make"};
+  -- Different color for selected search match
+  "PeterRincker/vim-searchlight";
   -- Syntax highlighters
-  --Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  {"nvim-treesitter/nvim-treesitter", run=function() vim.cmd "TSUpdate" end};
+  "frazrepo/vim-rainbow";
+  -- Colorscheme
   "iramaKamari/vimcolors";
-  "bfrg/vim-cpp-modern";
-  "vim-python/python-syntax";
 }
 --paq 'rktjmp/lush.nvim' colortheme creator
 -- <<<
@@ -28,12 +29,6 @@ vim.api.nvim_set_keymap('', '<space>', '<nop>', { noremap = true, silent = true 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 -- <<<
--- Syntax, color and highlight >>>
-vim.api.nvim_command([[syntax enable]])
-vim.api.nvim_set_var('gruvbox_termcolors', 256)
-vim.api.nvim_set_var('rbpt_colorpairs', 1)
-vim.api.nvim_set_var('rainbow_conf', 1)
-vim.api.nvim_command([[silent! colorscheme gruvbox]])
 -- Highlight leading whitespace
 vim.api.nvim_set_keymap('n', '<leader>i', '/^\\s\\+/<CR>', { noremap = true, silent = true })
 -- Highlight trailing whitespace
@@ -57,6 +52,10 @@ endfun
 -- <<<
 -- Global
 vim.api.nvim_command([[set noswapfile nobackup noshowmode]])
+vim.api.nvim_command([[set cursorline]])
+-- Extend MatchParen list
+vim.api.nvim_command([[set mps+=<:>]])
+vim.api.nvim_exec([[autocmd FileType c,cpp set mps+==:;]], false)
 vim.api.nvim_set_option('termguicolors', true)
 vim.api.nvim_set_option('autoread', true)
 vim.api.nvim_set_option('guicursor', "")
@@ -136,7 +135,6 @@ vim.api.nvim_buf_set_option(0, 'softtabstop', 2)
 vim.cmd([[set shiftwidth=2]])
 vim.api.nvim_buf_set_option(0, 'expandtab', true)
 vim.api.nvim_set_option('hidden', true)
---vim.api.nvim_buf_set_option(0, 'formatoptions', 'crqn1j')
 
 -- Move lines up and down in normal/insert/visual mode
 vim.api.nvim_set_keymap('n', '<S-Down>', ':m +1<CR>==', { noremap = true, silent = true })
@@ -170,7 +168,7 @@ vim.api.nvim_set_var('python_highlight_all', 1)
 
 -- Code formatting
 vim.api.nvim_set_var('clang_format#code_style', "chromium")
-vim.api.nvim_exec([[autocmd BufWritePre *.go lua go_org_imports()]], false)
+vim.api.nvim_exec([[autocmd BufWritePre *.go lua Go_org_imports()]], false)
 -- <<<
 
 -- Omnifunc
@@ -179,7 +177,6 @@ vim.api.nvim_exec([[autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc
 -- GIT
 vim.api.nvim_set_keymap('', '<leader>l', ':te tig %<Return>i', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('', '<leader>B', ':te tig blame +<C-r>=line(\'.\')<Return> %<Return>i', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('', '<leader>D', ':te git diff %<Return>i', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('', '<leader>V', ':te git checkout -p %<Return>i', { noremap = true, silent = true })
 
 -- Mundo settings
@@ -198,7 +195,40 @@ autocmd BufLeave term://* stopinsert
 -- Quit
 vim.api.nvim_set_keymap('n', '<leader>q', ':q<CR>', { noremap = true, silent = true })
 
--- Load own plugins last, order matters
---require('lspsettings')
---require('statusline')
---require('fzf')
+-- Syntax, color and highlight >>>
+vim.api.nvim_command([[syntax enable]])
+--vim.api.nvim_set_var('gruvbox_termcolors', 256)
+--vim.api.nvim_set_var('g:rbpt_colorpairs', 1)
+vim.api.nvim_exec([[
+let g:rainbow_active = 1
+let g:gruvbox_sign_column = "black"
+let g:gruvbox_contrast_dark = 'hard'
+]], false)
+vim.api.nvim_command([[silent! colorscheme gruvbox_modified]])
+
+require('nvim-treesitter.configs').setup {
+  auto_install = true,
+  highlight = {
+    additional_vim_regex_highlighting = false,
+    enable = true,
+    disable = function(lang, buf)
+      local max_filesize = 50000
+      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+      if ok and stats and stats.size > max_filesize then
+	return true
+      end
+    end,
+  },
+  indent = {
+    enable = true
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+}
