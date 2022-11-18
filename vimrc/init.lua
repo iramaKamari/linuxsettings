@@ -1,19 +1,26 @@
--- Plugins >>>
+-- Plugins {{{
 require "paq" {
   "savq/paq-nvim";
+  -- PlantUML
+  "aklt/plantuml-syntax",
+  "tyru/open-browser.vim",
+  "weirongxu/plantuml-previewer.vim",
   -- Undo graphical tree
   "simnalamburt/vim-mundo";
   -- LSP
   "neovim/nvim-lspconfig";
   "nvim-lua/completion-nvim";
-  "ojroques/nvim-lspfuzzy";
   "simrat39/rust-tools.nvim";
+  -- Snippets
+  "SirVer/ultisnips",
+  "honza/vim-snippets",
   -- Fuzzy finding of files/buffers etc
-  "nvim-lua/plenary.nvim";
-  {"nvim-telescope/telescope.nvim", branch = "0.1.x"};
-  {"nvim-telescope/telescope-fzf-native.nvim", run = "make"};
+  {"junegunn/fzf", run = "./install --bin"};
+  {"ibhagwan/fzf-lua", branch = "main"};
   -- Different color for selected search match
   "PeterRincker/vim-searchlight";
+  -- Better quickfix list
+  "kevinhwang91/nvim-bqf";
   -- Syntax highlighters
   {"nvim-treesitter/nvim-treesitter", run=function() vim.cmd "TSUpdate" end};
   "frazrepo/vim-rainbow";
@@ -21,14 +28,14 @@ require "paq" {
   "iramaKamari/vimcolors";
 }
 --paq 'rktjmp/lush.nvim' colortheme creator
--- <<<
-
+-- }}}
 -- Editor mappings and settings
--- Remap leader to space >>>
+-- Remap leader to space {{{
 vim.api.nvim_set_keymap('', '<space>', '<nop>', { noremap = true, silent = true })
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
--- <<<
+-- }}}
+-- Whitespace {{{
 -- Highlight leading whitespace
 vim.api.nvim_set_keymap('n', '<leader>i', '/^\\s\\+/<CR>', { noremap = true, silent = true })
 -- Highlight trailing whitespace
@@ -49,7 +56,7 @@ fun! TrimWhitespace()
     call winrestview(l:save)
 endfun
 ]], false)
--- <<<
+-- }}}
 -- Global
 vim.api.nvim_command([[set noswapfile nobackup noshowmode]])
 vim.api.nvim_command([[set cursorline]])
@@ -70,7 +77,7 @@ autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
 ]], false)
 vim.api.nvim_command([[set path+=**]])
 
--- Window >>>
+-- Window {{{
 -- Split
 vim.api.nvim_command([[set splitbelow splitright]])
 vim.api.nvim_exec([[autocmd VimResized * wincmd =]], false)
@@ -87,9 +94,9 @@ vim.api.nvim_set_keymap('n', '<A-Up>', '<C-w><C-+>', { noremap = true, silent = 
 vim.api.nvim_set_keymap('n', '<A-Down>', '<C-w><C-->', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-Left>', '<C-w><C->>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-Right>', '<C-w><C-<>', { noremap = true, silent = true })
--- <<<
+-- }}}
 
--- Navigation >>>
+-- Navigation {{{
 vim.api.nvim_command([[set number relativenumber]])
 vim.api.nvim_exec([[
 augroup numbertoggle
@@ -110,7 +117,8 @@ vim.api.nvim_set_keymap('n', '<C-h>', '<C-w><C-h>', { noremap = true, silent = t
 -- Don't skip wrapped lines
 vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
--- Zoom / Restore window.
+-- }}}
+-- Zoom/Restore window {{{
 vim.api.nvim_exec([[
 function! ZoomToggle()
     if exists('t:zoomed') && t:zoomed
@@ -125,9 +133,9 @@ function! ZoomToggle()
 endfunction
 ]], false)
 vim.api.nvim_set_keymap('n', '<leader>z', ':call ZoomToggle()<CR>', { noremap = true, silent = true })
--- <<<
+-- }}}
 
--- Editing >>>
+-- Editing {{{
 -- Buffer settings
 vim.api.nvim_buf_set_option(0, 'textwidth', 0)
 vim.api.nvim_buf_set_option(0, 'tabstop', 2)
@@ -169,10 +177,11 @@ vim.api.nvim_set_var('python_highlight_all', 1)
 -- Code formatting
 vim.api.nvim_set_var('clang_format#code_style', "chromium")
 vim.api.nvim_exec([[autocmd BufWritePre *.go lua Go_org_imports()]], false)
--- <<<
+-- }}}
 
 -- Omnifunc
 vim.api.nvim_exec([[autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc]], false)
+-- }}}
 
 -- GIT
 vim.api.nvim_set_keymap('', '<leader>l', ':te tig %<Return>i', { noremap = true, silent = true })
@@ -195,13 +204,13 @@ autocmd BufLeave term://* stopinsert
 -- Quit
 vim.api.nvim_set_keymap('n', '<leader>q', ':q<CR>', { noremap = true, silent = true })
 
--- Syntax, color and highlight >>>
+-- Syntax, color and highlight {{{
 vim.api.nvim_command([[syntax enable]])
 --vim.api.nvim_set_var('gruvbox_termcolors', 256)
 --vim.api.nvim_set_var('g:rbpt_colorpairs', 1)
 vim.api.nvim_exec([[
 let g:rainbow_active = 1
-let g:gruvbox_sign_column = "black"
+let g:gruvbox_sign_column = "none"
 let g:gruvbox_contrast_dark = 'hard'
 ]], false)
 vim.api.nvim_command([[silent! colorscheme gruvbox_modified]])
@@ -215,9 +224,12 @@ require('nvim-treesitter.configs').setup {
       local max_filesize = 50000
       local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
       if ok and stats and stats.size > max_filesize then
-	return true
+        return true
       end
     end,
+    custom_captures = {
+      ["TSError"] = "Normal",
+    },
   },
   indent = {
     enable = true
@@ -232,3 +244,34 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+-- }}}
+-- Snippets {{{
+vim.api.nvim_exec([[
+let g:UltiSnipsExpandTrigger = "<C-n>"
+let g:completion_enable_snippet = "UltiSnips"
+]], false)
+-- }}}
+
+-- Better quickfix {{{
+require('bqf').setup{
+  auto_resize_height = true,
+  preview = {
+    win_height = 999,
+    win_vheight = 999,
+  },
+}
+-- }}}
+
+-- Openbrowser {{{
+vim.api.nvim_exec([[
+let g:openbrowser_browser_commands = [
+\{'name': '/usr/bin/firefox',
+\'args': ['start', '{browser}', '{uri}']}
+\]
+]], false)
+
+-- }}}
+
+-- Highlight for odd files {{{
+vim.api.nvim_exec([[autocmd BufEnter *.ifx setlocal filetype=bash]], false)
+-- }}}
