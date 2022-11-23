@@ -32,34 +32,6 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 	vim.keymap.set('n', '<leader>ca', fzf.lsp_code_actions, opts)
 	vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.formatting { async = true } end, opts)
-	--vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-	--vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-	--vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-	--vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-	--vim.keymap.set('n', '<leader>K', vim.lsp.buf.signature_help, opts)
-	--vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-	--vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-	--vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
-	--vim.keymap.set('n', '<leader>d', vim.lsp.buf.type_definition, opts)
-	--vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-	--vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-	--vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float, opts)
-	--vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-	--vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-	--vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-	--vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.formatting { async = true } end, opts)
-	--vim.keymap.set('n', '<leader>cf', '<cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>', opts) Use if format on save
-
-	-- Set some keybinds conditional on server capabilities
-	--local code_format_opts = { "insestSpaces=true", "trimTrailingWhitespace?=true", "insertFinalNewLine?=false", "trimFinalNewLines?=true"}
-	--if client then
-	--  if client.resolved_capabilities.document_formatting then
-	--    vim.keymap.set('n', '<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', code_format_opts)
-	--  end
-	--  if client.resolved_capabilities.document_range_formatting then
-	--    vim.keymap.set('v', '<leader>cf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', code_format_opts)
-	--  end
-	--end
 end
 
 nvim_lsp.pylsp.setup {

@@ -60,6 +60,7 @@ endfun
 -- Global
 vim.api.nvim_command([[set noswapfile nobackup noshowmode]])
 vim.api.nvim_command([[set cursorline]])
+vim.api.nvim_command([[set mouse=]])
 -- Extend MatchParen list
 vim.api.nvim_command([[set mps+=<:>]])
 vim.api.nvim_exec([[autocmd FileType c,cpp set mps+==:;]], false)

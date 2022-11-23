@@ -1,11 +1,14 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=/snap/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:$PATH
+export PATH=/snap/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:$HOME/.cargo/bin:$PATH
 
 # Path to zsh folder.
-export ZSH=$HOME/linuxsettings/zshrc
+export ZSH=$HOME/.linuxsettings/zshrc
 
 # Path to zplug folder.
 export ZPLUG_HOME=$HOME/.zplug
+if [[ ! -a $ZPLUG_HOME/README.md ]];  then
+  git clone https://github.com/zplug/zplug $ZPLUG_HOME
+fi
 
 # Nvim as standard editor
 export EDITOR=nvim
@@ -47,7 +50,6 @@ fi
 
 # Then, source plugins and add commands to $PATH
 zplug load
-eval "$(lua ~/.zplug/repos/skywind3000/z.lua/z.lua --init zsh)"
 
 bindkey -v
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
