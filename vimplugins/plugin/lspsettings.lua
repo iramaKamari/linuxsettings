@@ -6,7 +6,6 @@ autocmd FileType cpp nnoremap <buffer> <leader>h :ClangdSwitchSourceHeader<CR>
 local nvim_lsp = require('lspconfig')
 local nvim_lsp_util = require('lspconfig/util')
 local on_attach = function(client, bufnr)
-	require 'completion'.on_attach()
 	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	vim.diagnostic.config({ virtual_text = false })
 
@@ -31,14 +30,14 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 	vim.keymap.set('n', '<leader>ca', fzf.lsp_code_actions, opts)
-	vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.formatting { async = true } end, opts)
+	vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, opts)
 end
 
 nvim_lsp.pylsp.setup {
 	on_attach = on_attach
 }
 nvim_lsp.clangd.setup {
-	cmd = { 'clangd-14', '-j=12', '--all-scopes-completion=true', '--background-index=true', '--fallback-style=chromium',
+	cmd = { 'clangd', '-j=12', '--all-scopes-completion=true', '--background-index=true', '--fallback-style=chromium',
 		'--header-insertion=iwyu', '--suggest-missing-includes=true' };
 	on_attach = on_attach
 }

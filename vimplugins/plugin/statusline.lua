@@ -109,7 +109,7 @@ Metatable.get_current_mode = function(self)
   return string.format("%s%s", self.highlights[value[2]], value[1]:upper())
 end
 
-Metatable.get_git_info = function(self)
+Metatable.get_git_info = function()
   local git_branches_file = io.popen("git rev-parse --abbrev-ref HEAD 2> /dev/null", "r")
   local git = git_branches_file:read("*l")
   io.close(git_branches_file)

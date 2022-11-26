@@ -9,8 +9,15 @@ require "paq" {
   "simnalamburt/vim-mundo";
   -- LSP
   "neovim/nvim-lspconfig";
-  "nvim-lua/completion-nvim";
   "simrat39/rust-tools.nvim";
+  -- Completion
+  "hrsh7th/nvim-cmp";
+  "hrsh7th/cmp-nvim-lsp";
+  "hrsh7th/cmp-buffer";
+  "hrsh7th/cmp-path";
+  "hrsh7th/cmp-cmdline";
+  "hrsh7th/cmp-nvim-lsp-signature-help";
+  "ray-x/cmp-treesitter";
   -- Snippets
   "SirVer/ultisnips",
   "honza/vim-snippets",
@@ -86,15 +93,15 @@ vim.api.nvim_set_keymap('n', '<leader>w', ':split<CR>', { noremap = true, silent
 -- Vertical split
 vim.api.nvim_set_keymap('n', '<leader>v', ':vs<CR>', { noremap = true, silent = true })
 -- Change split layout
-vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>J', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>K', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>L', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-h>', '<C-w>H', { noremap = true, silent = true })
--- Change split dimensions
-vim.api.nvim_set_keymap('n', '<A-Up>', '<C-w><C-+>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-Down>', '<C-w><C-->', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-Left>', '<C-w><C->>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-Right>', '<C-w><C-<>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>J', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>K', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>L', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<A-h>', '<C-w>H', { noremap = true, silent = true })
+---- Change split dimensions
+--vim.api.nvim_set_keymap('n', '<A-Up>', '<C-w><C-+>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<A-Down>', '<C-w><C-->', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<A-Left>', '<C-w><C->>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<A-Right>', '<C-w><C-<>', { noremap = true, silent = true })
 -- }}}
 
 -- Navigation {{{
@@ -207,8 +214,6 @@ vim.api.nvim_set_keymap('n', '<leader>q', ':q<CR>', { noremap = true, silent = t
 
 -- Syntax, color and highlight {{{
 vim.api.nvim_command([[syntax enable]])
---vim.api.nvim_set_var('gruvbox_termcolors', 256)
---vim.api.nvim_set_var('g:rbpt_colorpairs', 1)
 vim.api.nvim_exec([[
 let g:rainbow_active = 1
 let g:gruvbox_sign_column = "none"
@@ -249,7 +254,6 @@ require('nvim-treesitter.configs').setup {
 -- Snippets {{{
 vim.api.nvim_exec([[
 let g:UltiSnipsExpandTrigger = "<C-n>"
-let g:completion_enable_snippet = "UltiSnips"
 ]], false)
 -- }}}
 
