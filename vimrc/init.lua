@@ -17,6 +17,7 @@ require "paq" {
   "hrsh7th/cmp-path";
   "hrsh7th/cmp-cmdline";
   "hrsh7th/cmp-nvim-lsp-signature-help";
+  "quangnguyen30192/cmp-nvim-ultisnips";
   "ray-x/cmp-treesitter";
   -- Snippets
   "SirVer/ultisnips",
@@ -31,8 +32,6 @@ require "paq" {
   -- Syntax highlighters
   {"nvim-treesitter/nvim-treesitter", run=function() vim.cmd "TSUpdate" end};
   "frazrepo/vim-rainbow";
-  -- Colorscheme
-  "iramaKamari/vimcolors";
 }
 --paq 'rktjmp/lush.nvim' colortheme creator
 -- }}}
@@ -77,7 +76,7 @@ vim.api.nvim_set_option('guicursor', "")
 vim.api.nvim_set_option('lazyredraw', true)
 vim.api.nvim_set_option('showmatch', true)
 vim.api.nvim_set_option('complete', '.,w,b,u,t')
-vim.api.nvim_set_option('completeopt', 'menu,noinsert,noselect')
+vim.api.nvim_set_option('completeopt', 'menu,menuone,noinsert,noselect')
 vim.api.nvim_set_option('wildmode', 'longest:full,full')
 -- Omnicomple in insert mode
 vim.api.nvim_exec([[
