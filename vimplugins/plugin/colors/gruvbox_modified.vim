@@ -752,13 +752,13 @@ hi! link Typedef GruvboxYellow
 
 if version >= 700
   " Popup menu: normal item
-  call s:HL('Pmenu', s:gb.fg1, s:gb.bg1)
+  call s:HL('Pmenu', s:gb.fg1, s:none)
   " Popup menu: selected item
   call s:HL('PmenuSel', s:gb.bg1, s:gb.blue, s:bold)
   " Popup menu: scrollbar
-  call s:HL('PmenuSbar', s:none, s:gb.bg1)
+  call s:HL('PmenuSbar', s:none, s:none)
   " Popup menu: scrollbar thumb
-  call s:HL('PmenuThumb', s:none, s:gb.bg2)
+  call s:HL('PmenuThumb', s:none, s:none)
 endif
 
 " }}}
@@ -870,11 +870,11 @@ endif
 
 if g:indent_guides_auto_colors == 0
   if g:gruvbox_invert_indent_guides == 0
-    call s:HL('IndentGuidesOdd', s:vim_bg, s:gb.bg2)
-    call s:HL('IndentGuidesEven', s:vim_bg, s:gb.bg1)
+    call s:HL('IndentGuidesOdd', s:vim_fg, s:gb.bg2)
+    call s:HL('IndentGuidesEven', s:vim_fg, s:gb.bg1)
   else
-    call s:HL('IndentGuidesOdd', s:vim_bg, s:gb.bg2, s:inverse)
-    call s:HL('IndentGuidesEven', s:vim_bg, s:gb.bg3, s:inverse)
+    call s:HL('IndentGuidesOdd', s:vim_fg, s:gb.bg2, s:inverse)
+    call s:HL('IndentGuidesEven', s:vim_fg, s:gb.bg3, s:inverse)
   endif
 endif
 
@@ -1217,14 +1217,14 @@ call s:HL('htmlLink', s:gb.fg4, s:none, s:underline)
 
 hi! link htmlSpecialChar GruvboxRed
 
-call s:HL('htmlBold', s:vim_fg, s:vim_bg, s:bold)
-call s:HL('htmlBoldUnderline', s:vim_fg, s:vim_bg, s:bold . s:underline)
-call s:HL('htmlBoldItalic', s:vim_fg, s:vim_bg, s:bold . s:italic)
-call s:HL('htmlBoldUnderlineItalic', s:vim_fg, s:vim_bg, s:bold . s:underline . s:italic)
+call s:HL('htmlBold', s:gb.fg1, s:none, s:bold)
+call s:HL('htmlBoldUnderline', s:gb.fg1, s:none, s:bold . s:underline)
+call s:HL('htmlBoldItalic', s:gb.fg1, s:none, s:bold . s:italic)
+call s:HL('htmlBoldUnderlineItalic', s:gb.fg1, s:none, s:bold . s:underline . s:italic)
 
-call s:HL('htmlUnderline', s:vim_fg, s:vim_bg, s:underline)
-call s:HL('htmlUnderlineItalic', s:vim_fg, s:vim_bg, s:underline . s:italic)
-call s:HL('htmlItalic', s:vim_fg, s:vim_bg, s:italic)
+call s:HL('htmlUnderline', s:gb.fg1, s:none, s:underline)
+call s:HL('htmlUnderlineItalic', s:gb.fg1, s:none, s:underline . s:italic)
+call s:HL('htmlItalic', s:gb.fg1, s:none, s:italic)
 
 " }}}
 " Xml: {{{
