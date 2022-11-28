@@ -58,5 +58,7 @@ export FZF_CTRL_T_OPTS="--preview '(ansi -l {} 2> /dev/null || cat {} || tree -C
 export FZF_DEFAULT_COMMAND='fd --color=always --type file --follow --hidden --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--ansi"
+export FZF_ALT_C_COMMAND='fd --color=always --type directory --follow --hidden --exclude .git'
+export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS"
 
 unset fzf_base fzf_shell dir fzfdirs
