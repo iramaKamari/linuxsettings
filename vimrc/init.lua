@@ -122,8 +122,8 @@ vim.api.nvim_set_keymap('n', '<C-k>', '<C-w><C-k>', { noremap = true, silent = t
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-w><C-l>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w><C-h>', { noremap = true, silent = true })
 -- Don't skip wrapped lines
-vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
-vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
+--vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
+--vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 -- }}}
 -- Zoom/Restore window {{{
 vim.api.nvim_exec([[
@@ -151,6 +151,8 @@ vim.cmd([[set shiftwidth=2]])
 vim.api.nvim_buf_set_option(0, 'expandtab', true)
 vim.api.nvim_set_option('hidden', true)
 
+-- Keep yanked text in visual mode for pasting
+--vim.api.nvim_set_keymap('x', 'p', '"_dP"', { noremap = true, silent = true })
 -- Move lines up and down in normal/insert/visual mode
 vim.api.nvim_set_keymap('n', '<S-Down>', ':m +1<CR>==', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<S-Up>', ':m -2<CR>==', { noremap = true, silent = true })
