@@ -5,8 +5,6 @@ require "paq" {
   "aklt/plantuml-syntax",
   "tyru/open-browser.vim",
   "weirongxu/plantuml-previewer.vim",
-  -- Undo graphical tree
-  "simnalamburt/vim-mundo";
   -- LSP
   "neovim/nvim-lspconfig";
   "simrat39/rust-tools.nvim";
@@ -17,14 +15,16 @@ require "paq" {
   "hrsh7th/cmp-path";
   "hrsh7th/cmp-cmdline";
   "hrsh7th/cmp-nvim-lsp-signature-help";
-  "quangnguyen30192/cmp-nvim-ultisnips";
   "ray-x/cmp-treesitter";
   -- Snippets
-  "SirVer/ultisnips",
-  "honza/vim-snippets",
+  "L3MON4D3/LuaSnip",
+  "saadparwaiz1/cmp_luasnip",
+  "rafamadriz/friendly-snippets",
   -- Fuzzy finding of files/buffers etc
   {"junegunn/fzf", run = "./install --bin"};
   {"ibhagwan/fzf-lua", branch = "main"};
+  --{"nvim-telescope/telescope.nvim", branch = "0.1.x"},
+  --'nvim-lua/plenary.nvim',
   -- Different color for selected search match
   "PeterRincker/vim-searchlight";
   -- Better quickfix list
@@ -198,10 +198,10 @@ vim.api.nvim_set_keymap('', '<leader>B', ':te tig blame +<C-r>=line(\'.\')<Retur
 vim.api.nvim_set_keymap('', '<leader>V', ':te git checkout -p %<Return>i', { noremap = true, silent = true })
 
 -- Mundo settings
-vim.api.nvim_set_var('mundo_preview_bottom', 1)
-vim.api.nvim_set_var('mundo_preview_height', 50)
-vim.api.nvim_set_var('mundo_close_on_revert', 1)
-vim.api.nvim_set_keymap('n', '<leader>u', ':MundoToggle<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_var('mundo_preview_bottom', 1)
+--vim.api.nvim_set_var('mundo_preview_height', 50)
+--vim.api.nvim_set_var('mundo_close_on_revert', 1)
+--vim.api.nvim_set_keymap('n', '<leader>u', ':MundoToggle<CR>', { noremap = true, silent = true })
 
 -- Terminal mode mappings<C-\><C-n>:file<space>
 vim.api.nvim_set_keymap('n', '<leader>t', ':terminal<CR>', { noremap = true, silent = true })
@@ -253,9 +253,9 @@ require('nvim-treesitter.configs').setup {
 }
 -- }}}
 -- Snippets {{{
-vim.api.nvim_exec([[
-let g:UltiSnipsExpandTrigger = "<C-n>"
-]], false)
+--vim.api.nvim_exec([[
+--let g:UltiSnipsExpandTrigger = "<C-n>"
+--]], false)
 -- }}}
 
 -- Better quickfix {{{
@@ -280,4 +280,14 @@ let g:openbrowser_browser_commands = [
 
 -- Highlight for odd files {{{
 vim.api.nvim_exec([[autocmd BufEnter *.ifx setlocal filetype=bash]], false)
+-- }}}
+-- Border for floating windows {{{
+--function Floating_border()
+--  if vim.api.nvim_win_get_config(vim.api.nvim_win_getid()).relative ~= '' then
+--    vim.api.nvim_exec([[echo "Hi"]], false)
+--    vim.api.nvim_win_set_config(0, { border = "rounded" })
+--  end
+--end
+--vim.api.nvim_exec([[autocmd BufWinEnter lua Floating_border()]], false)
+--vim.api.nvim_exec([[autocmd BufWinEnter echo "Hi"]], false)
 -- }}}
