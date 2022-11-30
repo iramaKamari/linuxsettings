@@ -21,10 +21,20 @@ cmp.setup({
 		completion = cmp.config.window.bordered(),
 		documentation = cmp.config.window.bordered(),
 	},
+  completion = {
+    keyword_length = 2,
+    --autocomplete = false,
+  },
+  view = {
+    entries = {
+      name = "custom",
+      selection_order = "near_cursor",
+    }
+  },
 	mapping = {
 		['<C-b>'] = cmp.mapping.scroll_docs(-4),
 		['<C-f>'] = cmp.mapping.scroll_docs(4),
-		--['<C-Space>'] = cmp.mapping.complete(),
+		--['<C-n>'] = cmp.mapping.complete(),
 		['<C-e>'] = cmp.mapping.abort(),
 		['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 		["<C-n>"] = cmp.mapping(function(fallback)
@@ -48,6 +58,12 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
+    ['<C-l>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        return cmp.complete_common_string()
+      end
+      fallback()
+    end, { 'i', 'c' }),
 	},
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
@@ -58,8 +74,13 @@ cmp.setup({
 		--{ name = 'ultisnips' }, -- For ultisnips users.
 		-- { name = 'snippy' }, -- For snippy users.
 	}, {
-		{ name = 'buffer' },
-	})
+		{ name = 'buffer', keyword_length = 3 },
+	}),
+  performance = {
+    throttle = 100,
+    debounce = 500,
+    fetching_timeout = 200,
+  }
 })
 
 -- Set configuration for specific filetype.
