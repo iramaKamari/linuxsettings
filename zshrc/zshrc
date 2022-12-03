@@ -13,11 +13,6 @@ fi
 # Nvim as standard editor
 export EDITOR=nvim
 
-# Kitty as standard terminal
-export TERMCMD=kitty
-export TERM=kitty
-export TERMINAL=kitty
-
 autoload -Uz compinit
 
 # Source all config files

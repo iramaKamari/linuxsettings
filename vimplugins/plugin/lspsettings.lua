@@ -88,45 +88,45 @@ local opts = {
       other_hints_prefix = "",
     },
   },
-	server = {
-		-- on_attach is a callback called when the language server attachs to the buffer
-		on_attach = on_attach,
-		capabilities = capabilities,
-		settings = {
-			-- to enable rust-analyzer settings visit:
-			-- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-			["rust-analyzer"] = {
-				-- enable clippy on save
-				checkOnSave = {
-					command = "clippy"
-				},
-			}
-		}
-	},
+  server = {
+    -- on_attach is a callback called when the language server attachs to the buffer
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+      -- to enable rust-analyzer settings visit:
+      -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+      ["rust-analyzer"] = {
+        -- enable clippy on save
+        checkOnSave = {
+          command = "clippy"
+        },
+      }
+    }
+  },
 }
 
 require('rust-tools').setup(opts)
 
 nvim_lsp.sumneko_lua.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		Lua = {
-			runtime = {
-				version = "LuaJIT",
-			},
-			diagnostics = {
-				globals = { "vim" },
-			},
-			workspace = {
-				library = vim.api.nvim_get_runtime_file("", true),
-				checkThirdParty = false,
-			},
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
 }
 
 nvim_lsp.julials.setup {
