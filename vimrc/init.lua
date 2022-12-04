@@ -113,7 +113,7 @@ augroup numbertoggle
 augroup END
 ]], false)
 -- Go to last used buffer
-vim.api.nvim_set_keymap('n', '<leader>b', '<C-^>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<leader>b', '<C-^>', { noremap = true, silent = true })
 -- Display active buffers and prep for :buffer<COMMAND>
 vim.api.nvim_set_keymap('n', '§', ':ls<CR>:b<space>', { noremap = true, silent = true })
 -- Between splits
@@ -161,6 +161,8 @@ vim.api.nvim_set_keymap('i', '<S-Up>', '<Esc>:m -2<CR>==gi', { noremap = true, s
 vim.api.nvim_set_keymap('v', '<S-Down>', '<Esc>:m +1<CR>gv=gv', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<S-Up>', '<Esc>:m -2<CR>gv=gv', { noremap = true, silent = true })
 
+-- Tryout normal command
+vim.api.nvim_set_keymap('n', '<leader>n', ':normal ', { noremap = true, silent = false })
 -- Quicksave current buffer
 vim.api.nvim_set_keymap('n', '<leader>s', ':w<CR>', { noremap = true, silent = true })
 -- Escape as kk
