@@ -22,7 +22,7 @@ cmp.setup({
 		--documentation = cmp.config.window.bordered(),
 	},
   completion = {
-    keyword_length = 2,
+    keyword_length = 4,
     --autocomplete = false,
   },
   view = {
@@ -34,7 +34,7 @@ cmp.setup({
 	mapping = {
 		['<C-b>'] = cmp.mapping.scroll_docs(-4),
 		['<C-f>'] = cmp.mapping.scroll_docs(4),
-		--['<C-n>'] = cmp.mapping.complete(),
+		['<C-s>'] = cmp.mapping.complete(),
 		['<C-e>'] = cmp.mapping.abort(),
 		['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 		["<C-n>"] = cmp.mapping(function(fallback)

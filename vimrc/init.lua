@@ -195,9 +195,9 @@ vim.api.nvim_exec([[autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc
 -- }}}
 
 -- GIT
-vim.api.nvim_set_keymap('', '<leader>l', ':te tig %<Return>i', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('', '<leader>B', ':te tig blame +<C-r>=line(\'.\')<Return> %<Return>i', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('', '<leader>V', ':te git checkout -p %<Return>i', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('', '<leader>l', ':-tab split<CR> :terminal tig %<Return>i', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('', '<leader>B', ':-tab split<CR> :terminal tig blame +<C-r>=line(\'.\')<Return> %<Return>i', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('', '<leader>V', ':-tab split<CR> :terminal git checkout -p %<Return>i', { noremap = true, silent = true })
 
 -- Mundo settings
 --vim.api.nvim_set_var('mundo_preview_bottom', 1)
