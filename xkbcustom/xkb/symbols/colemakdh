@@ -1,0 +1,146 @@
+// based on a keyboard map from an 'xkb/symbols/se' file
+
+default  partial alphanumeric_keys
+xkb_symbols "basic" {
+    include "latin(type2)"
+    include "se(se)"
+};
+
+partial alphanumeric_keys
+xkb_symbols "se" {
+
+    name[Group1]="Swedish";
+
+    key <AE05>	{ [         5,    percent,     EuroSign,         cent ]	};
+    key <AE11>	{ [      plus,   question,    backslash, questiondown ]	};
+    key <AE12>	{ [dead_acute, dead_grave,    plusminus,      notsign ]	};
+
+
+    key <AC10>	{ [odiaeresis, Odiaeresis,       oslash,     Ooblique ]	};
+    key <AC11>	{ [adiaeresis, Adiaeresis,           ae,           AE ]	};
+    key <TLDE>	{ [   section,    onehalf,    paragraph, threequarters]	};
+
+    key <BKSL>	{ [apostrophe,   asterisk,        acute,     multiply ]	};
+
+    key <SPCE>	{ [     space,      space,        space, nobreakspace ]	};
+
+    key <LSGT>  { [      less,     greater,         bar,    brokenbar ] };
+    include "kpdl(comma)"
+
+    include "level3(ralt_switch)"
+};
+
+partial alphanumeric_keys
+xkb_symbols "nodeadkeys" {
+
+    // Modifies the basic Swedish layout to eliminate all dead keys
+
+    include "latin(type2)"
+    include "latin(type2_nodeadkeys)"
+    include "se(se)"
+
+    name[Group1]="Swedish (no dead keys)";
+
+    key <AE12>	{ [     acute,      grave,    plusminus,      notsign ]	};
+};
+
+partial alphanumeric_keys modifier_keys
+xkb_symbols "programming" {
+
+    include "latin(type2)"
+    include "se(se)"
+
+    name[Group1]="Swedish (Programming)";
+    key <AB08>  { [ comma, less ] };
+    key <AB09>  { [ period, greater ] };
+
+    key <AC10>  { [ slash, question, odiaeresis, Odiaeresis ] };
+    key <AC11>  { [ semicolon, colon, adiaeresis, Adiaeresis ] };
+    key <AD11>  { [ braceleft, bracketleft, aring, Aring ] };
+    key <AD12>  { [ braceright, bracketright, asciitilde ] };
+
+    key <AE04>  { [ 4, dollar ] };
+    key <AE05>  { [ 5, percent, EuroSign, cent ] };
+    key <AE07>  { [ 7, asciicircum, dollar ] };
+    key <AE11>  { [ plus, backslash, questiondown ] };
+    key <AE12>  { [ dead_acute, dead_grave, plusminus, notsign ] };
+
+    key <TLDE>  { [ section, asciitilde, paragraph, threequarters] };
+
+    key <BKSL>  { [ apostrophe, asterisk, dead_diaeresis ] };
+
+    key <SPCE>  { [ space, space, space, nobreakspace ] };
+
+    key <CAPS> { [ Escape ] };
+    key <ESC> { [ Caps_Lock ] };
+    key <DOWN> { [ Up	]	};
+    key <UP> { [ Down	]	};
+
+    key <LSGT>  { [ bar, brokenbar ] };
+    include "kpdl(comma)"
+
+    include "level3(ralt_switch)"
+};
+
+partial alphanumeric_keys modifier_keys
+xkb_symbols "colemakDH" {
+
+    include "latin(type2)"
+    include "se(se)"
+
+    name[Group1]="ColemakeDH (Programming)";
+    key <AB01>  { [ z, Z ] };
+    key <AB02>  { [ x, X, 1 ] };
+    key <AB03>  { [ c, C, 2 ] };
+    key <AB04>  { [ d, D, 3 ] };
+    key <AB05>  { [ v, V ] };
+    key <AB06>  { [ m, M ] };
+    key <AB07>  { [ h, H ] };
+    key <AB08>  { [ comma, less ] };
+    key <AB09>  { [ period, greater ] };
+
+    key <AC01>  { [ a, A, 0 ] };
+    key <AC02>  { [ r, R, 4 ] };
+    key <AC03>  { [ s, S, 5 ] };
+    key <AC04>  { [ t, T, 6 ] };
+    key <AC06>  { [ k, K ] };
+    key <AC07>  { [ n, N ] };
+    key <AC08>  { [ e, E ] };
+    key <AC09>  { [ i, I ] };
+    key <AC10>  { [ o, O, odiaeresis, Odiaeresis ] };
+    key <AC11>  { [ slash, question, adiaeresis, Adiaeresis ] };
+
+    key <AD02>  { [ w, W, 7 ] };
+    key <AD03>  { [ f, F, 8 ] };
+    key <AD04>  { [ p, P, 9 ] };
+    key <AD05>  { [ b, B ] };
+    key <AD06>  { [ j, J ] };
+    key <AD07>  { [ l, L ] };
+    key <AD08>  { [ u, U ] };
+    key <AD09>  { [ y, Y ] };
+    key <AD10>  { [ semicolon, colon, aring, Aring ] };
+    key <AD11>  { [ braceleft, bracketleft ] };
+    key <AD12>  { [ braceright, bracketright, asciitilde ] };
+
+    key <AE04>  { [ 4, dollar, grave ] };
+    key <AE05>  { [ 5, percent, EuroSign, cent ] };
+    key <AE07>  { [ 7, asciicircum, dollar ] };
+    key <AE11>  { [ plus, backslash, questiondown ] };
+    key <AE12>  { [ dead_acute, dead_grave, plusminus, notsign ] };
+
+    key <TLDE>  { [ section, asciitilde, paragraph, threequarters] };
+
+    key <BKSL>  { [ apostrophe, asterisk, dead_diaeresis ] };
+
+    key <SPCE>  { [ space, space, space, nobreakspace ] };
+
+    key <CAPS> { [ Escape ] };
+    key <ESC> { [ Caps_Lock ] };
+    key <DOWN> { [ Up	]	};
+    key <UP> { [ Down	]	};
+
+    key <LSGT>  { [ bar, brokenbar ] };
+    include "kpdl(comma)"
+
+    include "level3(ralt_switch)"
+};
