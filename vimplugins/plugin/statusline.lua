@@ -2,6 +2,7 @@ local Metatable = {}
 
 local Colors = {
   dark = '#000000',
+  dark_soft = '#3c3836',
   gray = '#928374',
   light = '#fbf1c7',
   red = '#fb4934',
@@ -14,6 +15,7 @@ local Colors = {
 }
 vim.api.nvim_command('hi DarkFg guifg=' .. Colors.dark)
 vim.api.nvim_command('hi GrayFg guifg=' .. Colors.gray)
+vim.api.nvim_command('hi GrayBg gui=' .. 'BOLD' .. ' guifg=' .. Colors.dark_soft .. ' guibg=NONE')
 vim.api.nvim_command('hi LightFg guifg=' .. Colors.light)
 vim.api.nvim_command('hi RedFg guifg=' .. Colors.red)
 vim.api.nvim_command('hi RedBg guifg=' .. Colors.dark .. ' guibg=' .. Colors.red)
@@ -23,10 +25,12 @@ vim.api.nvim_command('hi BlueFg guifg=' .. Colors.blue)
 vim.api.nvim_command('hi PurpleFg guifg=' .. Colors.purple)
 vim.api.nvim_command('hi AquaFg guifg=' .. Colors.aqua)
 vim.api.nvim_command('hi OrangeFg guifg=' .. Colors.orange)
+vim.api.nvim_command('hi Blank guifg=' .. 'NONE' .. ' guibg=' .. 'NONE')
 
 Metatable.highlights = {
   darkFg = "%#DarkFg#",
   grayFg = "%#GrayFg#",
+  grayBg = "%#GrayBg#",
   lightFg = "%#LightFg#",
   redFg = "%#RedFg#",
   redBg = "%#RedBg#",
@@ -35,6 +39,7 @@ Metatable.highlights = {
   purpleFg = "%#PurpleFg#",
   aquaFg = "%#AquaFg#",
   orangeFg = "%#OrangeFg#",
+  blank = "%#Blank#",
 }
 
 Metatable.scrollbar_states = {
@@ -49,18 +54,18 @@ Metatable.scrollbar_states = {
   '█',
 }
 
-Metatable.get_scrollbar = function(self)
+Metatable.get_scrollbar = function()
   local total_lines = vim.fn.line('$')
   local current_line = vim.fn.line('.')
   local position = current_line / total_lines
-  local index = nil
-  if current_line == 1 then
-    index = current_line
-  elseif current_line == total_lines then
-    index = #self.scrollbar_states
-  else
-    index = (math.floor(position * #self.scrollbar_states) % #self.scrollbar_states) + 1 -- Lua arrays are not 0-index based
-  end
+  --local index = nil
+  --if current_line == 1 then
+  --  index = current_line
+  --elseif current_line == total_lines then
+  --  index = #self.scrollbar_states
+  --else
+  --  index = (math.floor(position * #self.scrollbar_states) % #self.scrollbar_states) + 1 -- Lua arrays are not 0-index based
+  --end
   --return string.format("%s%s[%s]", math.floor(100*position), '%%', self.scrollbar_states[index])
   return string.format("%s%s", math.floor(100*position), '%%')
 end
@@ -113,20 +118,24 @@ Metatable.get_git_info = function()
   local git_branches_file = io.popen("git rev-parse --abbrev-ref HEAD 2> /dev/null", "r")
   local git = git_branches_file:read("*l")
   io.close(git_branches_file)
-  return not git and "" or string.format(" %s ", git or "")
+  return not git and "" or string.format(" %s", git or "")
 end
 
-Metatable.get_filename_and_modifiable = function(self)
+Metatable.get_modifiable = function(self)
   local modifiable = ""
-  local file_name = "%<%f"
-  if vim.api.nvim_buf_get_option(0, 'readonly')
-    or not vim.api.nvim_buf_get_option(0, 'modifiable') then
+  --if vim.api.nvim_buf_get_option(0, 'readonly')
+    --or not vim.api.nvim_buf_get_option(0, 'modifiable') then
+  if vim.bo.readonly then
     modifiable = self.highlights.redFg .. " "
   end
-  return string.format("%s%s", file_name, modifiable)
+  return string.format("%s", modifiable)
+end
+Metatable.get_filename = function()
+  local file_name = "%<%f"
+  return string.format("%s", file_name)
 end
 
-Metatable.get_filetype_and_size = function(self)
+Metatable.get_filetype_and_size = function()
   local file_size = vim.fn.getfsize(vim.fn.expand('%:p'))
   local size_text = "B"
   if file_size >= 1024 then
@@ -152,7 +161,8 @@ Metatable.set_active = function(self)
   local hi = self.highlights
 
   local git = hi.greenFg .. self:get_git_info()
-  local filename = hi.aquaFg .. self:get_filename_and_modifiable()
+  local filename = hi.aquaFg .. self:get_filename()
+  local modifiable = self:get_modifiable()
   local filetype = hi.aquaFg .. self:get_filetype_and_size()
   local encodeff = hi.aquaFg .. self:get_encoding_and_fileformat()
   --local line_total = hi.yellowFg .. ":%L"
@@ -160,9 +170,11 @@ Metatable.set_active = function(self)
   local file_position = hi.yellowFg .. self:get_scrollbar()
   local seperator = " "
   return table.concat({
+    hi.blank,
     self:get_current_mode(),
     seperator,
     filename,
+    modifiable,
     hi.redFg .. "%m%w",
     coloumn,
     seperator,
@@ -179,18 +191,21 @@ end
 Metatable.set_inactive = function(self)
   local hi = self.highlights
 
-  local git = self:get_git_info()
-  local filename = self:get_filename_and_modifiable()
-  local filetype = self:get_filetype_and_size()
-  local encodeff = self:get_encoding_and_fileformat()
+  --local git = self:get_git_info()
+  local filename = self:get_filename()
+  local modifiable = self:get_modifiable()
+  --local filetype = self:get_filetype_and_size()
+  --local encodeff = self:get_encoding_and_fileformat()
   --local coloumn = "[%c]"
-  local seperator = " "
+  --local seperator = " "
   return table.concat({
     hi.grayFg,
-    seperator,
+    "<<<",
     filename,
+    --modifiable,
     "%m%w",
    -- coloumn,
+    ">>>",
     --seperator,
     --filetype,
     --seperator,

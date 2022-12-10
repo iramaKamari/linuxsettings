@@ -406,7 +406,8 @@ if exists('g:gruvbox_cursorline')
   let s:cursorline = get(s:gb, g:gruvbox_cursorline)
 endif
 
-let s:vert_split = s:gb.bg0
+let s:vert_split = s:none
+"let s:vert_split = s:gb.bg0
 if exists('g:gruvbox_vert_split')
   let s:vert_split = get(s:gb, g:gruvbox_vert_split)
 endif
@@ -547,7 +548,7 @@ call s:HL('GruvboxPurpleSign', s:gb.purple, s:sign_column, s:invert_signs)
 call s:HL('GruvboxAquaSign', s:gb.aqua, s:sign_column, s:invert_signs)
 call s:HL('GruvboxOrangeSign', s:gb.orange, s:sign_column, s:invert_signs)
 
-call s:HL('GruvboxRedUnderline', s:none, s:none, s:undercurl, s:gb.red)
+call s:HL('GruvboxRedUnderline', s:gb.red, s:none, s:undercurl, s:gb.red)
 call s:HL('GruvboxGreenUnderline', s:none, s:none, s:undercurl, s:gb.green)
 call s:HL('GruvboxYellowUnderline', s:none, s:none, s:undercurl, s:gb.yellow)
 call s:HL('GruvboxBlueUnderline', s:none, s:none, s:undercurl, s:gb.blue)
@@ -596,7 +597,7 @@ if version >= 700
   hi! link TabLine TabLineFill
 
   " Match paired bracket under the cursor
-  call s:HL('MatchParen', s:none, s:gb.fg1, s:bold)
+  call s:HL('MatchParen', s:gb.purple, s:gb.bg1, s:bold)
 endif
 
 if version >= 703
@@ -623,11 +624,11 @@ call s:HL('QuickFixLine', s:gb.bg0, s:gb.yellow, s:bold)
 
 call s:HL('Underlined', s:gb.blue, s:none, s:underline)
 
-call s:HL('StatusLine',   s:gb.bg2, s:gb.fg1, s:inverse)
-call s:HL('StatusLineNC', s:gb.bg1, s:gb.fg4, s:inverse)
+call s:HL('StatusLine',   s:gb.bg1, s:none, s:bold)
+call s:HL('StatusLineNC', s:gb.bg4, s:none, s:bold)  
 
 " The column separating vertically split windows
-call s:HL('VertSplit', s:gb.bg3, s:vert_split)
+call s:HL('WinSeparator', s:gb.light2, s:none, s:bold)
 
 " Current match in wildmenu completion
 call s:HL('WildMenu', s:gb.blue, s:gb.bg2, s:bold)
@@ -667,7 +668,7 @@ call s:HL('FoldColumn', s:gb.gray, s:gb.bg1)
 " Cursor: {{{
 
 " Character under cursor
-call s:HL('Cursor', s:none, s:none, s:inverse)
+call s:HL('Cursor', s:gb.purple, s:gb.red, s:inverse)
 " Visual mode cursor, selection
 hi! link vCursor Cursor
 " Input moder cursor
@@ -686,8 +687,9 @@ endif
 
 call s:HL('Comment', s:gb.gray, s:none, s:italicize_comments)
 call s:HL('Todo', s:vim_fg, s:none, s:bold . s:italic)
-autocmd InsertEnter * call s:HL('Error', s:none, s:sign_column)
-autocmd InsertLeave * call s:HL('Error', s:gb.red, s:none, s:bold . s:inverse)
+"autocmd InsertEnter * call s:HL('Error', s:none, s:sign_column)
+"autocmd InsertLeave * call s:HL('Error', s:gb.red, s:none, s:bold . s:undercurl)
+"autocmd InsertLeave * call s:HL('Error', s:gb.red, s:none, s:bold . s:inverse)
 "call s:HL('Error', s:gb.red, s:none, s:bold . s:inverse)
 
 " Generic statement
@@ -752,9 +754,9 @@ hi! link Typedef GruvboxYellow
 
 if version >= 700
   " Popup menu: normal item
-  call s:HL('Pmenu', s:gb.fg1, s:none)
+  call s:HL('Pmenu', s:gb.fg1, s:gb.bg0)
   " Popup menu: selected item
-  call s:HL('PmenuSel', s:gb.bg1, s:gb.blue, s:bold)
+  call s:HL('PmenuSel', s:gb.fg0, s:gb.bg1, s:bold)
   " Popup menu: scrollbar
   call s:HL('PmenuSbar', s:none, s:none)
   " Popup menu: scrollbar thumb
@@ -1136,10 +1138,10 @@ hi! link TelescopePrompt TelescopeNormal
 
 " }}}
 " nvim-cmp: {{{
-hi! link CmpItemAbbr GruvboxFg0
+hi! link CmpItemAbbr GruvboxFg1
 hi! link CmpItemAbbrDeprecated GruvboxFg1
-hi! link CmpItemAbbrMatch GruvboxBlueBold
-hi! link CmpItemAbbrMatchFuzzy GruvboxBlueUnderline
+hi! link CmpItemAbbrMatch GruvboxAquaBold
+hi! link CmpItemAbbrMatchFuzzy GruvboxAquaUnderline
 hi! link CmpItemMenu GruvboxNone
 hi! link CmpItemKindText GruvboxOrange
 hi! link CmpItemKindMethod GruvboxBlue
@@ -1745,7 +1747,6 @@ hi! link ocamlInfixOpKeyword GruvboxRed
 hi! link ocamlConstructor GruvboxOrange
 
 " }}}
-
 
 " Functions -------------------------------------------------------------------
 " Search Highlighting Cursor {{{

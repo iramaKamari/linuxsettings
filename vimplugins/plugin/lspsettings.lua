@@ -30,7 +30,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
   vim.keymap.set('n', '<leader>ca', fzf.lsp_code_actions, opts)
-  vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.formatting { async = true } end, opts)
+  vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, opts)
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()

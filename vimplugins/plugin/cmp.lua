@@ -21,16 +21,16 @@ cmp.setup({
 		--completion = cmp.config.window.bordered(),
 		--documentation = cmp.config.window.bordered(),
 	},
-  completion = {
-    keyword_length = 4,
-    --autocomplete = false,
-  },
-  view = {
-    entries = {
-      name = "custom",
-      selection_order = "near_cursor",
-    }
-  },
+	completion = {
+		keyword_length = 2,
+		--autocomplete = false,
+	},
+	view = {
+		entries = {
+			name = "custom",
+			selection_order = "near_cursor",
+		}
+	},
 	mapping = {
 		['<C-b>'] = cmp.mapping.scroll_docs(-4),
 		['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -58,12 +58,12 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-    ['<C-l>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        return cmp.complete_common_string()
-      end
-      fallback()
-    end, { 'i', 'c' }),
+		['<C-l>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				return cmp.complete_common_string()
+			end
+			fallback()
+		end, { 'i', 'c' }),
 	},
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
@@ -74,13 +74,13 @@ cmp.setup({
 		--{ name = 'ultisnips' }, -- For ultisnips users.
 		-- { name = 'snippy' }, -- For snippy users.
 	}, {
-		{ name = 'buffer', keyword_length = 3 },
+		{ name = 'buffer', keyword_length = 2 },
 	}),
-  performance = {
-    throttle = 100,
-    debounce = 500,
-    fetching_timeout = 200,
-  }
+	performance = {
+		throttle = 100,
+		debounce = 500,
+		fetching_timeout = 200,
+	}
 })
 
 -- Set configuration for specific filetype.
@@ -97,7 +97,10 @@ cmp.setup.cmdline({ '/', '?' }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
 		{ name = 'buffer' }
-	}
+	},
+	view = {
+		entries = { name = 'wildmenu', separator = '|' }
+	},
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
