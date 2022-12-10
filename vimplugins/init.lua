@@ -18,6 +18,7 @@ require "paq" {
   "ray-x/cmp-treesitter";
   ---- Rust
   "Saecki/crates.nvim";
+  "nvim-lua/plenary.nvim"; -- Required by crates.nvim
   -- Snippets
   "L3MON4D3/LuaSnip",
   "saadparwaiz1/cmp_luasnip",
