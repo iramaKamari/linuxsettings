@@ -66,6 +66,8 @@ cmp.setup({
 		end, { 'i', 'c' }),
 	},
 	sources = cmp.config.sources({
+		{ name = 'path' },
+		{ name = 'buffer' },
 		{ name = 'nvim_lsp' },
 		{ name = 'nvim_lsp_signature_help' },
 		{ name = 'treesitter' },
@@ -73,8 +75,8 @@ cmp.setup({
 		{ name = 'luasnip' }, -- For luasnip users.
 		--{ name = 'ultisnips' }, -- For ultisnips users.
 		-- { name = 'snippy' }, -- For snippy users.
+		{ name = 'crates' },
 	}, {
-		{ name = 'buffer', keyword_length = 2 },
 	}),
 	performance = {
 		throttle = 100,

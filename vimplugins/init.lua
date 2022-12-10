@@ -16,6 +16,8 @@ require "paq" {
   "hrsh7th/cmp-cmdline";
   "hrsh7th/cmp-nvim-lsp-signature-help";
   "ray-x/cmp-treesitter";
+  ---- Rust
+  "Saecki/crates.nvim";
   -- Snippets
   "L3MON4D3/LuaSnip",
   "saadparwaiz1/cmp_luasnip",
@@ -108,8 +110,8 @@ vim.api.nvim_command([[set number relativenumber]])
 vim.api.nvim_exec([[
 augroup numbertoggle
   autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+  autocmd BufEnter,FocusGained,InsertLeave * setlocal relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * setlocal norelativenumber
 augroup END
 ]], false)
 -- Go to last used buffer
@@ -204,10 +206,10 @@ vim.api.nvim_set_keymap('n', '<leader>t', ':terminal zsh<CR>', { noremap = true,
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
 vim.api.nvim_exec([[
-  autocmd TermOpen,TermEnter term://* startinsert
-  autocmd TermLeave,TermClose term://* stopinsert
   autocmd TermOpen,TermEnter term://* :setlocal nonumber norelativenumber
   autocmd TermLeave,TermClose term://* :setlocal nonumber norelativenumber
+  autocmd TermOpen,TermEnter term://* startinsert
+  autocmd TermLeave,TermClose term://* stopinsert
 ]], false)
 -- Quit
 vim.api.nvim_set_keymap('n', '<leader>q', ':q<CR>', { noremap = true, silent = true })
