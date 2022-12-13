@@ -1,24 +1,21 @@
 -- Lsp settings
-vim.api.nvim_exec([[
-autocmd FileType c nnoremap <buffer> <leader>h :ClangdSwitchSourceHeader<CR>
-autocmd FileType cpp nnoremap <buffer> <leader>h :ClangdSwitchSourceHeader<CR>
-]], false)
-local nvim_lsp = require('lspconfig')
-local nvim_lsp_util = require('lspconfig/util')
-local on_attach = function(client, bufnr)
+local lsp = require('lspconfig')
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+---@diagnostic disable-next-line: unused-function
+local on_attach = function(_, bufnr)
+  local fzf = require('fzf-lua'),
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.diagnostic.config({ virtual_text = false })
 
-  local fzf = require('fzf-lua')
   -- Mappings.
   local opts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set('n', 'gD', fzf.lsp_declarations, opts)
-  vim.keymap.set('n', 'gd', fzf.lsp_definitions, opts)
-  vim.keymap.set('n', 'gr', fzf.lsp_references, opts)
-  vim.keymap.set('n', 'gi', fzf.lsp_implementations, opts)
-  vim.keymap.set('n', 'gic', fzf.lsp_incoming_calls, opts)
-  vim.keymap.set('n', 'goc', fzf.lsp_outgoing_calls, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+  vim.keymap.set('n', '<leader>gD', fzf.lsp_declarations, opts)
+  vim.keymap.set('n', '<leader>gd', fzf.lsp_definitions, opts)
+  vim.keymap.set('n', '<leader>gr', fzf.lsp_references, opts)
+  vim.keymap.set('n', '<leader>gi', fzf.lsp_implementations, opts)
+  vim.keymap.set('n', '<leader>gic', fzf.lsp_incoming_calls, opts)
+  vim.keymap.set('n', '<leader>goc', fzf.lsp_outgoing_calls, opts)
+  vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover, opts)
   vim.keymap.set('n', '<leader>K', vim.lsp.buf.signature_help, opts)
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
   vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
@@ -33,22 +30,52 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, opts)
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+vim.api.nvim_exec([[
+autocmd FileType c nnoremap <buffer> <leader>h :ClangdSwitchSourceHeader<CR>
+autocmd FileType cpp nnoremap <buffer> <leader>h :ClangdSwitchSourceHeader<CR>
+]], false)
 
-nvim_lsp.pylsp.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-nvim_lsp.clangd.setup {
+lsp.clangd.setup {
   cmd = { 'clangd', '-j=12', '--all-scopes-completion=true', '--background-index=true', '--fallback-style=chromium',
     '--header-insertion=iwyu', '--suggest-missing-includes=true' };
   on_attach = on_attach,
   capabilities = capabilities,
 }
-nvim_lsp.gopls.setup {
+
+lsp.pylsp.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+lsp.sumneko_lua.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
+
+vim.api.nvim_exec([[autocmd BufWritePre *.go lua Go_org_imports()]], false)
+-- Omnifunc
+vim.api.nvim_exec([[autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc]], false)
+lsp.gopls.setup {
   cmd = { "gopls", "serve" },
   filetypes = { "go", "gomod" },
-  root_dir = nvim_lsp_util.root_pattern("go.work", "go.mod", ".git"),
+  root_dir = lsp.util.root_pattern("go.work", "go.mod", ".git"),
   settings = {
     gopls = {
       analyses = {
@@ -200,30 +227,3 @@ local opts = {
 }
 
 require('rust-tools').setup(opts)
-
-nvim_lsp.sumneko_lua.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        version = "LuaJIT",
-      },
-      diagnostics = {
-        globals = { "vim" },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
-
-nvim_lsp.julials.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
