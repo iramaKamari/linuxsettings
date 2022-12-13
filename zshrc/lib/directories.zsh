@@ -31,6 +31,8 @@ function d () {
 }
 
 # List directory contents
-alias ll='ls -lh'
-alias la='ls -lah'
-alias lla='ls -lAh'
+#alias ll='ls -lh'
+#alias la='ls -lah'
+#alias lla='ls -lAh'
+alias ll='exa -lF'
+alias lla='exa -laF'
