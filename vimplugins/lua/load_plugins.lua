@@ -37,14 +37,18 @@ require "paq" {
   "frazrepo/vim-rainbow";
 }
 
-require("load_keymappings")
-require("load_nvim_treesitter")
-require("load_plantuml")
-require("load_better_quick_fix")
-require("load_cmp")
-require("load_fzf")
+require("keymappings")
+require("nvim_treesitter_settings")
+require("plantuml_settings")
+require("better_quick_fix_settings")
+require("cmp_settings")
+require("fzf_settings")
 
-require("lsp.load_settings")
-require("load_options")
-require("load_statusline")
-require("load_tabline")
+require("lsp.clangd_server")
+require("lsp.pylsp_server")
+require("lsp.gopls_server")
+require("lsp.sumneko_lua_server")
+require("lsp.rust_server")
+require("options")
+require("statusline")
+require("tabline")

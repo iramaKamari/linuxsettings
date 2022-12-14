@@ -1,4 +1,4 @@
-local lsp = require("lspsettings").nvim_lsp
+local settings = require("lsp.server_config")
 -- all the opts to send to nvim-lspconfig
 -- these override the defaults set by rust-tools.nvim
 -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
@@ -9,7 +9,7 @@ local opts = {
     --hover_with_actions = true,
     reload_workspace_from_cargo_toml = true,
     inlay_hints = {
-      show_parameter_hints = false,
+      show_parameter_hints = true,
       parameter_hints_prefix = "<- ",
       other_hints_prefix = "=> ",
       highlight = "Comment",
@@ -107,8 +107,8 @@ local opts = {
   },
   server = {
     -- on_attach is a callback called when the language server attachs to the buffer
-    on_attach = lsp.on_attach,
-    capabilities = lsp.capabilities,
+    on_attach = settings.on_attach,
+    capabilities = settings.capabilities,
     standalone = true,
     settings = {
       -- to enable rust-analyzer settings visit:

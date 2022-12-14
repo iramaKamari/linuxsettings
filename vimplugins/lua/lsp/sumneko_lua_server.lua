@@ -1,7 +1,7 @@
-local lsp = require("lspsettings").nvim_lsp
-lsp.sumneko_lua.setup {
-  on_attach = lsp.on_attach,
-  capabilities = lsp.capabilities,
+local settings = require("lsp.server_config")
+settings.lsp.sumneko_lua.setup {
+  on_attach = settings.on_attach,
+  capabilities = settings.capabilities,
   settings = {
     Lua = {
       runtime = {

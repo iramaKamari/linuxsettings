@@ -1,12 +1,12 @@
-local lsp = require("lspsettings").nvim_lsp
+local settings = require("lsp.server_config")
 
 vim.api.nvim_exec([[autocmd BufWritePre *.go lua Go_org_imports()]], false)
 -- Omnifunc
 vim.api.nvim_exec([[autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc]], false)
-lsp.gopls.setup {
+settings.lsp.gopls.setup {
   cmd = { "gopls", "serve" },
   filetypes = { "go", "gomod" },
-  root_dir = lsp.util.root_pattern("go.work", "go.mod", ".git"),
+  root_dir = settings.lsp.util.root_pattern("go.work", "go.mod", ".git"),
   settings = {
     gopls = {
       analyses = {
@@ -15,8 +15,8 @@ lsp.gopls.setup {
       staticcheck = true,
     },
   },
-  on_attach = lsp.on_attach,
-  capabilities = lsp.capabilities,
+  on_attach = settings.on_attach,
+  capabilities = settings.capabilities,
 }
 
 function Go_org_imports(wait_ms)
