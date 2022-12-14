@@ -37,18 +37,18 @@ require "paq" {
   "frazrepo/vim-rainbow";
 }
 
-require("keymappings")
+-- Plugin settings
 require("nvim_treesitter_settings")
 require("plantuml_settings")
 require("better_quick_fix_settings")
 require("cmp_settings")
 require("fzf_settings")
 
-require("lsp.clangd_server")
-require("lsp.pylsp_server")
-require("lsp.gopls_server")
-require("lsp.sumneko_lua_server")
-require("lsp.rust_server")
+-- Lazy load LSP servers
+require("lsp.load_server")
+
+-- Nvim settings
 require("options")
 require("statusline")
 require("tabline")
+require("keymappings")
