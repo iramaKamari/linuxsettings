@@ -687,8 +687,8 @@ endif
 
 call s:HL('Comment', s:gb.gray, s:none, s:italicize_comments)
 call s:HL('Todo', s:vim_fg, s:none, s:bold . s:italic)
-"autocmd InsertEnter * call s:HL('Error', s:none, s:sign_column)
-"autocmd InsertLeave * call s:HL('Error', s:gb.red, s:none, s:bold . s:undercurl)
+autocmd InsertEnter * call s:HL('Error', s:none, s:sign_column)
+autocmd InsertLeave * call s:HL('Error', s:gb.red, s:none, s:bold . s:undercurl)
 "autocmd InsertLeave * call s:HL('Error', s:gb.red, s:none, s:bold . s:inverse)
 "call s:HL('Error', s:gb.red, s:none, s:bold . s:inverse)
 
