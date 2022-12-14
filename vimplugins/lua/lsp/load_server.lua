@@ -8,9 +8,9 @@ local server = function(server)
     require(server)
 end
 
-load_lsp({"*.c", "*.cpp", "*.objc", "*.objcpp", "*.cuda", "*.proto"},
+load_lsp({"c", "cpp", "objc", "objcpp", "cuda", "proto"},
     server("lsp.clangd_server"))
-load_lsp({"*.go", "*.gomod", "*.gowork", "*.gotmpl"},
+load_lsp({"go", "gomod", "gowork", "gotmpl"},
     server("lsp.gopls_server"))
 load_lsp({"python"}, server("lsp.pylsp_server"))
 load_lsp({"rust"}, server("lsp.rust_server"))
