@@ -37,6 +37,10 @@ require "paq" {
   "frazrepo/vim-rainbow";
 }
 
+-- Nvim settings
+require("keymappings")
+require("options")
+
 -- Plugin settings
 require("nvim_treesitter_settings")
 require("plantuml_settings")
@@ -47,8 +51,7 @@ require("fzf_settings")
 -- Lazy load LSP servers
 require("lsp.load_server")
 
--- Nvim settings
-require("options")
+-- ColorScheme
+require("colorscheme")
 require("statusline")
 require("tabline")
-require("keymappings")
