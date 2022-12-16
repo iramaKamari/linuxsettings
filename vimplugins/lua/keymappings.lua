@@ -32,7 +32,6 @@ vim.api.nvim_set_keymap('v', '<S-Up>', '<Esc>:m -2<CR>gv=gv', { noremap = true, 
 vim.api.nvim_set_keymap('n', '<leader>n', ':normal ', { noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader>s', ':w<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', 'kk', '<esc>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>e', ':e ', { noremap = true, silent = false })
 -- Replace all occurences on a line
 vim.api.nvim_set_keymap('n', '<leader>r', ':s/<C-r><C-w>//g<Left><Left>', { noremap = true, silent = false })
 -- Replace all occurences in a file

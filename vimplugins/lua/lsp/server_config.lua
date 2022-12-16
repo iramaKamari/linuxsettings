@@ -10,12 +10,12 @@ M.on_attach = function(_, bufnr)
 
   -- Mappings.
   local opts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set('n', '<leader>gD', fzf.lsp_declarations, opts)
-  vim.keymap.set('n', '<leader>gd', fzf.lsp_definitions, opts)
-  vim.keymap.set('n', '<leader>gr', fzf.lsp_references, opts)
-  vim.keymap.set('n', '<leader>gi', fzf.lsp_implementations, opts)
-  vim.keymap.set('n', '<leader>gic', fzf.lsp_incoming_calls, opts)
-  vim.keymap.set('n', '<leader>goc', fzf.lsp_outgoing_calls, opts)
+  vim.keymap.set('n', '<leader>lD', fzf.lsp_declarations, opts)
+  vim.keymap.set('n', '<leader>ld', fzf.lsp_definitions, opts)
+  vim.keymap.set('n', '<leader>lr', fzf.lsp_references, opts)
+  vim.keymap.set('n', '<leader>li', fzf.lsp_implementations, opts)
+  vim.keymap.set('n', '<leader>lic', fzf.lsp_incoming_calls, opts)
+  vim.keymap.set('n', '<leader>loc', fzf.lsp_outgoing_calls, opts)
   vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover, opts)
   vim.keymap.set('n', '<leader>K', vim.lsp.buf.signature_help, opts)
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)

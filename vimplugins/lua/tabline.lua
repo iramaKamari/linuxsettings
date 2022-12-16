@@ -76,7 +76,7 @@ local function tabline(options)
         end
         -- buf name
         if bufname ~= '' then
-            s = s .. fn.fnamemodify(bufname, ':t')
+            s = s .. fn.fnamemodify(bufname, ':p:h:t')
         else
             s = s .. options.no_name .. ' '
         end
@@ -100,7 +100,7 @@ function Metatable.setup(user_options)
     function _G.nvim_tabline()
         return tabline(Metatable.options)
     end
-    vim.o.showtabline = 2
+    vim.o.showtabline = 1
     vim.o.tabline = '%!v:lua.nvim_tabline()'
 
     vim.g.loaded_nvim_tabline = 1
