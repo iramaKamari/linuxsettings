@@ -47,6 +47,7 @@ require("plantuml_settings")
 require("better_quick_fix_settings")
 require("cmp_settings")
 require("fzf_settings")
+require("scratch")
 
 -- Lazy load LSP servers
 require("lsp.load_server")
