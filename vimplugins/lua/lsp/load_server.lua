@@ -1,18 +1,23 @@
 local load_lsp = function(pattern, server)
-   vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+    vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
         pattern = pattern,
         callback = function() server() end,
     })
 end
+
 local server = function(server)
     require(server)
 end
 
-load_lsp({"c", "cpp", "objc", "objcpp", "cuda", "proto"},
-    server("lsp.clangd_server"))
-load_lsp({"go", "gomod", "gowork", "gotmpl"},
-    server("lsp.gopls_server"))
-load_lsp({"python"}, server("lsp.pylsp_server"))
-load_lsp({"rust"}, server("lsp.rust_server"))
-load_lsp({"lua"}, server("lsp.sumneko_lua_server"))
+local ServerTable = {
+    { { "c", "cpp", "objc", "objcpp", "cuda", "proto" }, "lsp.clangd_server" },
+    { { "go", "gomod", "gowork", "gotmpl" }, "lsp.gopls_server" },
+    { { "python" }, "lsp.pylsp_server" },
+    { { "rust" }, "lsp.rust_server" },
+    { { "lua" }, "lsp.sumneko_lua_server" },
+}
 
+for _, t in pairs(ServerTable) do
+    local pattern, lsp = table.unpack(t)
+    load_lsp(pattern, server(lsp))
+end
