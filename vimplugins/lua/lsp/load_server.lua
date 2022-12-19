@@ -18,6 +18,6 @@ local ServerTable = {
 }
 
 for _, t in pairs(ServerTable) do
-    local pattern, lsp = table.unpack(t)
+    local pattern, lsp = unpack(t)
     load_lsp(pattern, server(lsp))
 end
