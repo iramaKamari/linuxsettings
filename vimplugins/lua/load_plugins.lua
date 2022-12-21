@@ -35,7 +35,10 @@ require "paq" {
   "kevinhwang91/nvim-bqf";
   -- Syntax highlighters
   {"nvim-treesitter/nvim-treesitter", run=function() vim.cmd "TSUpdate" end};
+  "nvim-treesitter/playground";
   "frazrepo/vim-rainbow";
+  -- Ergonomics
+  "shortcuts/no-neck-pain.nvim";
 }
 
 -- Nvim settings
@@ -49,6 +52,7 @@ require("better_quick_fix_settings")
 require("cmp_settings")
 require("fzf_settings")
 require("scratch")
+require("no_neck_pain_settings")
 
 -- Lazy load LSP servers
 require("lsp.load_server")

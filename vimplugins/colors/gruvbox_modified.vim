@@ -687,9 +687,9 @@ endif
 
 call s:HL('Comment', s:gb.gray, s:none, s:italicize_comments)
 call s:HL('Todo', s:vim_fg, s:none, s:bold . s:italic)
-autocmd InsertEnter * call s:HL('Error', s:none, s:sign_column)
-autocmd InsertLeave * call s:HL('Error', s:gb.red, s:none, s:bold . s:undercurl)
-"autocmd InsertLeave * call s:HL('Error', s:gb.red, s:none, s:bold . s:inverse)
+call s:HL('Error', s:none, s:sign_column)
+"autocmd InsertEnter * call s:HL('Error', s:none, s:sign_column)
+"autocmd InsertLeave * call s:HL('Error', s:gb.red, s:none, s:bold . s:undercurl)
 "call s:HL('Error', s:gb.red, s:none, s:bold . s:inverse)
 
 " Generic statement
@@ -845,6 +845,7 @@ if has('nvim')
   " Highlight TSKeywordOperator as keywords
   " https://github.com/nvim-treesitter/nvim-treesitter/issues/447
   hi! link TSKeywordOperator GruvboxRed
+  "hi! link TSError Normal
 endif
 
 " }}}
