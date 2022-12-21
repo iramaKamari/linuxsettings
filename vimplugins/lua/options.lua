@@ -6,6 +6,7 @@ vim.api.nvim_set_option('showmatch', true)
 vim.api.nvim_set_option('complete', '.,w,b,u,t')
 vim.api.nvim_set_option('completeopt', 'menu,menuone,noinsert,noselect')
 vim.api.nvim_set_option('wildmode', 'longest:full,full')
+vim.api.nvim_command([[set signcolumn=number]])
 
 vim.api.nvim_command([[set noswapfile nobackup noshowmode]])
 vim.api.nvim_command([[set cursorline]])

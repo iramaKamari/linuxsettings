@@ -8,6 +8,7 @@ require "paq" {
   -- LSP
   "neovim/nvim-lspconfig";
   "simrat39/rust-tools.nvim";
+  "p00f/clangd_extensions.nvim";
   -- Completion
   "hrsh7th/nvim-cmp";
   "hrsh7th/cmp-nvim-lsp";
