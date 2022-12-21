@@ -5,6 +5,6 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	group = "OnVimEnter",
 	pattern = "*",
 	callback = function()
-        vim.schedule(function() nnp.enable() end)
+		vim.schedule(function() nnp.enable() end)
 	end,
 })

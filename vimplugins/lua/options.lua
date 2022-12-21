@@ -22,24 +22,24 @@ vim.api.nvim_exec([[autocmd VimResized * wincmd =]], false)
 vim.api.nvim_buf_set_option(0, 'textwidth', 0)
 vim.api.nvim_buf_set_option(0, 'tabstop', 4)
 vim.api.nvim_buf_set_option(0, 'shiftwidth', 4)
-vim.api.nvim_buf_set_option(0, 'expandtab', true)
+vim.api.nvim_buf_set_option(0, 'expandtab', false)
 
 vim.api.nvim_command([[set number relativenumber]])
 vim.api.nvim_exec([[
 augroup buffer_number_toggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * setlocal relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * setlocal norelativenumber
+autocmd!
+autocmd BufEnter,FocusGained,InsertLeave * setlocal relativenumber
+autocmd BufLeave,FocusLost,InsertEnter   * setlocal norelativenumber
 augroup END
 ]], false)
 
 vim.api.nvim_exec([[
 augroup terminal_number_toggle
-  autocmd!
-  autocmd TermOpen,TermEnter term://* startinsert
-  autocmd TermLeave,TermClose term://* stopinsert
-  autocmd TermOpen,TermEnter term://* :setlocal nonumber norelativenumber
-  autocmd TermLeave,TermClose term://* :setlocal nonumber norelativenumber
+autocmd!
+autocmd TermOpen,TermEnter term://* startinsert
+autocmd TermLeave,TermClose term://* stopinsert
+autocmd TermOpen,TermEnter term://* :setlocal nonumber norelativenumber
+autocmd TermLeave,TermClose term://* :setlocal nonumber norelativenumber
 augroup END
 ]], false)
 

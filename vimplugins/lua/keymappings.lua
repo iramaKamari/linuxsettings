@@ -68,9 +68,9 @@ autocmd BufLeave * call clearmatches()
 -- Trim trailing whitespace
 vim.api.nvim_exec([[
 fun! TrimWhitespace()
-    let l:save = winsaveview()
-    %s/\s\+$//e
-    call winrestview(l:save)
+let l:save = winsaveview()
+%s/\s\+$//e
+call winrestview(l:save)
 endfun
 ]], false)
 
@@ -78,14 +78,14 @@ endfun
 vim.api.nvim_set_keymap('n', '<leader>z', ':call ZoomToggle()<CR>', { noremap = true, silent = true })
 vim.api.nvim_exec([[
 function! ZoomToggle()
-    if exists('t:zoomed') && t:zoomed
-        execute t:zoom_winrestcmd
-        let t:zoomed = 0
-    else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-        let t:zoomed = 1
-    endif
+if exists('t:zoomed') && t:zoomed
+execute t:zoom_winrestcmd
+let t:zoomed = 0
+else
+let t:zoom_winrestcmd = winrestcmd()
+resize
+vertical resize
+let t:zoomed = 1
+endif
 endfunction
 ]], false)

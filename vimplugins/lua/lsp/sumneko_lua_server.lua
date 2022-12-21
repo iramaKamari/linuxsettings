@@ -5,7 +5,7 @@ settings.lsp.sumneko_lua.setup {
   settings = {
     Lua = {
       runtime = {
-        version = "LuaJIT",
+        version = "5.4.4",
       },
       diagnostics = {
         globals = { "vim" },
