@@ -28,8 +28,6 @@ require "paq" {
 	-- Fuzzy finding of files/buffers etc
 	{ "junegunn/fzf", run = "./install --bin" };
 	{ "ibhagwan/fzf-lua", branch = "main" };
-	--{"nvim-telescope/telescope.nvim", branch = "0.1.x"},
-	--'nvim-lua/plenary.nvim',
 	-- Different color for selected search match
 	"PeterRincker/vim-searchlight";
 	-- Better quickfix list
@@ -56,7 +54,6 @@ require("cmp_settings")
 require("fzf_settings")
 require("scratch")
 require("no_neck_pain_settings")
-require("close_it")
 
 -- Lazy load LSP servers
 require("lsp.load_server")

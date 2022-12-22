@@ -42,31 +42,10 @@ Metatable.highlights = {
 	blank = "%#Blank#",
 }
 
-Metatable.scrollbar_states = {
-	'▁',
-	'▁',
-	'▂',
-	'▃',
-	'▄',
-	'▅',
-	'▆',
-	'▇',
-	'█',
-}
-
-Metatable.get_scrollbar = function()
+Metatable.file_position = function()
 	local total_lines = vim.fn.line('$')
 	local current_line = vim.fn.line('.')
 	local position = current_line / total_lines
-	--local index = nil
-	--if current_line == 1 then
-	--  index = current_line
-	--elseif current_line == total_lines then
-	--  index = #self.scrollbar_states
-	--else
-	--  index = (math.floor(position * #self.scrollbar_states) % #self.scrollbar_states) + 1 -- Lua arrays are not 0-index based
-	--end
-	--return string.format("%s%s[%s]", math.floor(100*position), '%%', self.scrollbar_states[index])
 	return string.format("%s%s", math.floor(100*position), '%%')
 end
 
@@ -167,7 +146,7 @@ Metatable.set_active = function(self)
 	local encodeff = hi.aquaFg .. self:get_encoding_and_fileformat()
 	--local line_total = hi.yellowFg .. ":%L"
 	local coloumn = hi.yellowFg .. "[%c]"
-	local file_position = hi.yellowFg .. self:get_scrollbar()
+	local file_position = hi.yellowFg .. self:file_position()
 	local seperator = " "
 	return table.concat({
 		hi.blank,

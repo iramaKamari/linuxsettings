@@ -76,7 +76,7 @@ cmp.setup({
 		{ name = 'path' },
 		{ name = 'crates' },
 	}, {
-		}),
+	}),
 	performance = {
 		throttle = 100,
 		debounce = 500,
@@ -94,13 +94,13 @@ cmp.setup({
 		comparators = {
 			cmp.config.compare.offset,
 			cmp.config.compare.exact,
-cmp.config.compare.recently_used,
-require("clangd_extensions.cmp_scores"),
-cmp.config.compare.kind,
+			cmp.config.compare.recently_used,
+			require("clangd_extensions.cmp_scores"),
+			cmp.config.compare.kind,
 			cmp.config.compare.sort_text,
-cmp.config.compare.length,
+			cmp.config.compare.length,
 			cmp.config.compare.order,
-},
+		},
 	},
 })
 --})
@@ -109,9 +109,9 @@ cmp.config.compare.length,
 cmp.setup.filetype('gitcommit', {
 	sources = cmp.config.sources({
 		{ name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-}, {
-			{ name = 'buffer' },
-		})
+	}, {
+		{ name = 'buffer' },
+	})
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -131,6 +131,6 @@ cmp.setup.cmdline(':', {
 	sources = cmp.config.sources({
 		{ name = 'path' }
 	}, {
-			{ name = 'cmdline' }
-		})
+		{ name = 'cmdline' }
+	})
 })

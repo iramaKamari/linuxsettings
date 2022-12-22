@@ -76,19 +76,18 @@ local function tabline(options)
 		end
 		-- buf name
 		if bufname ~= '' then
-s = s .. fn.fnamemodify(bufname, ':p:h:t')
+			s = s .. fn.fnamemodify(bufname, ':p:h:t')
 		else
 			s = s .. options.no_name .. ' '
 		end
 		-- modify indicator
-		if
-bufmodified == 1
-			and options.show_modify
-			and options.modify_indicator ~= nil
+		if bufmodified == 1
+		    and options.show_modify
+		    and options.modify_indicator ~= nil
 		then
 			s = s .. options.modify_indicator
 		end
-end
+	end
 
 	s = s .. '%#TabLineFill#'
 	return s
@@ -100,6 +99,7 @@ function Metatable.setup(user_options)
 	function _G.nvim_tabline()
 		return tabline(Metatable.options)
 	end
+
 	vim.o.showtabline = 1
 	vim.o.tabline = '%!v:lua.nvim_tabline()'
 
