@@ -193,19 +193,19 @@ Metatable.set_inactive = function(self)
 
 	--local git = self:get_git_info()
 	local filename = self:get_filename()
-	local modifiable = self:get_modifiable()
+	--local modifiable = self:get_modifiable()
 	--local filetype = self:get_filetype_and_size()
 	--local encodeff = self:get_encoding_and_fileformat()
 	--local coloumn = "[%c]"
 	--local seperator = " "
 	return table.concat({
 		hi.grayFg,
-		"<<<",
+		--"<<<",
 		filename,
 		--modifiable,
 		"%m%w",
 		-- coloumn,
-		">>>",
+		--">>>",
 		--seperator,
 		--filetype,
 		--seperator,
