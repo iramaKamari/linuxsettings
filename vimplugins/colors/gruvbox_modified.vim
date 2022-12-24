@@ -80,11 +80,11 @@ hi TabLine guifg=#665c54 ctermfg=59 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi TabLineSel guifg=#ebdbb2 ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi TabLineFill guifg=NONE ctermfg=NONE guibg=#282828 ctermbg=235 gui=NONE cterm=NONE
 hi Terminal guifg=#ebdbb2 ctermfg=223 guibg=#282828 ctermbg=235 gui=NONE cterm=NONE
-hi Visual guifg=#d65d0e ctermfg=166 guibg=#1d2021 ctermbg=234 gui=bold,reverse cterm=bold,reverse
-hi VisualNOS guifg=#d65d0e ctermfg=166 guibg=#1d2021 ctermbg=234 gui=bold,reverse cterm=bold,reverse
+hi Visual guifg=#ebdbb2 ctermfg=223 guibg=#1d2021 ctermbg=234 gui=bold,reverse cterm=bold,reverse
+hi VisualNOS guifg=#ebdbb2 ctermfg=223 guibg=#1d2021 ctermbg=234 gui=bold,reverse cterm=bold,reverse
 hi WarningMsg guifg=#d79921 ctermfg=172 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi WildMenu guifg=#d65d0e ctermfg=166 guibg=NONE ctermbg=NONE gui=bold cterm=bold
-hi WinSeparator guifg=#ebdbb2 ctermfg=223 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+hi WinSeparator guifg=#bdae93 ctermfg=144 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 hi EndOfBuffer guifg=#282828 ctermfg=235 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi Searchlight guifg=#d65d0e ctermfg=166 guibg=#282828 ctermbg=235 gui=reverse cterm=reverse
 hi CmpItemAbbr guifg=#ebdbb2 ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
