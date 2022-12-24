@@ -60,8 +60,8 @@ hi IncSearch guifg=#d65d0e ctermfg=166 guibg=#282828 ctermbg=235 gui=reverse cte
 hi LineNr guifg=#504945 ctermfg=239 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi MatchParen guifg=#b16286 ctermfg=132 guibg=#3c3836 ctermbg=237 gui=bold cterm=bold
 hi NonText guifg=#504945 ctermfg=239 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Pmenu guifg=#ebdbb2 ctermfg=223 guibg=#282828 ctermbg=235 gui=NONE cterm=NONE
-hi PmenuSel guifg=#d65d0e ctermfg=166 guibg=#1d2021 ctermbg=234 gui=bold cterm=bold
+hi Pmenu guifg=#ebdbb2 ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi PmenuSel guifg=#d65d0e ctermfg=166 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 hi PmenuSbar guifg=NONE ctermfg=NONE guibg=#665c54 ctermbg=59 gui=NONE cterm=NONE
 hi PmenuThumb guifg=NONE ctermfg=NONE guibg=#ebdbb2 ctermbg=223 gui=NONE cterm=NONE
 hi Question guifg=#b16286 ctermfg=132 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
@@ -80,11 +80,11 @@ hi TabLine guifg=#665c54 ctermfg=59 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi TabLineSel guifg=#ebdbb2 ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi TabLineFill guifg=NONE ctermfg=NONE guibg=#282828 ctermbg=235 gui=NONE cterm=NONE
 hi Terminal guifg=#ebdbb2 ctermfg=223 guibg=#282828 ctermbg=235 gui=NONE cterm=NONE
-hi Visual guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
-hi VisualNOS guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
+hi Visual guifg=#d65d0e ctermfg=166 guibg=#1d2021 ctermbg=234 gui=bold,reverse cterm=bold,reverse
+hi VisualNOS guifg=#d65d0e ctermfg=166 guibg=#1d2021 ctermbg=234 gui=bold,reverse cterm=bold,reverse
 hi WarningMsg guifg=#d79921 ctermfg=172 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi WildMenu guifg=#d65d0e ctermfg=166 guibg=#504945 ctermbg=239 gui=bold cterm=bold
-hi WinSeparator guifg=#a89984 ctermfg=138 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+hi WildMenu guifg=#d65d0e ctermfg=166 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+hi WinSeparator guifg=#ebdbb2 ctermfg=223 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 hi EndOfBuffer guifg=#282828 ctermfg=235 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi Searchlight guifg=#d65d0e ctermfg=166 guibg=#282828 ctermbg=235 gui=reverse cterm=reverse
 hi CmpItemAbbr guifg=#ebdbb2 ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
