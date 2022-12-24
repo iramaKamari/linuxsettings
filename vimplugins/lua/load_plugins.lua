@@ -36,6 +36,8 @@ require "paq" {
 	{ "nvim-treesitter/nvim-treesitter", run = function() vim.cmd "TSUpdate" end };
 	"nvim-treesitter/playground";
 	"frazrepo/vim-rainbow";
+	"ChristianChiarulli/nvcode-color-schemes.vim";
+	"chrisbra/Colorizer";
 	-- Ergonomics
 	"shortcuts/no-neck-pain.nvim";
 	-- Tpope
@@ -46,8 +48,8 @@ require "paq" {
 -- Nvim settings
 require("keymappings")
 require("options")
+
 -- Plugin settings
-require("nvim_treesitter_settings")
 require("plantuml_settings")
 require("better_quick_fix_settings")
 require("cmp_settings")
@@ -58,7 +60,8 @@ require("no_neck_pain_settings")
 -- Lazy load LSP servers
 require("lsp.load_server")
 
--- ColorScheme
+-- Syntax, colorScheme settings
+require("nvim_treesitter_settings")
 require("colorscheme")
 require("statusline")
 require("tabline")

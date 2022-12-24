@@ -6,12 +6,12 @@ vim.keymap.set('n', '<leader>g', function() fzf.grep() end, keymap_opts)
 vim.keymap.set('n', '<leader>G', function() fzf.grep_cword() end, keymap_opts)
 vim.keymap.set("n", "<leader>e", ':FzfLua<space>', keymap_opts)
 keymap_opts.silent = true
-vim.keymap.set("n", "<leader>f",
+vim.keymap.set("n", "<leader>F",
 	function() fzf.files({ cmd = "rg --files", cwd = vim.fn.fnamemodify(vim.fn.bufname(), ':p:h') .. "/",
 			actions = { ["default"] = actions.file_edit } })
 	end,
 	keymap_opts)
-vim.keymap.set("n", "<leader>F",
+vim.keymap.set("n", "<leader>f",
 	function() fzf.files({ cmd = "rg --files", actions = { ["default"] = actions.file_edit } }) end, keymap_opts)
 
 fzf.setup {

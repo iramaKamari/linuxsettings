@@ -12,7 +12,7 @@ require('nvim-treesitter.configs').setup {
 			end
 		end,
 		custom_captures = {
-			["TSError"] = "Normal",
+			--["TSError"] = "Normal",
 		},
 	},
 	indent = {
