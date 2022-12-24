@@ -79,7 +79,7 @@ cmp.setup({
 	}),
 	performance = {
 		throttle = 100,
-		debounce = 500,
+		debounce = 25,
 		fetching_timeout = 200,
 	},
 	formatting = {
