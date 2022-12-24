@@ -10,6 +10,8 @@ ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}x"
 ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[red]%}!"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}✗"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_ARROW=$'\U276F' # ❯
 
-PROMPT='%{$fg_bold[red]%}[%{$fg_bold[yellow]%}%n%{$fg_bold[green]%}@%{$fg_bold[blue]%}%m%{$fg_bold[red] %{$fg_bold[magenta]%}%1d%}%{$fg_bold[red]%}]$(git_prompt_branch)$(git_prompt_dirty) ⌚%{$fg_bold[red]%}%*%{$fg_bold[cyan]%}
-$%{$reset_color%} '
+PROMPT='%{$fg_bold[blue]%}%~%}$(git_prompt_branch)$(git_prompt_dirty)
+%{$fg_bold[magenta]%}$ZSH_THEME_ARROW%{$fg_bold[yellow]%}$ZSH_THEME_ARROW%{$fg_bold[cyan]%}$ZSH_THEME_ARROW%{$reset_color%} '
+#PROMPT='%{$fg_bold[red]%}[%{$fg_bold[yellow]%}%n%{$fg_bold[green]%}@%{$fg_bold[blue]%}%m%{$fg_bold[red] %{$fg_bold[magenta]%}%1d%}%{$fg_bold[red]%}]$(git_prompt_branch)$(git_prompt_dirty) ⌚%{$fg_bold[red]%}%*%{$fg_bold[cyan]%}

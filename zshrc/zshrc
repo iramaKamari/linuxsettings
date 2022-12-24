@@ -23,7 +23,8 @@ done
 source $ZSH/zshtheme.zsh-theme
 
 # Locale
-export LC_ALL=C
+export LANG=sv_SE.UTF-8
+export LC_ALL=C.utf8
 
 # Zplug plugin management
 source ~/.zplug/init.zsh
