@@ -93,10 +93,10 @@ hi CmpItemAbbrMatch guifg=#d65d0e ctermfg=166 guibg=NONE ctermbg=NONE gui=bold c
 hi CmpItemAbbrMatchFuzzy guifg=#d65d0e ctermfg=166 guibg=NONE ctermbg=NONE gui=underline cterm=underline
 hi CmpItemMenu guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi CmpItemKindText guifg=#fe8019 ctermfg=208 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi CmpItemKindMethod guifg=#83a598 ctermfg=108 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi CmpItemKindFunction guifg=#83a598 ctermfg=108 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi CmpItemKindMethod guifg=#cc241d ctermfg=108 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi CmpItemKindFunction guifg=#cc241d ctermfg=108 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi CmpItemKindConstructor guifg=#fabd2f ctermfg=214 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi CmpItemKindField guifg=#83a598 ctermfg=108 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi CmpItemKindField guifg=#8ec07c ctermfg=108 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi CmpItemKindClass guifg=#fabd2f ctermfg=214 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi CmpItemKindInterface guifg=#fabd2f ctermfg=214 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi CmpItemKindModule guifg=#83a598 ctermfg=108 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE

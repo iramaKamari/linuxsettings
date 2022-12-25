@@ -83,9 +83,23 @@ cmp.setup({
 		fetching_timeout = 200,
 	},
 	formatting = {
-		fields = { "kind", "abbr" },
+		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
-			lspkind.cmp_format({ mode = "text", maxwidth = 35 })(entry, vim_item)
+			lspkind.cmp_format({
+				mode = "text",
+				menu = ({
+					buffer = "[Buffer]",
+					nvim_lsp = "[LSP]",
+					nvim_lsp_signature_help = "[LSP]",
+					treesitter = "[Tree]",
+					path = "[Path]",
+					crates = "[Crates]",
+					luasnip = "[LuaSnip]",
+					nvim_lua = "[Lua]",
+					latex_symbols = "[Latex]",
+				}),
+				maxwidth = 35
+			})(entry, vim_item)
 			vim_item.abbr = vim_item.abbr:match("[^(]+")
 			return vim_item
 		end,
