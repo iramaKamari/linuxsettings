@@ -127,7 +127,7 @@ highlights:
   CmpItemAbbrDeprecated: "fg"
   CmpItemAbbrMatch: "orange - b"
   CmpItemAbbrMatchFuzzy: "orange - u"
-  CmpItemMenu: "- -"
+  CmpItemMenu: "aqua - i"
   CmpItemKindText: "orange_2"
   CmpItemKindMethod: "blue_2"
   CmpItemKindFunction: "blue_2"
@@ -146,6 +146,15 @@ highlights:
   CmpItemKindConstant: "orange_2"
   CmpItemKindStruct: "yellow_2"
   CmpItemKindTypeParameter: "yellow_2"
+  CmpItemKindColor: "purple_2"
+  CmpItemKindEvent: "purple_2"
+  CmpItemKindFolder: "purple_2"
+  CmpItemKindOperator: "red_2"
+  CmpItemKindReference: "red_2"
+  CmpItemKindUnit: "yellow"
+  CmpItemKindVariable: "yellow"
+  CmpItemKindBoolean: "yellow"
+  CmpItemKindObject: "purple"
   # -- End nvim-cmp --
 
   # -- Start Treesitter --
