@@ -6,6 +6,9 @@ require("zen-mode").setup {
             relativenumber = true,
         }
     },
+	plugins = {
+		tmux = { enabled = true },
+	},
 }
 
 vim.keymap.set("n", "<leader>z", function()
