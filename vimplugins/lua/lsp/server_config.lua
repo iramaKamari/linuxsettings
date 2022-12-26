@@ -10,8 +10,8 @@ M.on_attach = function(_, bufnr)
 
   -- Mappings.
   local opts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set('n', '<leader>lD', fzf.lsp_declarations, opts)
-  vim.keymap.set('n', '<leader>ld', fzf.lsp_definitions, opts)
+  vim.keymap.set('n', 'gD', fzf.lsp_declarations, opts)
+  vim.keymap.set('n', 'gd', fzf.lsp_definitions, opts)
   vim.keymap.set('n', '<leader>lr', fzf.lsp_references, opts)
   vim.keymap.set('n', '<leader>li', fzf.lsp_implementations, opts)
   vim.keymap.set('n', '<leader>lic', fzf.lsp_incoming_calls, opts)
