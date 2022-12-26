@@ -39,7 +39,7 @@ require "paq" {
 	"ChristianChiarulli/nvcode-color-schemes.vim";
 	"chrisbra/Colorizer";
 	-- Ergonomics
-	"shortcuts/no-neck-pain.nvim";
+	"folke/zen-mode.nvim";
 	-- Tpope
 	"tpope/vim-surround";
 	"tpope/vim-repeat";
@@ -55,7 +55,7 @@ require("better_quick_fix_settings")
 require("cmp_settings")
 require("fzf_settings")
 require("scratch")
-require("no_neck_pain_settings")
+require("zen_mode_settings")
 
 -- Lazy load LSP servers
 require("lsp.load_server")
