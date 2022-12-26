@@ -40,7 +40,6 @@ require "paq" {
 	"chrisbra/Colorizer";
 	-- Ergonomics
 	"folke/zen-mode.nvim";
-	"folke/twilight.nvim";
 	-- Tpope
 	"tpope/vim-surround";
 	"tpope/vim-repeat";
