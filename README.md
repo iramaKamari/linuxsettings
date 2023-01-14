@@ -13,3 +13,8 @@ Put .keymap.xkb and .xkb folder in your home directory
 Enable with:
 xkbcomp -I$HOME/.xkb $HOME/.colemakdh.xkb $DISPLAY
 xkbcomp -I$HOME/.xkb $HOME/.keymap.xkb $DISPLAY
+
+## Vim fugitive as megretool
+git config --global mergetool.fugitive.cmd 'nvim -f -c "Gvdiffsplit!" "$MERGED"'
+
+git config --global merge.tool fugitive
